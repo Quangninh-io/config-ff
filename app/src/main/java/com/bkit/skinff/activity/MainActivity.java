@@ -1,13 +1,21 @@
-package com.bkit.skinff;
+package com.bkit.skinff.activity;
 
-import static com.bkit.skinff.utilities.AssessStorage.BUTTON_TAG;
-import static com.bkit.skinff.utilities.AssessStorage.CHOSE_FILE;
-import static com.bkit.skinff.utilities.AssessStorage.CHOSE_IMAGE;
-import static com.bkit.skinff.utilities.AssessStorage.FILE_FREE_FIRE;
-import static com.bkit.skinff.utilities.AssessStorage.INITIAL_URI;
-import static com.bkit.skinff.utilities.AssessStorage.NAME_IMAGE;
-import static com.bkit.skinff.utilities.AssessStorage.OPEN_DOCUMENT_TREE;
-import static com.bkit.skinff.utilities.AssessStorage.RESCONF;
+import static com.bkit.skinff.utilities.Constants.BUTTON_TAG;
+import static com.bkit.skinff.utilities.Constants.CHOSE_FILE;
+import static com.bkit.skinff.utilities.Constants.CHOSE_IMAGE;
+
+import static com.bkit.skinff.utilities.Constants.COLLECTION;
+import static com.bkit.skinff.utilities.Constants.FILE_FREE_FIRE;
+import static com.bkit.skinff.utilities.Constants.FILE_RESCONF_FREE_FIRE;
+import static com.bkit.skinff.utilities.Constants.INITIAL_URI;
+import static com.bkit.skinff.utilities.Constants.KEY_IMAGE;
+import static com.bkit.skinff.utilities.Constants.KEY_TIME;
+import static com.bkit.skinff.utilities.Constants.OPEN_DOCUMENT_TREE;
+import static com.bkit.skinff.utilities.Constants.PUT_BUNDLE;
+import static com.bkit.skinff.utilities.Constants.PUT_INTENT;
+import static com.bkit.skinff.utilities.Constants.RESCONF;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.documentfile.provider.DocumentFile;
@@ -21,27 +29,41 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.util.Log;
-import android.view.View;
 import android.widget.DatePicker;
 import com.bkit.skinff.databinding.ActivityMainBinding;
+import com.bkit.skinff.encode.Encode;
 import com.bkit.skinff.firebase.DownloadFile;
+import com.bkit.skinff.firebase.ReadToFireStore;
 import com.bkit.skinff.firebase.UploadFile;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import java.util.Calendar;
-import java.util.Locale;
+import com.bkit.skinff.firebase.WriteToFirestore;
+import com.bkit.skinff.listener.ReceiveDataFromFirebase;
+import com.bkit.skinff.model.FileData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity  {
 
 
     private ActivityMainBinding binding;
     UploadFile uploadFile;
+
     // location storage
     DownloadFile downloadFile;
+    WriteToFirestore writeToFirestore;
     Uri uriFile;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     @SuppressLint("SimpleDateFormat")
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         });
         binding.btnUpload.setOnClickListener(v -> {
             requestSdcardAccessPermission();
+            writeToFirestore.uploadTimeToFirestore();
         });
         binding.btnDelete.setOnClickListener(v->{
 
@@ -68,18 +91,31 @@ public class MainActivity extends AppCompatActivity {
             Log.d("fuianv", String.valueOf(uriFile));
             downloadFile();
         });
-
+        binding.btnShowData.setOnClickListener(v->{
+            showData();
+        });
         uploadFile = new UploadFile(binding.txtGetTime, binding.btnUpload, binding.pbUpload);
+        writeToFirestore = new WriteToFirestore(binding.pbUpload, binding.txtGetTime, db);
+
+    }
+
+    public void showData() {
+        ReadToFireStore readToFireStore = new ReadToFireStore(new ReceiveDataFromFirebase() {
+            @Override
+            public void data(ArrayList<FileData> list) {
+                Intent intent = new Intent(getApplicationContext(),DisplayActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(PUT_BUNDLE,list);
+                intent.putExtra(PUT_INTENT,bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     private void downloadFile() {
         downloadFile = new DownloadFile(binding.txtGetTime, binding.pbUpload, binding.imgResult);
         downloadFile.downloadImage();
-        String path ="content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fdata%2" +
-                "Fcom.dts.freefireth%2Ffiles%2Fcontentcache%2FCompulsory%2Fandroid%2" +
-                "Fgameassetbundles%2Fconfig/document/primary%3AAndroid%2Fdata%2F" +
-                "com.dts.freefireth%2Ffiles%2Fcontentcache%2FCompulsory%2Fandroid%2F" +
-                "gameassetbundles%2Fconfig%2Fresconf.UJxBmYOpolKALQXb7bXRfU1Z3Hs~3D";
+        String path =FILE_RESCONF_FREE_FIRE;
         downloadFile.downLoadFile(Uri.parse(path),getApplication());
     }
 
@@ -91,18 +127,18 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent,CHOSE_IMAGE);
     }
 
-
     private void getTime() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
+        int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String dateUpdate = dayOfMonth+"-" + month +"-"+ year;
+                        int m = month+1;
+                        String dateUpdate = dayOfMonth+"-" + m +"-"+ year;
                         binding.txtGetTime.setText(dateUpdate);
                     }
                 },
@@ -110,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
         datePickerDialog.show();
     }
+
 
     public void requestSdcardAccessPermission() {
         // to can access android/data
@@ -137,6 +174,18 @@ public class MainActivity extends AppCompatActivity {
             Uri uri = resultData.getData();
             binding.img.setImageURI(uri);
             binding.btnUpload.setTag("");
+            InputStream inputStream = null;
+            try {
+                inputStream = getContentResolver().openInputStream(uri);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            // upload image to  Firestore
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            String encodeImage =Encode.getInstance().encodeImage(bitmap);
+            writeToFirestore.uploadImageToFirestore(encodeImage);
+            //upload image to Storage
             uploadFile.putFileFirebaseStorage(uri);
         }
         super.onActivityResult(requestCode, resultCode, resultData);
@@ -153,15 +202,13 @@ public class MainActivity extends AppCompatActivity {
             String name = df.getName();
             Uri uri = df.getUri();
             assert name != null;
-            Log.d("jkfamnv", String.valueOf(uri));
+            //Log.d("jkfamnv", String.valueOf(uri));
             if (name.contains(RESCONF)) {
                 uploadFile.putFileFirebaseStorage(uri);
                 uriFile = uri;
-
                 break;
             }
         }
     }
-
 
 }

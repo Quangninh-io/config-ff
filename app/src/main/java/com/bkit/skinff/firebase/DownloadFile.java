@@ -1,7 +1,7 @@
 package com.bkit.skinff.firebase;
 
-import static com.bkit.skinff.utilities.AssessStorage.NAME_IMAGE;
-import static com.bkit.skinff.utilities.AssessStorage.RESCONF;
+import static com.bkit.skinff.utilities.Constants.NAME_IMAGE;
+import static com.bkit.skinff.utilities.Constants.RESCONF;
 
 import android.content.Context;
 import android.graphics.Bitmap;

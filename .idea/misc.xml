@@ -4,6 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/bkit/SkinFF/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_button_transform.xml" value="0.156" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_button_transfrom_white.xml" value="0.156" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_new.xml" value="0.156" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_display.xml" value="0.25416666666666665" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user.xml" value="0.176" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_welcome.xml" value="0.25416666666666665" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/item_admin.xml" value="0.2" />
       </map>
     </option>
   </component>

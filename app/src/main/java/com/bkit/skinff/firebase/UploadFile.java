@@ -1,16 +1,13 @@
 package com.bkit.skinff.firebase;
 
-import static com.bkit.skinff.utilities.AssessStorage.BUTTON_TAG;
-import static com.bkit.skinff.utilities.AssessStorage.NAME_IMAGE;
-import static com.bkit.skinff.utilities.AssessStorage.RESCONF;
+import static com.bkit.skinff.utilities.Constants.BUTTON_TAG;
+import static com.bkit.skinff.utilities.Constants.NAME_IMAGE;
+import static com.bkit.skinff.utilities.Constants.RESCONF;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 

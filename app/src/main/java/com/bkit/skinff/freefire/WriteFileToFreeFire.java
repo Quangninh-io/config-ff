@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class WriteFileToFreeFire {
+
+
     private static WriteFileToFreeFire instance;
     public static WriteFileToFreeFire getInstance(){
         if(instance==null){

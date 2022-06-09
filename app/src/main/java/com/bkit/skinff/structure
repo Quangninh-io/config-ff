@@ -1,0 +1,13 @@
+
+click upload file
+- put file store -> structures of folder: date of month/resconf.Ub......
+- put date of month to Firestore -> structures of folder: 1/time
+
+click upload image
+
+- put file store -> structures of folder: date of month/image( for admin checking upload succeeded or unsuccessful)
+- put file to Firestore -> structures of folder: 1/image -> covert image to base 64
+
+side user
+
+- click image, image will for we know, user click what time, app know information of time, handle download corresponding file

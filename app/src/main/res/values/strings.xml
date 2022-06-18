@@ -1,4 +1,35 @@
 <resources>
     <string name="app_name">skin ff</string>
     <string name="new_status">new</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="xong">Xong</string>
+    <string name="appname">Config FF</string>
+    <string name="outfit">Trang phục</string>
+    <string name="weapon">Súng</string>
+    <string name="package_new">Các gói mới ra mắt</string>
+    <string name="delete">Xóa</string>
+    <string name="dowload">Tải xuống</string>
+    <string name="check_download">Kiểm tra tải xuống</string>
+    <string name="date_of_month">10-10-1010</string>
+    <string name="btn_date">Chọn ngày</string>
+    <string name="name_package">Bui Quang Ninh</string>
+    <string name="btn_upload_file">upload to storage</string>
+    <string name="btn_choose_image">chọn ảnh</string>
+    <string name="btn_show_data">show data</string>
+    <string name="preview">preview</string>
+    <string name="name">ten dang nhap</string>
+    <string name="password">Mat khau</string>
+    <string name="login">Login</string>
+    <string name="content_des">Đảm bảo rằng bạn đã tải xuống tất cả các gói trong trung tâm tải xuống</string>
+    <string name="submit">fafda</string>
+    <string name="delete_skin">Xóa skin</string>
+    <string name="description">Hiệu ứng súng và trang phục chỉ thấy được ở phía người dùng, người khác sẽ không thấy được. Nhấn kích hoạt, skin sẽ được cài vào máy, nếu muốn xóa skin hãy nhấn xóa skin</string>
+    <string name="active">Kích hoạt</string>
+    <string name="status">activated</string>
+    <string name="des">Chọn skin bằng cách nhấn vào gói bạn muốn chọn \n Xóa skin bằng cách nhấn vào nút \'xóa skin\' hiển thị trên màn hình</string>
+    <string name="upload_to_firestore">upload_to_firestore</string>
+    <string name="link_image">link image</string>
+    <string name="get_link_image">lấy đường dẫn ảnh</string>
+    <string name="update_file_root">Cập nhập lại file gốc</string>
 </resources>

@@ -14,47 +14,41 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bkit.skinff.freefire.WriteFileToFreeFire;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.concurrent.atomic.DoubleAccumulator;
+
 public class DownloadFile {
-    private TextView txtGetTime;
-    private ProgressBar pbUpload;
-    private ImageView imgResult;
-    public DownloadFile(TextView txtGetTime, ProgressBar pbUpload, ImageView imgResult) {
-        this.txtGetTime = txtGetTime;
-        this.pbUpload = pbUpload;
-        this.imgResult = imgResult;
+
+    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    StorageReference storageReference = firebaseStorage.getReference();
+
+    private static DownloadFile instance;
+
+    public static DownloadFile getInstance(){
+        if(instance==null){
+            return new DownloadFile();
+        }
+        return instance;
     }
 
-    public void downloadImage() {
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference();
-        String date = txtGetTime.getText().toString().trim();
-        StorageReference imgRef = storageReference.child(date+"/"+NAME_IMAGE);
-        final long ONE_MEGABYTE = 1024 * 1024;
-        imgRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-            imgResult.setImageBitmap(bitmap);
-        }).addOnFailureListener(e -> {
-            Log.d("Fail something", "fail");
-        });
-    }
-
-    public void downLoadFile(Uri uri, Context context){
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference();
-        String date = txtGetTime.getText().toString().trim();
-        StorageReference imgRef = storageReference.child(date+"/"+RESCONF);
+    public void downLoadFile(ProgressBar pb, String time,Uri uri, Context context, String model, String getType,String type){
+        String uriLocal = model+"/"+getType+"/"+time;
+        StorageReference imgRef = storageReference.child(uriLocal+"/"+type);
         final long ONE_MEGABYTE = 3000000;
-        pbUpload.setVisibility(View.VISIBLE);
+
+        pb.setVisibility(View.VISIBLE);
         imgRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
-            pbUpload.setVisibility(View.INVISIBLE);
+            pb.setVisibility(View.INVISIBLE);
             WriteFileToFreeFire.getInstance().writeFile(uri, context, bytes);
             Log.d("byte", String.valueOf(bytes));
         }).addOnFailureListener(e -> {
-            pbUpload.setVisibility(View.INVISIBLE);
+            pb.setVisibility(View.INVISIBLE);
             Log.d("Fail something", "fail");
         });
     }
+
+
 }

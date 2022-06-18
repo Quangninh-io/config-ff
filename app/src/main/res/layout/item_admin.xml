@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cv_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_5sdp"
-    app:cardElevation="@dimen/_5sdp"
-    android:layout_margin="@dimen/_5sdp">
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_10sdp"
+    android:clickable="true"
+    android:elevation="@dimen/_10sdp"
+    android:padding="@dimen/_10sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,57 +17,75 @@
         android:padding="@dimen/_10sdp">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/iv_admin"
-            android:layout_width="@dimen/_160sdp"
+            android:id="@+id/iv_package"
+            android:layout_width="@dimen/_180sdp"
             android:layout_height="@dimen/_120sdp"
-            android:layout_marginStart="@dimen/_10sdp"
             android:scaleType="centerCrop"
-            android:src="@drawable/bird"
+            android:src="@drawable/image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius="@dimen/_20sdp" />
+            app:riv_corner_radius="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="@dimen/_110sdp"
+            android:layout_width="@dimen/_90sdp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:maxLines="3"
-            android:text="jfanfahkfakjhkfahkhkajkldfkjfahkfdjajhfakjfhkjaa"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:maxLines="4"
+            android:text="Bản cập nhập ngày 16-10"
             android:textColor="@color/text_color"
             android:textSize="@dimen/_15sdp"
-            app:layout_constraintStart_toEndOf="@+id/iv_admin"
+            app:layout_constraintStart_toEndOf="@id/iv_package"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_70sdp"
-            android:text="4-6-2022"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="16-10-2000"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_10sdp"
             android:textStyle="italic"
-            app:layout_constraintStart_toEndOf="@+id/iv_admin"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/iv_package"
+            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+        <TextView
+            android:id="@+id/tv_filename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/iv_package"
+            app:layout_constraintTop_toBottomOf="@id/tv_time"/>
 
         <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="@dimen/_30sdp"
+            android:id="@+id/tv_check_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Tên lưu trữ khác với tên cập nhập"
+            android:textSize="@dimen/_8sdp"
+            android:textColor="@color/white"
+            android:background="@color/warning"
+            android:padding="@dimen/_3sdp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_package"
+            app:layout_constraintStart_toStartOf="@id/iv_package"
+            app:layout_constraintEnd_toEndOf="@id/iv_package"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/tv_new"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/shape_new"
             android:gravity="center"
-            android:visibility="visible"
-            android:padding="@dimen/_2sdp"
             android:text="@string/new_status"
+            android:visibility="invisible"
             android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="@id/tv_time"
-            app:layout_constraintTop_toBottomOf="@id/tv_time" />
-
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintEnd_toEndOf="@id/iv_package"
+            app:layout_constraintTop_toTopOf="@id/iv_package" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

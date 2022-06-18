@@ -11,4 +11,7 @@
     <color name="new_status">#2039B8</color>
     <color name="button_transform">#360303</color>
     <color name="background">#837564</color>
+    <color name="primary_color">#030B36</color>
+    <color name="status_bar">#837564</color>
+    <color name="warning">#D80000</color>
 </resources>

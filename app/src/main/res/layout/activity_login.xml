@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LoginActivity"
+    android:padding="@dimen/_10sdp"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name_package"
+        android:textColor="@color/text_color"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        android:background="@drawable/shape_login"
+        android:padding="@dimen/_10sdp"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/tv_pas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_name" />
+
+    <EditText
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/et_pas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:textColor="@color/text_color"
+        app:layout_constraintTop_toBottomOf="@id/tv_pas"
+        android:background="@drawable/shape_login"
+        android:padding="@dimen/_10sdp"/>
+
+    <Button
+        android:id="@+id/bt_login"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/et_pas"
+        app:layout_constraintTop_toBottomOf="@id/et_pas" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

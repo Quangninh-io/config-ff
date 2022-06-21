@@ -50,7 +50,7 @@
         </RadioGroup>
 
         <Button
-            android:id="@+id/btn_choose_model"
+            android:id="@+id/bt_choose_model"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -8,9 +8,11 @@ import static com.bkit.skinff.utilities.Constants.KEY_MODEL;
 import static com.bkit.skinff.utilities.Constants.KEY_NAME;
 import static com.bkit.skinff.utilities.Constants.KEY_NAME_FILE;
 import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT;
+import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT_MAX;
 import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON;
+import static com.bkit.skinff.utilities.Constants.KEY_WEAPON_MAX;
 import static com.bkit.skinff.utilities.Constants.RESCONF;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,10 +34,10 @@ import java.util.ArrayList;
 public class AdminPreviewActivity extends AppCompatActivity {
 
     private ActivityAdminPreviewBinding binding;
-    AdminAdapter adapter;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String nameWeapon ="";
-    String nameOutfit = "";
+    private AdminAdapter adapter;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String nameWeapon="", nameOutfit = "", nameWeaponMax = "", nameOutfitMax ="";
+    DeleteFile delete = DeleteFile.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,17 +47,18 @@ public class AdminPreviewActivity extends AppCompatActivity {
         getDataFromFireStore();
 
     }
-
+    // get name from collection "name"
+    // target to compare name in collection "name" with name in collection "file"
     private void getNameCorrect() {
         db.collection(COLLECTION_NAME)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                           String weapon = String.valueOf(document.getData().get(KEY_WEAPON));
-                           String outfit = String.valueOf(document.getData().get(KEY_OUTFIT));
-                           nameWeapon = weapon;
-                           nameOutfit = outfit;
+                            nameWeapon = String.valueOf(document.getData().get(KEY_WEAPON));
+                            nameOutfit = String.valueOf(document.getData().get(KEY_OUTFIT));
+                            nameWeaponMax = String.valueOf(document.getData().get(KEY_WEAPON_MAX));
+                            nameOutfitMax = String.valueOf(document.getData().get(KEY_OUTFIT_MAX));
                         }
                     }
 
@@ -64,7 +67,10 @@ public class AdminPreviewActivity extends AppCompatActivity {
                     Log.d("error read file", "error");
                 });
     }
-
+    // get all data in collection "file"
+    // do check if any field wrong
+    // set adapter for recycle view
+    // delete data in firestore and storage
     private void getDataFromFireStore() {
         db.collection(COLLECTION)
                 .get()
@@ -80,18 +86,26 @@ public class AdminPreviewActivity extends AppCompatActivity {
                             String documentId = document.getId();
                             String nameFile = String.valueOf(document.getData().get(KEY_NAME_FILE));
                             boolean checkName = false;
-                            if(type.equals("outfit")){
-                                if(nameFile.equals(nameOutfit)){
-                                    checkName = true;
+                            if(model.equals("ff")){
+                                if(type.equals("outfit")){
+                                    if(nameFile.equals(nameOutfit)){
+                                        checkName = true;
+                                    }
+                                }else if(type.equals("gun")){
+                                    if(nameFile.equals(nameWeapon)){
+                                        checkName = true;
+                                    }
                                 }
-                                else{
-                                   checkName = false;
-                                }
-                            }else if(type.equals("gun")){
-                                if(nameFile.equals(nameWeapon)){
-                                    checkName = true;
-                                }else{
-                                    checkName = false;
+                            }
+                            if(model.equals("ffmax")){
+                                if(type.equals("outfit")){
+                                    if(nameFile.equals(nameOutfitMax)){
+                                        checkName = true;
+                                    }
+                                }else if(type.equals("gun")){
+                                    if(nameFile.equals(nameWeaponMax)){
+                                        checkName = true;
+                                    }
                                 }
                             }
                             fileData.add(new FileData(image, model, name, time, type, documentId,nameFile,checkName));
@@ -100,13 +114,13 @@ public class AdminPreviewActivity extends AppCompatActivity {
                     adapter = new AdminAdapter(fileData, new ClickToModify() {
                         @Override
                         public void modify(FileData fileData) {
-                            DeleteFile.getInstance().deleteFirestore(fileData.getDocumentId(), binding.pb);
-                            DeleteFile.getInstance().deleteStorage(fileData.getModel(), fileData.getType(), fileData.getTime(), KEY_IMAGE);
-                            DeleteFile.getInstance().deleteStorage(fileData.getModel(),fileData.getType(),fileData.getTime(),fileData.getNameFile());
+                            delete.deleteFirestore(fileData.getDocumentId(), binding.pb);
+                            delete.deleteStorage(fileData.getModel(), fileData.getType(), fileData.getTime(), KEY_IMAGE);
+                            delete.deleteStorage(fileData.getModel(),fileData.getType(),fileData.getTime(),fileData.getNameFile());
+
                         }
                     });
                     binding.rcvAdmin.setAdapter(adapter);
-
                 })
                 .addOnFailureListener(e -> {
                     Log.d("error read file", "error");

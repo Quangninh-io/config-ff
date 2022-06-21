@@ -6,14 +6,18 @@ import static com.bkit.skinff.utilities.Constants.CHOSE_IMAGE;
 
 import static com.bkit.skinff.utilities.Constants.CLOTHES;
 import static com.bkit.skinff.utilities.Constants.FILE_FREE_FIRE;
+import static com.bkit.skinff.utilities.Constants.FILE_FREE_FIRE_MAX;
 import static com.bkit.skinff.utilities.Constants.INITIAL_URI;
 import static com.bkit.skinff.utilities.Constants.KEY_IMAGE;
 import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT;
+import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT_MAX;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON;
+import static com.bkit.skinff.utilities.Constants.KEY_WEAPON_MAX;
 import static com.bkit.skinff.utilities.Constants.NAME_CLOTHES;
 import static com.bkit.skinff.utilities.Constants.NAME_RESCONF;
 import static com.bkit.skinff.utilities.Constants.OPEN_DOCUMENT_TREE;
 import static com.bkit.skinff.utilities.Constants.RESCONF;
+import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,29 +38,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.bkit.skinff.databinding.ActivityAdminBinding;
-
-import com.bkit.skinff.firebase.DeleteFile;
-import com.bkit.skinff.firebase.DownloadFile;
-
 import com.bkit.skinff.firebase.UploadStorage;
 import com.bkit.skinff.firebase.UploadFirestore;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AdminActivity extends AppCompatActivity {
 
 
     private ActivityAdminBinding binding;
-    Uri  uriImage;
+    Uri uriImage;
     String model = "";
     String type = "";
     String time = "";
@@ -64,6 +58,9 @@ public class AdminActivity extends AppCompatActivity {
     private RadioGroup rgFileName;
     private RadioButton rbFileName;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Map<String, Uri> fileDataChose = new HashMap<>();
+    UploadStorage storage = UploadStorage.getInstance();
+    UploadFirestore firestore = UploadFirestore.getInstance();
 
     @SuppressLint("SimpleDateFormat")
     @Override
@@ -72,55 +69,49 @@ public class AdminActivity extends AppCompatActivity {
         binding = ActivityAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initMain();
-
     }
-
+    // first initial
     private void initMain() {
-        binding.btnChooseImage.setOnClickListener(v -> {
+        binding.btChooseImage.setOnClickListener(v -> {
             choseImage();
         });
-
-        binding.btnTime.setOnClickListener(v -> {
+        binding.btTime.setOnClickListener(v -> {
             getTime();
         });
-
         binding.btnUploadFile.setOnClickListener(v -> {
             upload();
         });
-
         binding.btnChooseFile.setOnClickListener(v -> {
             chooseFile();
         });
-
         binding.btnUploadFirestore.setOnClickListener(v -> {
             uploadToFirestore();
         });
         binding.btnGetLinkImage.setOnClickListener(v -> {
             getLinkImage();
         });
-        //writeToFirestore = new UploadFirestore(binding.pbUpload, binding.txtGetTime, db,binding.etName);
         binding.btnPreview.setOnClickListener(v -> {
             showData();
         });
-        binding.btUpdateFileRoot.setOnClickListener(v->{
+        binding.btUpdateFileRoot.setOnClickListener(v -> {
             updateFileRoot();
         });
     }
 
-
-
+    // open activity preview
     public void showData() {
         Intent intent = new Intent(this, AdminPreviewActivity.class);
         startActivity(intent);
     }
-
+    // send request to gallery to able access to image, to get path image
     private void choseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, CHOSE_IMAGE);
     }
-
+    // handle time
+    // use time is parameter
     private void getTime() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -133,7 +124,7 @@ public class AdminActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         int m = month + 1;
                         String dateUpdate = dayOfMonth + "-" + m + "-" + year;
-                        binding.txtGetTime.setText(dateUpdate);
+                        binding.tvGetTime.setText(dateUpdate);
                     }
                 },
                 year, month, dayOfMonth);
@@ -141,17 +132,23 @@ public class AdminActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-
+    // send a request t device to can open archive dialo
     public void requestSdcardAccessPermission() {
         // to can access android/data
         Intent intent = new Intent(OPEN_DOCUMENT_TREE);
+        Uri parse = null;
+        if (model.equals("ff")) {
+            parse = Uri.parse(FILE_FREE_FIRE);
+        }
+        if (model.equals("ffmax")) {
+            parse = Uri.parse(FILE_FREE_FIRE_MAX);
+        }
         // will be access first when opening storage
-        Uri parse = Uri.parse(FILE_FREE_FIRE);
         intent.putExtra(INITIAL_URI,
                 DocumentsContract.buildDocumentUriUsingTree(parse, DocumentsContract.getTreeDocumentId(parse)));
         startActivityForResult(intent, CHOSE_FILE);
     }
-
+    // receive result is path to file free fire and uri image
     @SuppressLint("WrongConstant")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
@@ -166,51 +163,34 @@ public class AdminActivity extends AppCompatActivity {
         if (requestCode == CHOSE_IMAGE && resultCode == Activity.RESULT_OK) {
             assert resultData != null;
             Uri uri = resultData.getData();
-            binding.imgPreview.setImageURI(uri);
+            binding.ivPreview.setImageURI(uri);
             binding.btnUploadFile.setTag("");
             uriImage = uri;
-            //upload image to Storage
-
-            //UploadStorage.getInstance().putFileFirebaseStorage(uri,binding.);
-            //uploadFile.putFileFirebaseStorage(uri);
         }
         super.onActivityResult(requestCode, resultCode, resultData);
     }
 
-    Map<String,Uri> fileDataChose = new HashMap<>();
 
-    // upload file to storage
+    // get uri from device
+    // save result as type Hashmap (String, uri) , with key is name file and value is path
     private void getUriFile(Uri treeUri) {
         getContentResolver().takePersistableUriPermission(treeUri,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         DocumentFile pickedDir = DocumentFile.fromTreeUri(getApplicationContext(), treeUri);
         assert pickedDir != null;
         DocumentFile[] ddff = pickedDir.listFiles();
-        if (type.equals("gun")) {
-            nameFileChoose = RESCONF;
-        } else if (type.equals("outfit")) {
-            nameFileChoose = CLOTHES;
-        }
         for (DocumentFile df : ddff) {
             String name = df.getName();
             Uri uri = df.getUri();
             assert name != null;
-            //Log.d("jkfamnv", String.valueOf(uri));
             Log.d("fjalir", type);
             if (type.equals("gun")) {
                 if (name.contains(NAME_RESCONF)) {
-                    //uploadFile.putFileFirebaseStorage(uri);
-                    fileDataChose.put(name,uri);
-//                    binding.tvNameFileChose.setText(name);
-//                    uriWeapon = uri;
-//                    Log.d("fakdaur", String.valueOf(uri));
+                    fileDataChose.put(name, uri);
                 }
             } else if (type.equals("outfit")) {
                 if (name.contains(NAME_CLOTHES)) {
-                    fileDataChose.put(name,uri);
-//                    binding.tvNameFileChose.setText(name);
-//                    Log.d("fakdaur", String.valueOf(uri));
-//                    uriOufit = uri;
+                    fileDataChose.put(name, uri);
                 }
             }
         }
@@ -218,17 +198,19 @@ public class AdminActivity extends AppCompatActivity {
 
     }
 
+    // create radio button, numbers button equal corresponding number file
+    // at he same time update name of file
     private void createRadioButtonToChooseFileName() {
         rgFileName = new RadioGroup(this);
         rgFileName.setOrientation(LinearLayout.VERTICAL);
         rgFileName.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         RadioGroup.LayoutParams layoutParams;
 
-        for(String namerb: fileDataChose.keySet()){
+        for (String namerb : fileDataChose.keySet()) {
             rbFileName = new RadioButton(this);
             rbFileName.setText(namerb);
-            layoutParams = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT);
-            rgFileName.addView(rbFileName,layoutParams);
+            layoutParams = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT, RadioGroup.LayoutParams.MATCH_PARENT);
+            rgFileName.addView(rbFileName, layoutParams);
         }
         binding.llRadioGroup.addView(rgFileName);
         rgFileName.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -237,44 +219,53 @@ public class AdminActivity extends AppCompatActivity {
                 RadioButton checkButton = rgFileName.findViewById(checkedId);
                 String name = checkButton.getText().toString();
                 binding.tvNameFileChose.setText(name);
-                if(name.contains(NAME_CLOTHES)){
-                    UploadFirestore.getInstance().updateName(KEY_OUTFIT,name,binding.pbUpload);
-                }else if(name.contains(NAME_RESCONF)){
-                    UploadFirestore.getInstance().updateName(KEY_WEAPON,name,binding.pbUpload);
+                if (name.contains(NAME_CLOTHES)) {
+                    if (model.equals("ff")) {
+                        firestore.updateName(KEY_OUTFIT, name, binding.pbUpload);
+                    }
+                    if (model.equals("ffmax")) {
+                        firestore.updateName(KEY_OUTFIT_MAX, name, binding.pbUpload);
+                    }
+                } else if (name.contains(NAME_RESCONF)) {
+                    if (model.equals("ff")) {
+                        firestore.updateName(KEY_WEAPON, name, binding.pbUpload);
+                    }
+                    if (model.equals("ffmax")) {
+                        firestore.updateName(KEY_WEAPON_MAX, name, binding.pbUpload);
+                    }
                 }
             }
         });
     }
-
+    // upload data to storage
+    // upload file config game
+    // uploaf file image
     private void upload() {
-        time = binding.txtGetTime.getText().toString().trim();
-        UploadStorage.getInstance().putFileFirebaseStorage(uriImage, model, type, time, binding.pbUpload, KEY_IMAGE);
+        time = binding.tvGetTime.getText().toString().trim();
+        storage.putFileFirebaseStorage(uriImage, model, type, time, binding.pbUpload, KEY_IMAGE);
         String name = binding.tvNameFileChose.getText().toString().trim();
         Uri uri = fileDataChose.get(name);
-        UploadStorage.getInstance().putFileFirebaseStorage(uri, model, type, time, binding.pbUpload, name);
-//        if (type.equals("gun")) {
-//            UploadStorage.getInstance().putFileFirebaseStorage(uriWeapon, model, type, time, binding.pbUpload, binding.tvNameFileChose.getText().toString().trim());
-//        } else if (type.equals("outfit")) {
-//            UploadStorage.getInstance().putFileFirebaseStorage(uriOufit, model, type, time, binding.pbUpload, binding.tvNameFileChose.getText().toString().trim());
-//        }
+        storage.putFileFirebaseStorage(uri, model, type, time, binding.pbUpload, name);
     }
+    // update file use to "delete skin"
     private void updateFileRoot() {
-        time = "3-12-2000";
+        time = TIME_DELETE;
         String name = binding.tvNameFileChose.getText().toString().trim();
         Uri uri = fileDataChose.get(name);
-        UploadStorage.getInstance().putFileFirebaseStorage(uri, model, type, time, binding.pbUpload, name);
+        storage.putFileFirebaseStorage(uri, model, type, time, binding.pbUpload, name);
     }
-
+    // get link image, image saved in storage
     private void getLinkImage() {
-        UploadStorage.getInstance().getUriImage(model, type, time, binding.tvLinkImage);
+        storage.getUriImage(model, type, time, binding.tvLinkImage);
     }
-
+    // upload data to firestore
+    // upload in collection "file"
     private void uploadToFirestore() {
         String name = binding.etName.getText().toString().trim();
         String linkImage = binding.tvLinkImage.getText().toString().trim();
-        UploadFirestore.getInstance().uploadToFirestore(model, name, time, type, binding.pbUpload, linkImage, binding.tvNameFileChose.getText().toString());
+        firestore.uploadToFirestore(model, name, time, type, binding.pbUpload, linkImage, binding.tvNameFileChose.getText().toString());
     }
-
+    // handle event click radio button
     private void chooseFile() {
         if (binding.rbFfmax.isChecked()) {
             model = "ffmax";

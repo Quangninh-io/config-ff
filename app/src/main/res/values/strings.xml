@@ -32,4 +32,6 @@
     <string name="link_image">link image</string>
     <string name="get_link_image">lấy đường dẫn ảnh</string>
     <string name="update_file_root">Cập nhập lại file gốc</string>
+    <string name="choose_model">Bạn chưa chọn phiên bản</string>
+    <string name="chose_model">Các bản mới ra mắt</string>
 </resources>

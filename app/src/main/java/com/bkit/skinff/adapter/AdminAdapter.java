@@ -1,5 +1,6 @@
 package com.bkit.skinff.adapter;
 
+import static com.bkit.skinff.utilities.Constants.ADMIN_REQUEST_DELETE;
 import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
 
 import android.annotation.SuppressLint;
@@ -51,13 +52,14 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
         holder.setData(list.get(position));
         holder.binding.getRoot().setOnClickListener(v->{
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setMessage("Ban co muon xoa hay ko")
+            builder.setMessage(ADMIN_REQUEST_DELETE)
                     .setTitle("Xoa");
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @SuppressLint("NotifyDataSetChanged")
                 public void onClick(DialogInterface dialog, int id) {
                     clickToDownload.modify(list.get(position));
-                    notifyDataSetChanged();
+                    list.remove(position);
+                    notifyItemRemoved(position);
                 }
             });
             builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {

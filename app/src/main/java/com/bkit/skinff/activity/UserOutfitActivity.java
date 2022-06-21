@@ -1,9 +1,9 @@
 package com.bkit.skinff.activity;
 
-import static com.bkit.skinff.utilities.Constants.CLOTHES;
 import static com.bkit.skinff.utilities.Constants.COLLECTION;
 import static com.bkit.skinff.utilities.Constants.INTENT_DETAIL;
 import static com.bkit.skinff.utilities.Constants.INTENT_MODEL;
+import static com.bkit.skinff.utilities.Constants.INTENT_CHOSE_MODEL;
 import static com.bkit.skinff.utilities.Constants.INTENT_NAME;
 import static com.bkit.skinff.utilities.Constants.INTENT_OUTFIT;
 import static com.bkit.skinff.utilities.Constants.INTENT_WEAPON;
@@ -14,7 +14,7 @@ import static com.bkit.skinff.utilities.Constants.KEY_NAME_FILE;
 import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
-import static com.bkit.skinff.utilities.Constants.RESCONF;
+import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.bkit.skinff.adapter.UserAdapter;
 import com.bkit.skinff.databinding.ActivityUserWeaponBinding;
 import com.bkit.skinff.firebase.DownloadFile;
@@ -49,6 +50,8 @@ public class UserOutfitActivity extends AppCompatActivity {
     UserAdapter adapter;
     Uri uriOutfit, uriWeapon;
     Name name;
+    String decideChoseModel = "";
+    DownloadFile downloadFile = DownloadFile.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,20 +62,24 @@ public class UserOutfitActivity extends AppCompatActivity {
 
     private void initMain() {
         String result = getIntent().getStringExtra(INTENT_MODEL);
-        binding.fbDelete.setOnClickListener(v->{
-                String time = "3-12-2000";
-                DownloadFile.getInstance().downLoadFile(binding.pbDownload,time,uriWeapon,this,result,"gun",name.getWeapon());
-                DownloadFile.getInstance().downLoadFile(binding.pbDownload,time,uriOutfit,this,result,"outfit",name.getWeapon());
+        binding.fbDelete.setOnClickListener(v -> {
+            if(decideChoseModel.equals("ff")){
+                downloadFile.downLoadFile(binding.pbDownload, TIME_DELETE, uriWeapon, this, result, "outfit", name.getOutfit());
+            }
+            if(decideChoseModel.equals("ffmax")){
+                downloadFile.downLoadFile(binding.pbDownload, TIME_DELETE, uriWeapon, this, result, "outfit", name.getOutfitMax());
+            }
 
         });
 
 
         uriOutfit = Uri.parse(getIntent().getStringExtra(INTENT_OUTFIT));
         uriWeapon = Uri.parse(getIntent().getStringExtra(INTENT_WEAPON));
+        decideChoseModel = getIntent().getStringExtra(INTENT_CHOSE_MODEL);
         name = (Name) getIntent().getSerializableExtra(INTENT_NAME);
         db.collection(COLLECTION)
-                .whereEqualTo("model",result)
-                .whereEqualTo("type","outfit")
+                .whereEqualTo("model", result)
+                .whereEqualTo("type", "outfit")
                 .get()
                 .addOnCompleteListener(task -> {
                     ArrayList<FileData> fileData = new ArrayList<>();
@@ -85,14 +92,14 @@ public class UserOutfitActivity extends AppCompatActivity {
                             String type = String.valueOf(document.getData().get(KEY_TYPE));
                             String documentId = document.getId();
                             String nameFile = String.valueOf(document.getData().get(KEY_NAME_FILE));
-                            fileData.add(new FileData(image,model,name,time,type,documentId,nameFile));
+                            fileData.add(new FileData(image, model, name, time, type, documentId, nameFile));
                         }
                         uploadRecycleView(fileData);
                     }
                     //receiveDataFromFirebase.data(fileData);
                 })
                 .addOnFailureListener(e -> {
-                    Log.d("error read file","error");
+                    Log.d("error read file", "error");
                 });
 
     }
@@ -103,13 +110,13 @@ public class UserOutfitActivity extends AppCompatActivity {
         Instant before = now.minus(Duration.ofDays(LIMITED_DATE_SET_NEW));
         Date dateBefore = Date.from(before);
         String thirtyDayAgo = simpleDateFormat.format(dateBefore);
-        for (FileData fileData:list){
+        for (FileData fileData : list) {
             Log.d("time", thirtyDayAgo);
             try {
                 Date dateInFirebase = simpleDateFormat.parse(fileData.getTime());
                 Date dateInReality = simpleDateFormat.parse(thirtyDayAgo);
                 assert dateInFirebase != null;
-                if(dateInFirebase.compareTo(dateInReality)>0){
+                if (dateInFirebase.compareTo(dateInReality) > 0) {
                     display.add(fileData);
                 }
             } catch (ParseException e) {
@@ -120,11 +127,12 @@ public class UserOutfitActivity extends AppCompatActivity {
         adapter = new UserAdapter(display, getApplicationContext(), new ClickSpecificItem() {
             @Override
             public void click(FileData fileData) {
-                Intent intent = new Intent(getApplication(),UserDetailActivity.class);
-                intent.putExtra(INTENT_WEAPON,String.valueOf(uriWeapon));
-                intent.putExtra(INTENT_OUTFIT,String.valueOf(uriOutfit));
-                intent.putExtra(INTENT_DETAIL,fileData);
-                intent.putExtra(INTENT_NAME,name);
+                Intent intent = new Intent(getApplication(), UserDetailActivity.class);
+                intent.putExtra(INTENT_WEAPON, String.valueOf(uriWeapon));
+                intent.putExtra(INTENT_OUTFIT, String.valueOf(uriOutfit));
+                intent.putExtra(INTENT_DETAIL, fileData);
+                intent.putExtra(INTENT_CHOSE_MODEL, decideChoseModel);
+                intent.putExtra(INTENT_NAME, name);
                 startActivity(intent);
             }
         });

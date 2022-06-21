@@ -2,6 +2,7 @@ package com.bkit.skinff.firebase;
 
 import static com.bkit.skinff.utilities.Constants.COLLECTION;
 import static com.bkit.skinff.utilities.Constants.COLLECTION_NAME;
+import static com.bkit.skinff.utilities.Constants.DOCUMENT_PATH;
 import static com.bkit.skinff.utilities.Constants.KEY_IMAGE;
 import static com.bkit.skinff.utilities.Constants.KEY_MODEL;
 import static com.bkit.skinff.utilities.Constants.KEY_NAME;
@@ -66,7 +67,7 @@ public class UploadFirestore {
         fileData.put(type,weapon);
         pbUpload.setVisibility(View.VISIBLE);
         db.collection(COLLECTION_NAME)
-                .document("name")
+                .document(DOCUMENT_PATH)
                 .update(fileData)
                 .addOnSuccessListener(documentReference -> {
                     pbUpload.setVisibility(View.INVISIBLE);

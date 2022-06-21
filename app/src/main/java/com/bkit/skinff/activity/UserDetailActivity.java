@@ -1,6 +1,7 @@
 package com.bkit.skinff.activity;
 
 import static com.bkit.skinff.utilities.Constants.CLOTHES;
+import static com.bkit.skinff.utilities.Constants.INTENT_CHOSE_MODEL;
 import static com.bkit.skinff.utilities.Constants.INTENT_DETAIL;
 import static com.bkit.skinff.utilities.Constants.INTENT_NAME;
 import static com.bkit.skinff.utilities.Constants.INTENT_OUTFIT;
@@ -9,14 +10,21 @@ import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
 import static com.bkit.skinff.utilities.Constants.RESCONF;
 import static com.bkit.skinff.utilities.Constants.STATUS_ACTIVE;
 import static com.bkit.skinff.utilities.Constants.STATUS_INACTIVE;
+import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
 
+import com.bkit.skinff.R;
 import com.bkit.skinff.databinding.ActivityUserDetailBinding;
 import com.bkit.skinff.firebase.DownloadFile;
 import com.bkit.skinff.model.FileData;
@@ -25,6 +33,7 @@ import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -39,6 +48,7 @@ public class UserDetailActivity extends AppCompatActivity {
     FileData fileData;
     Uri uriWeapon, uriOutfit;
     Name name;
+    String decideChoseModel = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +60,6 @@ public class UserDetailActivity extends AppCompatActivity {
         initMain();
 
     }
-
 
 
     private void initMain() {
@@ -66,9 +75,9 @@ public class UserDetailActivity extends AppCompatActivity {
         try {
             Date dateInFirebase = simpleDateFormat.parse(fileData.getTime());
             Date dateInReality = simpleDateFormat.parse(thirtyDayAgo);
-            if(dateInFirebase.compareTo(dateInReality)>0){
+            if (dateInFirebase.compareTo(dateInReality) > 0) {
                 binding.tvNew.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 binding.tvNew.setVisibility(View.INVISIBLE);
             }
 
@@ -76,68 +85,64 @@ public class UserDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-        binding.btActive.setOnClickListener(v->{
+        binding.btActive.setOnClickListener(v -> {
             handleClick();
         });
+
         binding.btActive.setTag(STATUS_INACTIVE);
     }
 
     private void handleClick() {
-        if(binding.btActive.getTag()==STATUS_INACTIVE){
+        if (binding.btActive.getTag() == STATUS_INACTIVE) {
             binding.btActive.setTag(STATUS_ACTIVE);
-            binding.btActive.setText("Chuyen toi free fire");
+            binding.btActive.setText("Đã kích hoạt");
             handleActive();
-
-        }else{
-            UserDetailActivity.this.startActivity(UserDetailActivity.this.getPackageManager().getLaunchIntentForPackage("com.dts.freefireth"));
-            //binding.btActive.setTag(STATUS_INACTIVE);
-            //binding.btActive.setText("Kích hoạt");
-            //handleDelete();
-
+        } else {
+            //UserDetailActivity.this.startActivity(UserDetailActivity.this.getPackageManager().getLaunchIntentForPackage("com.dts.freefireth"));
+            binding.btActive.setTag(STATUS_INACTIVE);
+            binding.btActive.setText("Kích hoạt");
+           // handleDelete();
         }
     }
 
     private void handleDelete() {
-        String time = "3-12-2000";
-        if(fileData.getModel().equals("ffmax")){
-            handleDelete("ffmax");
-        }else{
-            handleDelete("ff");
+        String time = TIME_DELETE;
+        if (fileData.getModel().equals("ffmax")) {
+            downLoadFile(uriWeapon, name.getWeaponMax(), time);
+            downLoadFile(uriOutfit, name.getOutfitMax(), time);
         }
-    }
-
-
-    private void handleDelete(String model){
-        String time = "3-12-2000";
-        DownloadFile.getInstance().downLoadFile(binding.pbDowload,time,uriWeapon,this,model,"gun",name.getWeapon());
-        DownloadFile.getInstance().downLoadFile(binding.pbDowload,time,uriOutfit,this,model,"outfit",name.getOutfit());
+        if(fileData.getModel().equals("ff")){
+            downLoadFile(uriWeapon, name.getWeapon(), time);
+            downLoadFile(uriOutfit, name.getOutfit(), time);
+        }
     }
 
     private void handleActive() {
 
-        if(fileData.getModel().equals("ffmax")){
-            if(fileData.getType().equals("gun")){
-                downLoadFile(uriWeapon,name.getWeapon(),fileData.getTime());
-            }else{
-                downLoadFile(uriOutfit,name.getOutfit(),fileData.getTime());
+        if (fileData.getModel().equals("ffmax")) {
+            if (fileData.getType().equals("gun")) {
+                downLoadFile(uriWeapon, name.getWeaponMax(), fileData.getTime());
+            } else {
+                downLoadFile(uriOutfit, name.getOutfitMax(), fileData.getTime());
             }
-        }else{
-            if(fileData.getType().equals("gun")){
-                downLoadFile(uriWeapon,name.getWeapon(),fileData.getTime());
-            }else{
-                downLoadFile(uriOutfit,name.getOutfit(),fileData.getTime());
+        } else {
+            if (fileData.getType().equals("gun")) {
+                downLoadFile(uriWeapon, name.getWeapon(), fileData.getTime());
+            } else {
+                downLoadFile(uriOutfit, name.getOutfit(), fileData.getTime());
             }
         }
 
     }
+
     private void requestSdcardAccessPermission() {
+        decideChoseModel = getIntent().getStringExtra(INTENT_CHOSE_MODEL);
         uriWeapon = Uri.parse(getIntent().getStringExtra(INTENT_WEAPON));
         uriOutfit = Uri.parse(getIntent().getStringExtra(INTENT_OUTFIT));
         name = (Name) getIntent().getSerializableExtra(INTENT_NAME);
     }
 
-    private void downLoadFile(Uri uri,String type,String time){
-        DownloadFile.getInstance().downLoadFile(binding.pbDowload,time,uri,this,fileData.getModel(),fileData.getType(),type);
+    private void downLoadFile(Uri uri, String nameFile, String time) {
+        DownloadFile.getInstance().downLoadFile(binding.pbDowload, time, uri, this, fileData.getModel(), fileData.getType(), nameFile);
     }
 }

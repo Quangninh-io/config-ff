@@ -2,6 +2,7 @@ package com.bkit.skinff.activity;
 
 import static com.bkit.skinff.utilities.Constants.CLOTHES;
 import static com.bkit.skinff.utilities.Constants.COLLECTION;
+import static com.bkit.skinff.utilities.Constants.INTENT_CHOSE_MODEL;
 import static com.bkit.skinff.utilities.Constants.INTENT_DETAIL;
 import static com.bkit.skinff.utilities.Constants.INTENT_MODEL;
 import static com.bkit.skinff.utilities.Constants.INTENT_NAME;
@@ -15,6 +16,7 @@ import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
 import static com.bkit.skinff.utilities.Constants.RESCONF;
+import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,11 +45,13 @@ import java.util.List;
 public class UserWeaponActivity extends AppCompatActivity {
 
     private ActivityUserWeaponBinding binding;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    UserAdapter adapter;
-    Uri uriWeapon, uriOutfit;
-    Name name;
+    private UserAdapter adapter;
+    private Uri uriWeapon, uriOutfit;
+    private Name name;
+    private String decideChoseModel = "";
+    DownloadFile downloadFile = DownloadFile.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,18 +62,21 @@ public class UserWeaponActivity extends AppCompatActivity {
 
     private void initMain() {
         String result = getIntent().getStringExtra(INTENT_MODEL);
-        binding.fbDelete.setOnClickListener(v->{
-            String time = "3-12-2000";
-            DownloadFile.getInstance().downLoadFile(binding.pbDownload,time,uriWeapon,this,result,"gun",name.getWeapon());
-            DownloadFile.getInstance().downLoadFile(binding.pbDownload,time,uriOutfit,this,result,"outfit",name.getOutfit());
-
+        binding.fbDelete.setOnClickListener(v -> {
+            if(decideChoseModel.equals("ff")){
+                downloadFile.downLoadFile(binding.pbDownload, TIME_DELETE, uriWeapon, this, result, "gun", name.getWeapon());
+            }
+            if(decideChoseModel.equals("ffmax")){
+                downloadFile.downLoadFile(binding.pbDownload, TIME_DELETE, uriWeapon, this, result, "gun", name.getWeaponMax());
+            }
         });
         uriWeapon = Uri.parse(getIntent().getStringExtra(INTENT_WEAPON));
         uriOutfit = Uri.parse(getIntent().getStringExtra(INTENT_OUTFIT));
+        decideChoseModel = getIntent().getStringExtra(INTENT_CHOSE_MODEL);
         name = (Name) getIntent().getSerializableExtra(INTENT_NAME);
         db.collection(COLLECTION)
-                .whereEqualTo("model",result)
-                .whereEqualTo("type","gun")
+                .whereEqualTo("model", result)
+                .whereEqualTo("type", "gun")
                 .get()
                 .addOnCompleteListener(task -> {
                     ArrayList<FileData> fileData = new ArrayList<>();
@@ -82,14 +89,14 @@ public class UserWeaponActivity extends AppCompatActivity {
                             String type = String.valueOf(document.getData().get(KEY_TYPE));
                             String documentId = document.getId();
                             String nameFile = String.valueOf(document.getData().get(KEY_NAME_FILE));
-                            fileData.add(new FileData(image,model,name,time,type,documentId,nameFile));
+                            fileData.add(new FileData(image, model, name, time, type, documentId, nameFile));
                         }
                         uploadRecycleView(fileData);
                     }
                     //receiveDataFromFirebase.data(fileData);
                 })
                 .addOnFailureListener(e -> {
-                    Log.d("error read file","error");
+                    Log.d("error read file", "error");
                 });
 
     }
@@ -100,13 +107,13 @@ public class UserWeaponActivity extends AppCompatActivity {
         Instant before = now.minus(Duration.ofDays(LIMITED_DATE_SET_NEW));
         Date dateBefore = Date.from(before);
         String thirtyDayAgo = simpleDateFormat.format(dateBefore);
-        for (FileData fileData:list){
+        for (FileData fileData : list) {
             Log.d("time", thirtyDayAgo);
             try {
                 Date dateInFirebase = simpleDateFormat.parse(fileData.getTime());
                 Date dateInReality = simpleDateFormat.parse(thirtyDayAgo);
                 assert dateInFirebase != null;
-                if(dateInFirebase.compareTo(dateInReality)>0){
+                if (dateInFirebase.compareTo(dateInReality) > 0) {
                     display.add(fileData);
                 }
             } catch (ParseException e) {
@@ -118,11 +125,12 @@ public class UserWeaponActivity extends AppCompatActivity {
         adapter = new UserAdapter(display, getApplicationContext(), new ClickSpecificItem() {
             @Override
             public void click(FileData fileData) {
-                Intent intent = new Intent(getApplication(),UserDetailActivity.class);
-                intent.putExtra(INTENT_WEAPON,String.valueOf(uriWeapon));
-                intent.putExtra(INTENT_OUTFIT,String.valueOf(uriOutfit));
-                intent.putExtra(INTENT_DETAIL,fileData);
-                intent.putExtra(INTENT_NAME,name);
+                Intent intent = new Intent(getApplication(), UserDetailActivity.class);
+                intent.putExtra(INTENT_WEAPON, String.valueOf(uriWeapon));
+                intent.putExtra(INTENT_OUTFIT, String.valueOf(uriOutfit));
+                intent.putExtra(INTENT_DETAIL, fileData);
+                intent.putExtra(INTENT_CHOSE_MODEL, decideChoseModel);
+                intent.putExtra(INTENT_NAME, name);
                 startActivity(intent);
             }
         });

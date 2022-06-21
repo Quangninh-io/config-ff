@@ -8,9 +8,9 @@
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/giv"
         android:layout_width="@dimen/_270sdp"
-        android:layout_height="@dimen/_170sdp"
-        android:layout_marginTop="@dimen/_100sdp"
-        android:src="@drawable/weapon"
+        android:layout_height="@dimen/_480sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/guide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,8 +18,8 @@
     <TextView
         android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:text="Chọn select để tiếp tục"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Chọn nút màu xanh để tiếp tục"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

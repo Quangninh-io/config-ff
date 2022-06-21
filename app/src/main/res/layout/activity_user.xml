@@ -54,13 +54,23 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_25sdp"
             android:background="@drawable/shape_button_transform" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_4"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:background="@drawable/shape_button_transform" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_success"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_15sdp"
         android:text="@string/xong"
         android:visibility="gone"

@@ -6,6 +6,7 @@
         <entry key="..\:/bkit/SkinFF/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.138" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/ic_launcher_background.xml" value="0.138" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_appbar.xml" value="0.136" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_background_detail.xml" value="0.163" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_button_choose_model.xml" value="0.138" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_button_inactive.xml" value="0.1" />
@@ -25,19 +26,20 @@
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_test.xml" value="0.25416666666666665" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user.xml" value="0.152" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user_detail.xml" value="0.264" />
-        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user_main.xml" value="0.264" />
-        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user_weapon.xml" value="0.536" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user_main.xml" value="0.176" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user_weapon.xml" value="0.152" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alert_choose_model.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alert_move_free_fire.xml" value="0.23822463768115942" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/dialog_admin.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_description.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_description_2.xml" value="0.136" />
-        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_description_3.xml" value="0.264" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_description_3.xml" value="0.176" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_desicription.xml" value="0.17844202898550723" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_welcome.xml" value="0.152" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/item_admin.xml" value="0.3660287081339713" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/item_user_main_adpater.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/item_weapon_adpater.xml" value="0.13360507246376813" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.124" />
       </map>
     </option>
   </component>

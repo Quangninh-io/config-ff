@@ -3,14 +3,12 @@ package com.bkit.skinff.freefire;
 import android.content.Context;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+// use to override data downloaded into com.dys.freefire
 public class WriteFileToFreeFire {
-
-
     private static WriteFileToFreeFire instance;
     public static WriteFileToFreeFire getInstance(){
         if(instance==null){
@@ -18,7 +16,7 @@ public class WriteFileToFreeFire {
         }
         return instance;
     }
-    //uri : storage location
+    // handle write by the way write bye array
     public void writeFile(Uri uri, Context context, byte[] bytes) {
         try {
             ParcelFileDescriptor pfd = context.getContentResolver().

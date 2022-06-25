@@ -10,11 +10,12 @@ import com.bkit.skinff.fragment.Description2Fragment;
 import com.bkit.skinff.fragment.Description3Fragment;
 import com.bkit.skinff.fragment.DescriptionFragment;
 import com.bkit.skinff.fragment.WelcomeFragment;
+// use for target when open app, user will tap desc about app and guide
+// include 4 fragments
+public class DescriptionAdapter extends FragmentStateAdapter {
 
-public class Viewpager2UserAdapter extends FragmentStateAdapter {
 
-
-    public Viewpager2UserAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public DescriptionAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 

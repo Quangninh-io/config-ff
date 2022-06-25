@@ -1,6 +1,5 @@
 package com.bkit.skinff.activity;
 
-import static com.bkit.skinff.utilities.Constants.CLOTHES;
 import static com.bkit.skinff.utilities.Constants.COLLECTION;
 import static com.bkit.skinff.utilities.Constants.INTENT_CHOSE_MODEL;
 import static com.bkit.skinff.utilities.Constants.INTENT_DETAIL;
@@ -15,43 +14,42 @@ import static com.bkit.skinff.utilities.Constants.KEY_NAME_FILE;
 import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
-import static com.bkit.skinff.utilities.Constants.RESCONF;
 import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.bkit.skinff.adapter.UserAdapter;
 import com.bkit.skinff.databinding.ActivityUserWeaponBinding;
 import com.bkit.skinff.firebase.DownloadFile;
 import com.bkit.skinff.listener.ClickSpecificItem;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
+import com.bkit.skinff.utilities.ArrangeTime;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 public class UserWeaponActivity extends AppCompatActivity {
 
     private ActivityUserWeaponBinding binding;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final DownloadFile downloadFile = DownloadFile.getInstance();
+    @SuppressLint("SimpleDateFormat")
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    private UserAdapter adapter;
-    private Uri uriWeapon, uriOutfit;
-    private Name name;
-    private String decideChoseModel = "";
-    DownloadFile downloadFile = DownloadFile.getInstance();
+    UserAdapter adapter;
+    Uri uriWeapon, uriOutfit;
+    Name name;
+    String decideChoseModel = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +57,12 @@ public class UserWeaponActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         initMain();
     }
-
+    // initial run activity
+    // catch event foe button delete, handle delete by the way override file initial of free fire saved in storage
+    // receive data from user main activity delivery by the way intent ( uri weapon, outfit, chose model, name file)
+    // proceed get data form firestore with collection is "file"
+    // with condition is what is model, type = weapon( because we handle in activity weapon)
+    // data received is data array, prepare to assign for adapter
     private void initMain() {
         String result = getIntent().getStringExtra(INTENT_MODEL);
         binding.fbDelete.setOnClickListener(v -> {
@@ -91,6 +94,8 @@ public class UserWeaponActivity extends AppCompatActivity {
                             String nameFile = String.valueOf(document.getData().get(KEY_NAME_FILE));
                             fileData.add(new FileData(image, model, name, time, type, documentId, nameFile));
                         }
+                        ArrangeTime arrangeTime = ArrangeTime.getInstance();
+                        Collections.sort(fileData, arrangeTime.comparator);
                         uploadRecycleView(fileData);
                     }
                     //receiveDataFromFirebase.data(fileData);
@@ -100,29 +105,11 @@ public class UserWeaponActivity extends AppCompatActivity {
                 });
 
     }
-
+    // calculated time now with time of packages, if package time less current time -30, set new and vice versa
+    // set data for adapter
+    // send data contain (uri, model file data, name file) for user detail activity
     private void uploadRecycleView(ArrayList<FileData> list) {
-        List<FileData> display = new ArrayList<>();
-        Instant now = Instant.now(); //current date
-        Instant before = now.minus(Duration.ofDays(LIMITED_DATE_SET_NEW));
-        Date dateBefore = Date.from(before);
-        String thirtyDayAgo = simpleDateFormat.format(dateBefore);
-        for (FileData fileData : list) {
-            Log.d("time", thirtyDayAgo);
-            try {
-                Date dateInFirebase = simpleDateFormat.parse(fileData.getTime());
-                Date dateInReality = simpleDateFormat.parse(thirtyDayAgo);
-                assert dateInFirebase != null;
-                if (dateInFirebase.compareTo(dateInReality) > 0) {
-                    display.add(fileData);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        Log.d("falfia", String.valueOf(display.size()));
-        binding.tvType.setText("Súng");
-        adapter = new UserAdapter(display, getApplicationContext(), new ClickSpecificItem() {
+        adapter = new UserAdapter(list, getApplicationContext(), new ClickSpecificItem() {
             @Override
             public void click(FileData fileData) {
                 Intent intent = new Intent(getApplication(), UserDetailActivity.class);

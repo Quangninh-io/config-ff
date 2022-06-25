@@ -19,7 +19,7 @@
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_package"
             android:layout_width="@dimen/_180sdp"
-            android:layout_height="@dimen/_120sdp"
+            android:layout_height="@dimen/_115sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/image"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,14 +28,15 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="@dimen/_90sdp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:maxLines="4"
             android:text="Bản cập nhập ngày 16-10"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_package"
             app:layout_constraintTop_toTopOf="parent" />
 

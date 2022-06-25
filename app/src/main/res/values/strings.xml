@@ -2,7 +2,6 @@
     <string name="app_name">skin ff</string>
     <string name="new_status">new</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="xong">Xong</string>
     <string name="appname">Config FF</string>
     <string name="outfit">Trang phục</string>
@@ -34,4 +33,8 @@
     <string name="update_file_root">Cập nhập lại file gốc</string>
     <string name="choose_model">Bạn chưa chọn phiên bản</string>
     <string name="chose_model">Các bản mới ra mắt</string>
+    <string name="delete_success">Bạn đã xóa thành công</string>
+    <string name="active_success">Bạn đã kích hoạt thành công</string>
+    <string name="admin_request_delete">Bạn có muốn xóa hay không</string>
+    <string name="des_3">Chọn nút màu xanh để tiếp tục</string>
 </resources>

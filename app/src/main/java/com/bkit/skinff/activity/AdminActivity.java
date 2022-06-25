@@ -3,20 +3,19 @@ package com.bkit.skinff.activity;
 import static com.bkit.skinff.utilities.Constants.BUTTON_TAG;
 import static com.bkit.skinff.utilities.Constants.CHOSE_FILE;
 import static com.bkit.skinff.utilities.Constants.CHOSE_IMAGE;
-
-import static com.bkit.skinff.utilities.Constants.CLOTHES;
 import static com.bkit.skinff.utilities.Constants.FILE_FREE_FIRE;
 import static com.bkit.skinff.utilities.Constants.FILE_FREE_FIRE_MAX;
 import static com.bkit.skinff.utilities.Constants.INITIAL_URI;
 import static com.bkit.skinff.utilities.Constants.KEY_IMAGE;
+import static com.bkit.skinff.utilities.Constants.KEY_MODEL;
 import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT;
 import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT_MAX;
+import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON_MAX;
 import static com.bkit.skinff.utilities.Constants.NAME_CLOTHES;
 import static com.bkit.skinff.utilities.Constants.NAME_RESCONF;
 import static com.bkit.skinff.utilities.Constants.OPEN_DOCUMENT_TREE;
-import static com.bkit.skinff.utilities.Constants.RESCONF;
 import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 
 import androidx.annotation.Nullable;
@@ -25,7 +24,9 @@ import androidx.documentfile.provider.DocumentFile;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,31 +37,26 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.bkit.skinff.R;
 import com.bkit.skinff.databinding.ActivityAdminBinding;
 import com.bkit.skinff.firebase.UploadStorage;
 import com.bkit.skinff.firebase.UploadFirestore;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AdminActivity extends AppCompatActivity {
-
-
     private ActivityAdminBinding binding;
+    private final Map<String, Uri> fileDataChose = new HashMap<>();
+    private final UploadStorage storage = UploadStorage.getInstance();
+    private final UploadFirestore firestore = UploadFirestore.getInstance();
     Uri uriImage;
-    String model = "";
-    String type = "";
-    String time = "";
-    String nameFileChoose = "";
-    private RadioGroup rgFileName;
-    private RadioButton rbFileName;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Map<String, Uri> fileDataChose = new HashMap<>();
-    UploadStorage storage = UploadStorage.getInstance();
-    UploadFirestore firestore = UploadFirestore.getInstance();
+    String model = "", type = "", time = "";
+    RadioGroup rgFileName;
+    RadioButton rbFileName;
 
     @SuppressLint("SimpleDateFormat")
     @Override
@@ -70,28 +66,52 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         initMain();
     }
+
+    boolean checkChooseImage, checkGetTime, checkChooseFile, checkUploadToStorage, checkGetLinkImage;
+
     // first initial
     private void initMain() {
         binding.btChooseImage.setOnClickListener(v -> {
             choseImage();
+            checkChooseImage = true;
         });
         binding.btTime.setOnClickListener(v -> {
+            checkGetTime = true;
             getTime();
         });
-        binding.btnUploadFile.setOnClickListener(v -> {
-            upload();
-        });
         binding.btnChooseFile.setOnClickListener(v -> {
+            checkChooseFile = true;
             chooseFile();
         });
+        binding.btnUploadFile.setOnClickListener(v -> {
+            if (checkChooseImage && checkChooseFile && checkGetTime) {
+                checkUploadToStorage = true;
+                upload();
+            } else {
+                Toast.makeText(this, "Vui lòng chọn các trường trên trước", Toast.LENGTH_SHORT).show();
+            }
+        });
         binding.btnUploadFirestore.setOnClickListener(v -> {
-            uploadToFirestore();
+            if (checkGetLinkImage) {
+                uploadToFirestore();
+            } else {
+                Toast.makeText(this, "Vui lòng chọn các trường trên trước", Toast.LENGTH_SHORT).show();
+            }
         });
         binding.btnGetLinkImage.setOnClickListener(v -> {
-            getLinkImage();
+            if (checkUploadToStorage) {
+                checkGetLinkImage = true;
+                getLinkImage();
+            } else {
+                Toast.makeText(this, "Vui lòng chọn các trường trên trước", Toast.LENGTH_SHORT).show();
+            }
         });
         binding.btnPreview.setOnClickListener(v -> {
-            showData();
+            if (!type.equals("") && !model.equals("")) {
+                showData();
+            }else{
+                Toast.makeText(this,"Chọn loại game và kiểu mod, rồi ấn chọn file",Toast.LENGTH_SHORT).show();
+            }
         });
         binding.btUpdateFileRoot.setOnClickListener(v -> {
             updateFileRoot();
@@ -99,19 +119,23 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     // open activity preview
-    public void showData() {
+    private void showData() {
         Intent intent = new Intent(this, AdminPreviewActivity.class);
+        intent.putExtra(KEY_TYPE, type);
+        intent.putExtra(KEY_MODEL, model);
         startActivity(intent);
     }
-    // send request to gallery to able access to image, to get path image
+
+    // send request to gallery to able access to get path image
     private void choseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, CHOSE_IMAGE);
     }
+
     // handle time
-    // use time is parameter
+    // use time to set name for folder in storage
     private void getTime() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -148,6 +172,7 @@ public class AdminActivity extends AppCompatActivity {
                 DocumentsContract.buildDocumentUriUsingTree(parse, DocumentsContract.getTreeDocumentId(parse)));
         startActivityForResult(intent, CHOSE_FILE);
     }
+
     // receive result is path to file free fire and uri image
     @SuppressLint("WrongConstant")
     @Override
@@ -237,34 +262,54 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
     }
+
     // upload data to storage
     // upload file config game
     // uploaf file image
     private void upload() {
         time = binding.tvGetTime.getText().toString().trim();
-        storage.putFileFirebaseStorage(uriImage, model, type, time, binding.pbUpload, KEY_IMAGE);
+        storage.putFileFirebaseStorage(this, uriImage, model, type, time, binding.pbUpload, KEY_IMAGE);
         String name = binding.tvNameFileChose.getText().toString().trim();
         Uri uri = fileDataChose.get(name);
-        storage.putFileFirebaseStorage(uri, model, type, time, binding.pbUpload, name);
+        storage.putFileFirebaseStorage(this, uri, model, type, time, binding.pbUpload, name);
     }
+
     // update file use to "delete skin"
     private void updateFileRoot() {
-        time = TIME_DELETE;
-        String name = binding.tvNameFileChose.getText().toString().trim();
-        Uri uri = fileDataChose.get(name);
-        storage.putFileFirebaseStorage(uri, model, type, time, binding.pbUpload, name);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.admin_request_delete)
+                .setTitle("Xoa");
+        builder.setPositiveButton("Bạn có chắc muốn cập nhập hay ko", new DialogInterface.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            public void onClick(DialogInterface dialog, int id) {
+                time = TIME_DELETE;
+                String name = binding.tvNameFileChose.getText().toString().trim();
+                Uri uri = fileDataChose.get(name);
+                storage.putFileFirebaseStorage(getApplication(), uri, model, type, time, binding.pbUpload, name);
+            }
+        });
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
     }
+
     // get link image, image saved in storage
     private void getLinkImage() {
         storage.getUriImage(model, type, time, binding.tvLinkImage);
     }
+
     // upload data to firestore
     // upload in collection "file"
     private void uploadToFirestore() {
         String name = binding.etName.getText().toString().trim();
         String linkImage = binding.tvLinkImage.getText().toString().trim();
-        firestore.uploadToFirestore(model, name, time, type, binding.pbUpload, linkImage, binding.tvNameFileChose.getText().toString());
+        firestore.uploadToFirestore(this, model, name, time, type, binding.pbUpload, linkImage, binding.tvNameFileChose.getText().toString());
     }
+
     // handle event click radio button
     private void chooseFile() {
         if (binding.rbFfmax.isChecked()) {
@@ -279,6 +324,10 @@ public class AdminActivity extends AppCompatActivity {
         if (binding.rbOutfit.isChecked()) {
             type = "outfit";
         }
-        requestSdcardAccessPermission();
+        if(!model.equals("") && !type.equals("")){
+            requestSdcardAccessPermission();
+        }else{
+            Toast.makeText(this, "Chọn loại game và kiểu mode trước", Toast.LENGTH_SHORT).show();
+        }
     }
 }

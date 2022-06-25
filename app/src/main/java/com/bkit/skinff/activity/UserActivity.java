@@ -19,7 +19,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.bkit.skinff.R;
-import com.bkit.skinff.adapter.Viewpager2UserAdapter;
+import com.bkit.skinff.adapter.DescriptionAdapter;
 import com.bkit.skinff.databinding.ActivityUserBinding;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
@@ -27,29 +27,26 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class UserActivity extends AppCompatActivity {
-
     private ActivityUserBinding binding;
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     Uri uriWeapon, uriOutfit;
     Name name = new Name();
     String nameWeapon, nameOutfit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         getName();
         getNameFile();
-        //getUri();
         initMain();
     }
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
+    // get name in firestore with name collection is "name"
+    // set total data to model Name
     private void getNameFile() {
         db.collection(COLLECTION_NAME)
                 .get()
@@ -73,8 +70,10 @@ public class UserActivity extends AppCompatActivity {
                 });
     }
 
+    // handle transform descriptions
+    // send model Name for another activity
     private void initMain() {
-        Viewpager2UserAdapter adapter = new Viewpager2UserAdapter(this);
+        DescriptionAdapter adapter = new DescriptionAdapter(this);
         binding.vp2User.setAdapter(adapter);
         binding.vp2User.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         // xu ly luong o day sau
@@ -85,11 +84,10 @@ public class UserActivity extends AppCompatActivity {
                 handleWelcome(position);
             }
         });
-
-        binding.tvSuccess.setOnClickListener(v->{
-            Intent intent = new Intent(getApplicationContext(),UserMainActivity.class);
-            intent.putExtra(INTENT_WEAPON,String.valueOf(uriWeapon));
-            intent.putExtra(INTENT_OUTFIT,String.valueOf(uriOutfit));
+        binding.tvSuccess.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), UserMainActivity.class);
+            intent.putExtra(INTENT_WEAPON, String.valueOf(uriWeapon));
+            intent.putExtra(INTENT_OUTFIT, String.valueOf(uriOutfit));
             intent.putExtra(INTENT_NAME, name);
             startActivity(intent);
             finish();
@@ -100,7 +98,7 @@ public class UserActivity extends AppCompatActivity {
 
     private void handleWelcome(int position) {
         setBackground();
-        switch (position){
+        switch (position) {
             case 0:
                 binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
                 break;
@@ -116,13 +114,15 @@ public class UserActivity extends AppCompatActivity {
                 break;
         }
     }
-    private void setBackground(){
+
+    private void setBackground() {
         binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transform));
         binding.iv2.setBackground(getResources().getDrawable(R.drawable.shape_button_transform));
         binding.iv3.setBackground(getResources().getDrawable(R.drawable.shape_button_transform));
         binding.iv4.setBackground(getResources().getDrawable(R.drawable.shape_button_transform));
     }
-    private void getName(){
+
+    private void getName() {
         db.collection(COLLECTION_NAME)
                 .get()
                 .addOnCompleteListener(task -> {

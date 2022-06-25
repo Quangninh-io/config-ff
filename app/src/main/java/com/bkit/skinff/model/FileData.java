@@ -28,7 +28,7 @@ public class FileData  implements Serializable {
         this.time = time;
         this.type = type;
         this.documentId = documentId;
-        nameFile = nameFile;
+        this.nameFile = nameFile;
     }
 
     public FileData(String image, String model, String name, String time, String type, String documentId, String nameFile, boolean checkName) {
@@ -50,7 +50,7 @@ public class FileData  implements Serializable {
     }
 
     public void setNameFile(String nameFile) {
-        nameFile = nameFile;
+        this.nameFile = nameFile;
     }
 
 

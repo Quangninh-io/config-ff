@@ -24,21 +24,21 @@ public class Constants {
     public static final String COLLECTION_NAME = "name";
     public static final String KEY_TIME = "time";
     public static final String KEY_TYPE = "type";
-    public static final String KEY_IMAGE = "image";
+    public static final String KEY_IMAGE = "image.png";
     public static final String KEY_MODEL = "model";
     public static final String KEY_NAME = "name";
     public static final String KEY_NAME_FILE = "namefile";
     public static final String KEY_OUTFIT = "outfit";
     public static final String KEY_CHOSE_MODEL = "chose model";
     public static final String KEY_WEAPON = "weapon";
+    public static final String KEY_LOGIN = "login";
+    public static final String STORAGE_WEAPON = "gun";
     public static final String KEY_WEAPON_SHAR = "weapon share preference";
     public static final String KEY_OUTFIT_SHAR = "outfit share preference";
     public static final String KEY_WEAPON_SHAR_MAX = "weapon share preference max";
     public static final String KEY_OUTFIT_SHAR_MAX = "outfit share preference max";
     public static final String KEY_OUTFIT_MAX = "outfitmax";
     public static final String KEY_WEAPON_MAX = "weaponmax";
-    public static final String LINK_IMAGE_DEFAULT = "https://firebasestorage.googleapis.com/v0/b/" +
-            "bkit-45368.appspot.com/o/image.png?alt=media&token=09d24323-b333-4b83-9385-aed45cc7405a";
     public static final int LIMITED_DATE_SET_NEW = 30;
     public static final String INTENT_DETAIL = "intent detail";
     public static final String STATUS_ACTIVE = "active";
@@ -49,11 +49,10 @@ public class Constants {
     public static final String KEY_PASSWORD = "password";
     public static final String COLLECTION_ADMIN = "admin";
     public static final String SHAREPRE = "share preference";
-    public static final String SHAREPREFILE = "share preference file";
-    public static final String CHECK = "check";
+    public static final String SHAREPREADMIN = "share preference check login admin";
+    public static final String SHAREPREFILE = "share preference corresponding model";
     public static final String DOCUMENT_PATH = "name";
+    public static final String TIME_DELETE = "3-12-2000";
     public static final String ACTIVE_SUCCESS = "Bạn đã kích hoạt thành công";
     public static final String DELETE_SUCCESS = "Bạn đã xóa thành công";
-    public static final String TIME_DELETE = "3-12-2000";
-    public static final String ADMIN_REQUEST_DELETE = "Bạn có muốn xóa hay không";
 }

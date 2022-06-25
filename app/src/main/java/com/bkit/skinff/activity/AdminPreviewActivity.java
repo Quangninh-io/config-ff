@@ -1,6 +1,5 @@
 package com.bkit.skinff.activity;
 
-import static com.bkit.skinff.utilities.Constants.CLOTHES;
 import static com.bkit.skinff.utilities.Constants.COLLECTION;
 import static com.bkit.skinff.utilities.Constants.COLLECTION_NAME;
 import static com.bkit.skinff.utilities.Constants.KEY_IMAGE;
@@ -13,43 +12,41 @@ import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON_MAX;
-import static com.bkit.skinff.utilities.Constants.RESCONF;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
-
 import com.bkit.skinff.adapter.AdminAdapter;
 import com.bkit.skinff.databinding.ActivityAdminPreviewBinding;
 import com.bkit.skinff.firebase.DeleteFile;
 import com.bkit.skinff.listener.ClickToModify;
 import com.bkit.skinff.model.FileData;
-import com.bkit.skinff.model.Name;
+import com.bkit.skinff.utilities.ArrangeTime;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AdminPreviewActivity extends AppCompatActivity {
-
     private ActivityAdminPreviewBinding binding;
     private AdminAdapter adapter;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String nameWeapon="", nameOutfit = "", nameWeaponMax = "", nameOutfitMax ="";
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String nameWeapon="", nameOutfit = "", nameWeaponMax = "", nameOutfitMax ="";
     DeleteFile delete = DeleteFile.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAdminPreviewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        String data =getIntent().getStringExtra("package")+"";
+        Log.d("fada",data);
         getNameCorrect();
-        getDataFromFireStore();
 
     }
     // get name from collection "name"
     // target to compare name in collection "name" with name in collection "file"
     private void getNameCorrect() {
+
         db.collection(COLLECTION_NAME)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -61,7 +58,7 @@ public class AdminPreviewActivity extends AppCompatActivity {
                             nameOutfitMax = String.valueOf(document.getData().get(KEY_OUTFIT_MAX));
                         }
                     }
-
+                    getDataFromFireStore();
                 })
                 .addOnFailureListener(e -> {
                     Log.d("error read file", "error");
@@ -73,6 +70,8 @@ public class AdminPreviewActivity extends AppCompatActivity {
     // delete data in firestore and storage
     private void getDataFromFireStore() {
         db.collection(COLLECTION)
+                .whereEqualTo(KEY_TYPE,getIntent().getStringExtra(KEY_TYPE))
+                .whereEqualTo(KEY_MODEL,getIntent().getStringExtra(KEY_MODEL))
                 .get()
                 .addOnCompleteListener(task -> {
                     ArrayList<FileData> fileData = new ArrayList<>();
@@ -108,6 +107,8 @@ public class AdminPreviewActivity extends AppCompatActivity {
                                     }
                                 }
                             }
+                            ArrangeTime arrangeTime = ArrangeTime.getInstance();
+                            Collections.sort(fileData, arrangeTime.comparator);
                             fileData.add(new FileData(image, model, name, time, type, documentId,nameFile,checkName));
                         }
                     }

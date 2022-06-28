@@ -3,8 +3,14 @@ package com.bkit.skinff.freefire;
 import android.content.Context;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 // use to override data downloaded into com.dys.freefire
@@ -33,4 +39,6 @@ public class WriteFileToFreeFire {
             e.printStackTrace();
         }
     }
+
+
 }

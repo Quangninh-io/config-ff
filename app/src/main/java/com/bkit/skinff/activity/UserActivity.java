@@ -23,6 +23,9 @@ import com.bkit.skinff.adapter.DescriptionAdapter;
 import com.bkit.skinff.databinding.ActivityUserBinding;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
+import com.bkit.skinff.sharepreference.GetUri;
+import com.bkit.skinff.sharepreference.SaveUri;
+import com.bkit.skinff.utilities.LanguageManager;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -73,6 +76,14 @@ public class UserActivity extends AppCompatActivity {
     // handle transform descriptions
     // send model Name for another activity
     private void initMain() {
+        String code = GetUri.getInstance().getCode(this);
+        if(!code.equals("")){
+            LanguageManager.getInstance().updateLanguage(this,code);
+        }else{
+            LanguageManager.getInstance().updateLanguage(this,"vi");
+        }
+
+
         DescriptionAdapter adapter = new DescriptionAdapter(this);
         binding.vp2User.setAdapter(adapter);
         binding.vp2User.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);

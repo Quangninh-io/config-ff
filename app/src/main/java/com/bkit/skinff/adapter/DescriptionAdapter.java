@@ -6,10 +6,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.bkit.skinff.fragment.Description2Fragment;
-import com.bkit.skinff.fragment.Description3Fragment;
-import com.bkit.skinff.fragment.DescriptionFragment;
-import com.bkit.skinff.fragment.WelcomeFragment;
+import com.bkit.skinff.fragment.guide.Description2Fragment;
+import com.bkit.skinff.fragment.guide.Description3Fragment;
+import com.bkit.skinff.fragment.guide.DescriptionFragment;
+import com.bkit.skinff.fragment.guide.WelcomeFragment;
 // use for target when open app, user will tap desc about app and guide
 // include 4 fragments
 public class DescriptionAdapter extends FragmentStateAdapter {

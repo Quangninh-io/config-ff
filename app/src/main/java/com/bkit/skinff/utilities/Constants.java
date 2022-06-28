@@ -3,19 +3,19 @@ package com.bkit.skinff.utilities;
 public class Constants {
     public static final int CHOSE_FILE = 123;
     public static final String OPEN_DOCUMENT_TREE = "android.intent.action.OPEN_DOCUMENT_TREE";
-    public static final String FILE_FREE_FIRE = "content://com.android.externalstorage.documents/tree/" +
-            "primary%3AAndroid%2Fdata%2Fcom.dts.freefireth%2Ffiles%2Fcontentcache%2FCompulsory%2F" +
-            "android%2Fgameassetbundles%2Fconfig/";
+    public static final String FILE_FREE_FIRE =
+            "content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fdata%2Fcom.dts.freefireth%2Ffiles%2Fcontentcache%2FCompulsory%2Fandroid%2Fgameassetbundles%2Fconfig%";
+
     public static final String FILE_FREE_FIRE_MAX = "content://com.android.externalstorage.documents/tree/" +
             "primary%3AAndroid%2Fdata%2Fcom.dts.freefiremax%2Ffiles%2Fcontentcache%2FCompulsory%2F" +
-            "android%2Fgameassetbundles%2Fconfig/";
-
+            "android%2Fgameassetbundles%2Fconfig%";
+    public static final String FREE_FIRE_TH_29 = "/Android/data/com.dts.freefireth/files/contentcache/Compulsory/android/gameassetbundles/config";
+    public static final String FREE_FIRE_MAX_29 = "/Android/data/com.dts.freefiremax/files/contentcache/Compulsory/android/gameassetbundles/config";
     public static final String INITIAL_URI = "android.provider.extra.INITIAL_URI";
-    public static final String RESCONF = "resconf.UJxBmYOpolKALQXb7bXRfU1Z3Hs~3D";
-    public static final String CLOTHES = "clothesslotoverlays.39YM4CgfAqeQl6xbWwvJ8T~2BYQUQ~3D";
     public static final String NAME_RESCONF = "resconf";
     public static final String NAME_CLOTHES = "clothesslotoverlays";
-    public static final String NAME_IMAGE = "image";
+    public static String CHECK_FF_EXIST ="";
+    public static String CHECK_FF_MAX_EXIST ="";
     public static final int CHOSE_IMAGE = 543;
     public static final String BUTTON_TAG = "files";
     public static final String COLLECTION = "file";
@@ -36,6 +36,7 @@ public class Constants {
     public static final String KEY_WEAPON_SHAR = "weapon share preference";
     public static final String KEY_OUTFIT_SHAR = "outfit share preference";
     public static final String KEY_WEAPON_SHAR_MAX = "weapon share preference max";
+    public static final String KEY_CODE = "code";
     public static final String KEY_OUTFIT_SHAR_MAX = "outfit share preference max";
     public static final String KEY_OUTFIT_MAX = "outfitmax";
     public static final String KEY_WEAPON_MAX = "weaponmax";
@@ -51,8 +52,7 @@ public class Constants {
     public static final String SHAREPRE = "share preference";
     public static final String SHAREPREADMIN = "share preference check login admin";
     public static final String SHAREPREFILE = "share preference corresponding model";
+    public static final String SHAREPRECODE = "share preference corresponding code";
     public static final String DOCUMENT_PATH = "name";
     public static final String TIME_DELETE = "3-12-2000";
-    public static final String ACTIVE_SUCCESS = "Bạn đã kích hoạt thành công";
-    public static final String DELETE_SUCCESS = "Bạn đã xóa thành công";
 }

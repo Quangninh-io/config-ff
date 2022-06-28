@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">skin ff</string>
     <string name="new_status">Mới</string>
@@ -51,11 +52,10 @@
     <string name="save">Lưu</string>
     <string name="next">xong</string>
     <string name="introduce">
-        Sử dụng ứng dụng để cấu hìnhgame free fire, nhận các skin mới nhất mà không mất phí\n.
+        Sử dụng ứng dụng để cấu hìnhgame free fire, nhận các skin mới nhất mà không mất phí.\n
         Trong ứng dụng này, chúng tôi cung cấp cho bạn nhiều gói skin mới nhất.\n
         Ứng dụng sẽ cập nhật các skin mới ra của free fire để bạn có thể thoải mái lựa chọn.\n
         Đầu tiên bạn cần cái đặt game Garena Free Fire.\n
-        Ứng dụng này chỉ là bản mod của bên thứu 3, sẽ chỉ xuất hiện ở góc nhìn của người chơi, không ảnh hưởng đến trò chơi
+        Ứng dụng này chỉ là bản mod của bên thứ 3, sẽ chỉ xuất hiện ở góc nhìn của người chơi, không ảnh hưởng đến trò chơi
     </string>
-
 </resources>

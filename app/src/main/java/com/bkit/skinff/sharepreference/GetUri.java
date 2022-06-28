@@ -1,6 +1,7 @@
 package com.bkit.skinff.sharepreference;
 
 import static com.bkit.skinff.utilities.Constants.KEY_CHOSE_MODEL;
+import static com.bkit.skinff.utilities.Constants.KEY_CODE;
 import static com.bkit.skinff.utilities.Constants.KEY_LOGIN;
 import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT;
 import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT_SHAR;
@@ -10,6 +11,7 @@ import static com.bkit.skinff.utilities.Constants.KEY_WEAPON_SHAR;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON_SHAR_MAX;
 import static com.bkit.skinff.utilities.Constants.SHAREPRE;
 import static com.bkit.skinff.utilities.Constants.SHAREPREADMIN;
+import static com.bkit.skinff.utilities.Constants.SHAREPRECODE;
 import static com.bkit.skinff.utilities.Constants.SHAREPREFILE;
 
 import android.annotation.SuppressLint;
@@ -79,6 +81,10 @@ public class GetUri {
             return uriOutfit;
         }
         return null;
+    }
+    public String getCode(Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(SHAREPRECODE, Context.MODE_PRIVATE);
+        return sharedPref.getString(KEY_CODE, "");
     }
 
 }

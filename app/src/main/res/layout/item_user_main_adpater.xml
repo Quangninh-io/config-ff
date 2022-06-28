@@ -8,6 +8,8 @@
     android:layout_marginEnd="@dimen/_5sdp"
     android:layout_marginBottom="@dimen/_10sdp"
     android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
     android:elevation="@dimen/_10sdp"
     android:padding="@dimen/_10sdp">
 

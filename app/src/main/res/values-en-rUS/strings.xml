@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">skin ff</string>
+    <string name="new_status">new</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="appname">Config FF</string>
+    <string name="outfit">Outfit</string>
+    <string name="weapon">Gun</string>
+    <string name="package_new">New package launched</string>
+    <string name="delete">delete</string>
+    <string name="dowload">download</string>
+    <string name="check_download">Download check</string>
+    <string name="date_of_month">10-10-1010</string>
+    <string name="btn_date">Select day</string>
+    <string name="name_package">bkit</string>
+    <string name="btn_upload_file">upload to storage</string>
+    <string name="btn_choose_image">select image</string>
+    <string name="btn_show_data">show data</string>
+    <string name="preview">preview</string>
+    <string name="name">user name</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="content_des">Make sure you have downloaded all the package in the dowload center</string>
+    <string name="submit">fafda</string>
+    <string name="description">Gun and skin effects are only visible to the user other people won\'t see it. Click activate, the skin will be installed on the device, if you want to delete the skin, click delete skin</string>
+    <string name="active">active</string>
+    <string name="status">activated</string>
+    <string name="des">Remove the skin you installed</string>
+    <string name="upload_to_firestore">upload_to_firestore</string>
+    <string name="link_image">link image</string>
+    <string name="get_link_image">get link image</string>
+    <string name="update_file_root">restore root file</string>
+    <string name="choose_model">you have not selected version</string>
+    <string name="chose_model">new releases</string>
+    <string name="delete_success">you have success deleted</string>
+    <string name="active_success">you have success activated</string>
+    <string name="admin_request_delete">dow you want delete</string>
+    <string name="des_3">select the blue button to continue</string>
+    <string name="installed">select version</string>
+    <string name="not_installed">you haven\'t installed free fire</string>
+    <string name="clothes">outfit</string>
+    <string name="weapons">weapon</string>
+    <string name="delete_skin">Delete skin</string>
+    <string name="rate">Assessment</string>
+    <string name="share">Share</string>
+    <string name="settting">Setting</string>
+    <string name="language">Select language</string>
+    <string name="infor">Information about the app</string>
+    <string name="title_choose_language">Choose the language you use</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="english">English</string>
+    <string name="save">Save</string>
+    <string name="next">next</string>
+    <string name="introduce">
+        Use the app to configure the free fire game, get the latest skins at no cost\n.
+         In this app we provide you many latest skin packs.\n
+         The application will update the new skins of free fire so you can freely choose.\n
+         First you need to install the game Garena Free Fire.\n
+         This application is only a 3rd party mod, will only appear in the player\'s perspective, does not affect the game
+    </string>
+</resources>

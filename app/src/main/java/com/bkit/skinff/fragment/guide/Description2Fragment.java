@@ -1,4 +1,4 @@
-package com.bkit.skinff.fragment;
+package com.bkit.skinff.fragment.guide;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

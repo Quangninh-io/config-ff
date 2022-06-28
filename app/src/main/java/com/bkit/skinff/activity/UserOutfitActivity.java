@@ -21,6 +21,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.bkit.skinff.R;
 import com.bkit.skinff.adapter.UserAdapter;
 import com.bkit.skinff.databinding.ActivityUserWeaponBinding;
 import com.bkit.skinff.firebase.DownloadFile;
@@ -65,16 +67,9 @@ public class UserOutfitActivity extends AppCompatActivity {
     // data received is data array, prepare to assign for adapter
     private void initMain() {
         String result = getIntent().getStringExtra(INTENT_MODEL);
-        binding.fbDelete.setOnClickListener(v -> {
-            if(decideChoseModel.equals("ff")){
-                downloadFile.downLoadFile(binding.pbDownload, TIME_DELETE, uriWeapon, this, result, "outfit", name.getOutfit());
-            }
-            if(decideChoseModel.equals("ffmax")){
-                downloadFile.downLoadFile(binding.pbDownload, TIME_DELETE, uriWeapon, this, result, "outfit", name.getOutfitMax());
-            }
-
+        binding.ivBack.setOnClickListener(v->{
+            onBackPressed();
         });
-
 
         uriOutfit = Uri.parse(getIntent().getStringExtra(INTENT_OUTFIT));
         uriWeapon = Uri.parse(getIntent().getStringExtra(INTENT_WEAPON));
@@ -112,7 +107,7 @@ public class UserOutfitActivity extends AppCompatActivity {
     // set data for adapter
     // send data contain (uri, model file data, name file) for user detail activity
     private void uploadRecycleView(ArrayList<FileData> list) {
-        binding.tvType.setText("Trang phục");
+        binding.tvType.setText(getResources().getString(R.string.clothes));
         adapter = new UserAdapter(list, getApplicationContext(), new ClickSpecificItem() {
             @Override
             public void click(FileData fileData) {
@@ -127,6 +122,5 @@ public class UserOutfitActivity extends AppCompatActivity {
         });
         binding.rvWeapon.setAdapter(adapter);
     }
-
 
 }

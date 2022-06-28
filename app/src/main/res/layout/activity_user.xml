@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:text="@string/xong"
+        android:text="@string/next"
         android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="@dimen/_25sdp"

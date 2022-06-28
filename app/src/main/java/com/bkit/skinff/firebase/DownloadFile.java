@@ -1,7 +1,6 @@
 package com.bkit.skinff.firebase;
 
-import static com.bkit.skinff.utilities.Constants.ACTIVE_SUCCESS;
-import static com.bkit.skinff.utilities.Constants.DELETE_SUCCESS;
+
 import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 import android.app.Dialog;
 import android.content.Context;
@@ -16,11 +15,14 @@ import com.bkit.skinff.freefire.WriteFileToFreeFire;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+
 // use for user can download the desire file
 public class DownloadFile {
     private final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     private final StorageReference storageReference = firebaseStorage.getReference();
     private static DownloadFile instance;
+    WriteFileToFreeFire write = WriteFileToFreeFire.getInstance();
     public static DownloadFile getInstance() {
         if (instance == null) {
             return new DownloadFile();
@@ -38,14 +40,14 @@ public class DownloadFile {
         pb.setVisibility(View.VISIBLE);
         imgRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
             pb.setVisibility(View.INVISIBLE);
-            WriteFileToFreeFire.getInstance().writeFile(uri, context, bytes);
+            write.writeFile(uri, context, bytes);
             Log.d("byte", String.valueOf(bytes));
             if (!time.equals(TIME_DELETE)) {
-                showDialog(context,ACTIVE_SUCCESS,model);
+                showDialog(context,context.getResources().getString(R.string.active_success),model);
                 //showDialog(context, R.string.active_success,model);
             }else{
                 Log.d("delete", "success");
-                showDialog(context,DELETE_SUCCESS,model);
+                showDialog(context,context.getResources().getString(R.string.delete_success),model);
                 //showDialog(context, String.valueOf(R.string.delete_success),model);
             }
         }).addOnFailureListener(e -> {
@@ -53,6 +55,7 @@ public class DownloadFile {
             Log.d("Fail something", "fail");
         });
     }
+
     // give 2 options for user, open game or exit
     private void showDialog(Context context, String content , String choseModel) {
         Dialog dialog = new Dialog(context);

@@ -62,6 +62,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
+            android:visibility="gone"
             android:layout_marginBottom="@dimen/_25sdp"
             android:background="@drawable/shape_button_transform" />
     </LinearLayout>
@@ -70,12 +71,13 @@
         android:id="@+id/tv_success"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:text="@string/next"
         android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="@dimen/_25sdp"
+        app:layout_constraintStart_toEndOf="@+id/layout_image"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

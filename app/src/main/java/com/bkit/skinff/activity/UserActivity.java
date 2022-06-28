@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -109,22 +110,40 @@ public class UserActivity extends AppCompatActivity {
 
     private void handleWelcome(int position) {
         setBackground();
-        switch (position) {
-            case 0:
-                binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
-                break;
-            case 1:
-                binding.iv2.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
-                break;
-            case 2:
-                binding.iv3.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
-                break;
-            case 3:
-                binding.iv4.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
-                binding.tvSuccess.setVisibility(View.VISIBLE);
-                break;
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 30) {
+            binding.iv4.setVisibility(View.GONE);
+            switch (position) {
+                case 0:
+                    binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
+                    break;
+                case 1:
+                    binding.iv2.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
+                    break;
+                case 2:
+                    binding.iv3.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
+                    binding.tvSuccess.setVisibility(View.VISIBLE);
+                    break;
+
+            }
+        }else{
+            switch (position) {
+                case 0:
+                    binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
+                    break;
+                case 1:
+                    binding.iv2.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
+                    break;
+                case 2:
+                    binding.iv3.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
+                    break;
+                case 3:
+                    binding.iv4.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
+                    binding.tvSuccess.setVisibility(View.VISIBLE);
+                    break;
+            }
         }
     }
+
 
     private void setBackground() {
         binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transform));

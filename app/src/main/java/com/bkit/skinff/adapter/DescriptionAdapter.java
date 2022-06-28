@@ -1,5 +1,9 @@
 package com.bkit.skinff.adapter;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -27,21 +31,35 @@ public class DescriptionAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-                return new WelcomeFragment();
-            case 1:
-                return new DescriptionFragment();
-            case 2:
-                return new Description2Fragment();
-            case 3:
-                return new Description3Fragment();
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 30) {
+            switch (position) {
+                case 0:
+                    return new WelcomeFragment();
+                case 1:
+                    return new DescriptionFragment();
+                case 2:
+                    return new Description2Fragment();
+            }
+        }else{
+            switch (position) {
+                case 0:
+                    return new WelcomeFragment();
+                case 1:
+                    return new DescriptionFragment();
+                case 2:
+                    return new Description2Fragment();
+                case 3:
+                    return new Description3Fragment();
+            }
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 30) {
+            return 3;
+        }
         return 4;
     }
 }

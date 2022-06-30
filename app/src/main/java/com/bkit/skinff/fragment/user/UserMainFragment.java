@@ -140,14 +140,16 @@ public class UserMainFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 30) {
             if (getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }else{
+                handleGetTotalFile();
             }
         } else {
-            // to can access android/data
-            Intent intent = new Intent(OPEN_DOCUMENT_TREE);
+
+            //to can access android/data
+            Intent intent = new Intent("android.intent.action.OPEN_DOCUMENT_TREE");
             // will be access first when opening storage
             Uri parse = Uri.parse(uri);
-            //Uri parse = Uri.parse(FILE_FREE_FIRE);
-            intent.putExtra(INITIAL_URI,
+            intent.putExtra("android.provider.extra.INITIAL_URI",
                     DocumentsContract.buildDocumentUriUsingTree(parse, DocumentsContract.getTreeDocumentId(parse)));
             startActivityForResult(intent, CHOSE_FILE);
         }
@@ -156,7 +158,7 @@ public class UserMainFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                handleGetTotalFile();
+               handleGetTotalFile();
             } else {
                 Toast.makeText(getActivity(), "Permission not granted", Toast.LENGTH_SHORT).show();
             }
@@ -275,14 +277,6 @@ public class UserMainFragment extends Fragment {
             putIntent(intent);
             startActivity(intent);
         });
-//        binding.ivChangeModel.setOnClickListener(v -> {
-//            openDialog("Chọn phiên bản free fire");
-//        });
-//
-//        binding.ivLogo.setOnLongClickListener(v -> {
-//            startActivity(new Intent(getApplication(), LoginActivity.class));
-//            return false;
-//        });
 
         if (check.equals("")) {
             binding.tvDefault.setText(R.string.choose_model);

@@ -4,11 +4,10 @@ public class Constants {
     public static final int CHOSE_FILE = 123;
     public static final String OPEN_DOCUMENT_TREE = "android.intent.action.OPEN_DOCUMENT_TREE";
     public static final String FILE_FREE_FIRE =
-            "content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fdata%2Fcom.dts.freefireth%2Ffiles%2Fcontentcache%2FCompulsory%2Fandroid%2Fgameassetbundles%2Fconfig%";
-
+            "content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fdata%2Fcom.dts.freefireth%2Ffiles%2Fcontentcache%2FCompulsory%2Fandroid%2Fgameassetbundles%2Fconfig/";
     public static final String FILE_FREE_FIRE_MAX = "content://com.android.externalstorage.documents/tree/" +
             "primary%3AAndroid%2Fdata%2Fcom.dts.freefiremax%2Ffiles%2Fcontentcache%2FCompulsory%2F" +
-            "android%2Fgameassetbundles%2Fconfig%";
+            "android%2Fgameassetbundles%2Fconfig/";
     public static final String FREE_FIRE_TH_29 = "/Android/data/com.dts.freefireth/files/contentcache/Compulsory/android/gameassetbundles/config";
     public static final String FREE_FIRE_MAX_29 = "/Android/data/com.dts.freefiremax/files/contentcache/Compulsory/android/gameassetbundles/config";
     public static final String INITIAL_URI = "android.provider.extra.INITIAL_URI";

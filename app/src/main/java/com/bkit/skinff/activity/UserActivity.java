@@ -110,7 +110,7 @@ public class UserActivity extends AppCompatActivity {
 
     private void handleWelcome(int position) {
         setBackground();
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 30) {
+        if (Build.VERSION.SDK_INT < 30) {
             binding.iv4.setVisibility(View.GONE);
             switch (position) {
                 case 0:

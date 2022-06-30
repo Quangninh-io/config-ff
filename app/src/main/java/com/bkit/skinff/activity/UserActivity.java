@@ -44,6 +44,11 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        if (Build.VERSION.SDK_INT < 30) {
+            binding.iv4.setVisibility(View.GONE);
+        }else{
+            binding.iv4.setVisibility(View.VISIBLE);
+        }
         getName();
         getNameFile();
         initMain();
@@ -111,7 +116,6 @@ public class UserActivity extends AppCompatActivity {
     private void handleWelcome(int position) {
         setBackground();
         if (Build.VERSION.SDK_INT < 30) {
-            binding.iv4.setVisibility(View.GONE);
             switch (position) {
                 case 0:
                     binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
@@ -126,7 +130,6 @@ public class UserActivity extends AppCompatActivity {
 
             }
         }else{
-            binding.iv4.setVisibility(View.VISIBLE);
             switch (position) {
                 case 0:
                     binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));

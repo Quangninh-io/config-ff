@@ -126,6 +126,7 @@ public class UserActivity extends AppCompatActivity {
 
             }
         }else{
+            binding.iv4.setVisibility(View.VISIBLE);
             switch (position) {
                 case 0:
                     binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));

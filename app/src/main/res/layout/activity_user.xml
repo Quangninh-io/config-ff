@@ -63,7 +63,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_marginBottom="@dimen/_25sdp"
             android:background="@drawable/shape_button_transform" />
     </LinearLayout>

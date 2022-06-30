@@ -46,6 +46,16 @@
         <entry key="..\:/bkit/config-ff/app/src/main/res/menu/menu_navigation.xml" value="0.25416666666666665" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.124" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.152" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/layout/activity_user.xml" value="0.42916666666666664" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/layout/alert_choose_model.xml" value="0.42916666666666664" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/layout/alert_infor_about.xml" value="0.42916666666666664" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/layout/alert_move_free_fire.xml" value="0.42916666666666664" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/layout/fragment_description_2.xml" value="0.42916666666666664" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/layout/fragment_description_3.xml" value="0.48300117233294254" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/layout/item_admin.xml" value="0.42916666666666664" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/layout/item_user_main_adpater.xml" value="0.42916666666666664" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/layout/layout_navigation_header.xml" value="0.42916666666666664" />
+        <entry key="..\:/ninh/config-ff/app/src/main/res/menu/menu_navigation.xml" value="0.42916666666666664" />
       </map>
     </option>
   </component>

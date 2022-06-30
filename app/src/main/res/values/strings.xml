@@ -34,7 +34,7 @@
     <string name="delete_success">Bạn đã xóa thành công</string>
     <string name="active_success">Bạn đã kích hoạt thành công</string>
     <string name="admin_request_delete">Bạn có muốn xóa hay không</string>
-    <string name="des_3">Chọn nút màu xanh để tiếp tục</string>
+    <string name="des_3">Nhấn nút để tiếp tục</string>
     <string name="installed">Chọn phiên bản</string>
     <string name="not_installed">Bạn chưa cài free fire</string>
     <string name="clothes">Trang phục</string>
@@ -49,13 +49,16 @@
     <string name="vietnamese">Tiếng Việt</string>
     <string name="english">Tiếng Anh</string>
     <string name="save">Lưu</string>
-    <string name="next">xong</string>
+    <string name="next_to_continue">Tiếp tục</string>
     <string name="introduce">
-        Sử dụng ứng dụng để cấu hìnhgame free fire, nhận các skin mới nhất mà không mất phí\n.
+        Sử dụng ứng dụng để cấu hình game free fire, nhận các skin mới nhất mà không mất phí\n.
         Trong ứng dụng này, chúng tôi cung cấp cho bạn nhiều gói skin mới nhất.\n
         Ứng dụng sẽ cập nhật các skin mới ra của free fire để bạn có thể thoải mái lựa chọn.\n
         Đầu tiên bạn cần cái đặt game Garena Free Fire.\n
         Ứng dụng này chỉ là bản mod của bên thứu 3, sẽ chỉ xuất hiện ở góc nhìn của người chơi, không ảnh hưởng đến trò chơi
     </string>
+    <string name="open_free_fire">Mở free fire</string>
+    <string name="exit">Thoát</string>
+    <string name="select">Chọn</string>
 
 </resources>

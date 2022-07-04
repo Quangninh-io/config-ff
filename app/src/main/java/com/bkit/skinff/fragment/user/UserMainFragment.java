@@ -1,5 +1,6 @@
 package com.bkit.skinff.fragment.user;
 
+import static com.bkit.skinff.utilities.Constants.BUNDLE_NAME;
 import static com.bkit.skinff.utilities.Constants.CHECK_FF_EXIST;
 import static com.bkit.skinff.utilities.Constants.CHECK_FF_MAX_EXIST;
 import static com.bkit.skinff.utilities.Constants.CHOSE_FILE;
@@ -8,7 +9,6 @@ import static com.bkit.skinff.utilities.Constants.FILE_FREE_FIRE;
 import static com.bkit.skinff.utilities.Constants.FILE_FREE_FIRE_MAX;
 import static com.bkit.skinff.utilities.Constants.FREE_FIRE_MAX_29;
 import static com.bkit.skinff.utilities.Constants.FREE_FIRE_TH_29;
-import static com.bkit.skinff.utilities.Constants.INITIAL_URI;
 import static com.bkit.skinff.utilities.Constants.INTENT_CHOSE_MODEL;
 import static com.bkit.skinff.utilities.Constants.INTENT_DETAIL;
 import static com.bkit.skinff.utilities.Constants.INTENT_MODEL;
@@ -26,7 +26,6 @@ import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON;
 import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
 import static com.bkit.skinff.utilities.Constants.NAME_RESCONF;
-import static com.bkit.skinff.utilities.Constants.OPEN_DOCUMENT_TREE;
 import static com.bkit.skinff.utilities.Constants.STORAGE_WEAPON;
 import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 
@@ -70,6 +69,7 @@ import com.bkit.skinff.model.Name;
 import com.bkit.skinff.sharepreference.GetUri;
 import com.bkit.skinff.sharepreference.SaveUri;
 import com.bkit.skinff.utilities.ArrangeTime;
+import com.bkit.skinff.utilities.SetLanguage;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -97,13 +97,18 @@ public class UserMainFragment extends Fragment {
     SaveUri saveUri = SaveUri.getInstance();
     DownloadFile downloadFile = DownloadFile.getInstance();
     GetUri getUri = GetUri.getInstance();
-    int dem =0;
+    int dem = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentUserMainBinding.inflate(inflater,container,false);
+        SetLanguage.getInstance().configLanguage(getActivity());
+        binding = FragmentUserMainBinding.inflate(inflater, container, false);
         dem++;
         checkPackageExist();
+        Bundle bundle = this.getArguments();
+        fileName = (Name) bundle.getSerializable(BUNDLE_NAME);
+        Log.d("dfjalf",fileName.getWeapon()+"");
         initMain();
         return binding.getRoot();
     }
@@ -137,14 +142,17 @@ public class UserMainFragment extends Fragment {
 
     // start progress to get uri
     private void requestSdcardAccessPermission(String uri) {
-        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 30) {
-            if (getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        if (Build.VERSION.SDK_INT < 30) {
+            if (Build.VERSION.SDK_INT>=23){
+                if (getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                } else {
+                    handleGetTotalFile();
+                }
             }else{
                 handleGetTotalFile();
             }
         } else {
-
             //to can access android/data
             Intent intent = new Intent("android.intent.action.OPEN_DOCUMENT_TREE");
             // will be access first when opening storage
@@ -158,7 +166,7 @@ public class UserMainFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-               handleGetTotalFile();
+                handleGetTotalFile();
             } else {
                 Toast.makeText(getActivity(), "Permission not granted", Toast.LENGTH_SHORT).show();
             }
@@ -167,33 +175,34 @@ public class UserMainFragment extends Fragment {
     }
 
     private void handleGetTotalFile() {
-        String path = Environment.getExternalStorageDirectory().toString()+FREE_FIRE_TH_29;
-        if(decideChooseModel.equals("ff")){
-            path = Environment.getExternalStorageDirectory().toString()+FREE_FIRE_TH_29;
+        String path = Environment.getExternalStorageDirectory().toString() + FREE_FIRE_TH_29;
+        if (decideChooseModel.equals("ff")) {
+            path = Environment.getExternalStorageDirectory().toString() + FREE_FIRE_TH_29;
         }
-        if(decideChooseModel.equals("ffmax")){
-            path = Environment.getExternalStorageDirectory().toString()+FREE_FIRE_MAX_29;
+        if (decideChooseModel.equals("ffmax")) {
+            path = Environment.getExternalStorageDirectory().toString() + FREE_FIRE_MAX_29;
         }
         File directory = new File(path);
         File[] files = directory.listFiles();
-        for (int i = 0; i < files.length; i++)
-        {
-            if(files[i].getName().equals(fileName.getWeapon())){
-                uriWeapon = Uri.fromFile(files[i]);
+        assert files != null;
+        if (files.length > 0) {
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].getName().equals(fileName.getWeapon())) {
+                    uriWeapon = Uri.fromFile(files[i]);
+                }
+                if (files[i].getName().equals(fileName.getOutfit())) {
+                    uriOutfit = Uri.fromFile(files[i]);
+                }
+                if (files[i].getName().equals(fileName.getWeaponMax())) {
+                    uriWeapon = Uri.fromFile(files[i]);
+                }
+                if (files[i].getName().equals(fileName.getOutfitMax())) {
+                    uriOutfit = Uri.fromFile(files[i]);
+                }
             }
-            if(files[i].getName().equals(fileName.getOutfit())){
-                uriOutfit = Uri.fromFile(files[i]);
-            }
-            if(files[i].getName().equals(fileName.getWeaponMax())){
-                uriWeapon = Uri.fromFile(files[i]);
-            }
-            if(files[i].getName().equals(fileName.getOutfitMax())){
-                uriOutfit = Uri.fromFile(files[i]);
-            }
+            saveUri.deleteData(getActivity());
+            saveUri.saveData(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit), decideChooseModel);
         }
-        saveUri.deleteData(getActivity());
-        saveUri.saveData(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit), decideChooseModel);
-
     }
 
 
@@ -209,7 +218,6 @@ public class UserMainFragment extends Fragment {
         }
         super.onActivityResult(requestCode, resultCode, resultData);
     }
-
     // function then activity for result called
     // handle read file one by one
     // if meet file have name requirement, proceed to assign for variable(uri weapon and uri outfit)
@@ -240,18 +248,28 @@ public class UserMainFragment extends Fragment {
         }
         saveUri.deleteData(getActivity());
         saveUri.saveData(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit), decideChooseModel);
+        if(decideChooseModel.equals("ff")){
+            saveUri.saveUriModelFF(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit));
+        }
+        if(decideChooseModel.equals("ffmax")){
+            saveUri.saveUriModelFFMAX(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit));
+        }
     }
 
     // initial run activity
     // get uri in share preference, if data exist, user don't have to choose uri again
     private void initMain() {
-
+        if(CHECK_FF_EXIST.equals("")&& CHECK_FF_MAX_EXIST.equals("")){
+            binding.tvDefault.setText(R.string.not_installed);
+        }else{
+            binding.tvDefault.setText(R.string.package_new);
+        }
         createNavigationDrawer();
 
         String stringUriWeapon = getUri.getData(getActivity(), KEY_WEAPON);
         String stringUriOutfit = getUri.getData(getActivity(), KEY_OUTFIT);
         String chooseModelS = getUri.getData(getActivity(), KEY_CHOSE_MODEL);
-        Log.d("fadfa",stringUriWeapon);
+        Log.d("fadfa", stringUriWeapon);
 
         if (stringUriOutfit.equals("")) {
             decideOpenDialog();
@@ -262,7 +280,6 @@ public class UserMainFragment extends Fragment {
             check = chooseModelS;
             decideChooseModel = chooseModelS;
         }
-        fileName = (Name) getActivity().getIntent().getSerializableExtra(INTENT_NAME);
 
         //showData();
         binding.ivWeapon.setOnClickListener(v -> {
@@ -278,9 +295,9 @@ public class UserMainFragment extends Fragment {
             startActivity(intent);
         });
 
-        if (check.equals("")) {
-            binding.tvDefault.setText(R.string.choose_model);
-        }
+//        if (check.equals("")) {
+//            binding.tvDefault.setText(R.string.choose_model);
+//        }
     }
 
     private void createNavigationDrawer() {
@@ -327,16 +344,16 @@ public class UserMainFragment extends Fragment {
         Button btn = dialog.findViewById(R.id.bt_choose_model);
         rbFF = dialog.findViewById(R.id.rb_ff);
         rbFFMax = dialog.findViewById(R.id.rb_ff_max);
-        String chooseModel = getUri.getData(getActivity(),KEY_CHOSE_MODEL);
-        if(chooseModel.equals("ff")){
+        String chooseModel = getUri.getData(getActivity(), KEY_CHOSE_MODEL);
+        if (chooseModel.equals("ff")) {
             rbFF.setChecked(true);
             rbFFMax.setChecked(false);
         }
-        if(chooseModel.equals("ffmax")){
+        if (chooseModel.equals("ffmax")) {
             rbFF.setChecked(false);
             rbFFMax.setChecked(true);
         }
-        if (chooseModel.equals("")){
+        if (chooseModel.equals("")) {
             rbFF.setChecked(true);
             rbFFMax.setChecked(false);
         }
@@ -344,36 +361,39 @@ public class UserMainFragment extends Fragment {
         TextView tv = dialog.findViewById(R.id.tv);
         tv.setText(note);
         btn.setOnClickListener(v -> {
-            if (rbFFMax.isChecked()) {
-                getDataFromFireStore("ffmax");
-                check = "ffmax";
-                decideChooseModel = "ffmax";
-                binding.tvDefault.setText(R.string.chose_model);
-                if (!checkGameExistFFmax.equals("")) {
-                    String uriWeaponS = getUri.getDataFFMAX(getActivity(), KEY_WEAPON);
-                    String uriOutitS = getUri.getDataFFMAX(getActivity(), KEY_OUTFIT);
-                    if (uriWeaponS.contains(NAME_RESCONF)) {
-                        uriWeapon = Uri.parse(uriWeaponS);
-                        uriOutfit = Uri.parse(uriOutitS);
-                    } else {
-                        requestSdcardAccessPermission(FILE_FREE_FIRE_MAX);
-                        saveUri.saveUriModelFFMAX(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit));
-                    }
-                }
-            } else if (rbFF.isChecked()) {
+            if (rbFF.isChecked()) {
                 getDataFromFireStore("ff");
                 check = "ff";
                 decideChooseModel = "ff";
-                binding.tvDefault.setText(R.string.chose_model);
                 if (!checkGameExistFF.equals("")) {
                     String uriWeaponS = getUri.getDataFF(getActivity(), KEY_WEAPON);
                     String uriOutitS = getUri.getDataFF(getActivity(), KEY_OUTFIT);
                     if (uriWeaponS.contains(NAME_RESCONF)) {
                         uriWeapon = Uri.parse(uriWeaponS);
                         uriOutfit = Uri.parse(uriOutitS);
+                        saveUri.deleteData(getActivity());
+                        saveUri.saveData(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit), decideChooseModel);
                     } else {
                         requestSdcardAccessPermission(FILE_FREE_FIRE);
                         saveUri.saveUriModelFF(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit));
+                    }
+                }
+            } else if (rbFFMax.isChecked()) {
+                getDataFromFireStore("ffmax");
+                check = "ffmax";
+                decideChooseModel = "ffmax";
+
+                if (!checkGameExistFFmax.equals("")) {
+                    String uriWeaponS = getUri.getDataFFMAX(getActivity(), KEY_WEAPON);
+                    String uriOutitS = getUri.getDataFFMAX(getActivity(), KEY_OUTFIT);
+                    if (uriWeaponS.contains(NAME_RESCONF)) {
+                        uriWeapon = Uri.parse(uriWeaponS);
+                        uriOutfit = Uri.parse(uriOutitS);
+                        saveUri.deleteData(getActivity());
+                        saveUri.saveData(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit), decideChooseModel);
+                    } else {
+                        requestSdcardAccessPermission(FILE_FREE_FIRE_MAX);
+                        saveUri.saveUriModelFFMAX(getActivity(), String.valueOf(uriWeapon), String.valueOf(uriOutfit));
                     }
                 }
             }

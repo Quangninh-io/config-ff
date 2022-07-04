@@ -3,11 +3,15 @@ package com.bkit.skinff.adapter;
 import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bkit.skinff.R;
@@ -21,15 +25,17 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 // use for recycle in admin preview activity
 public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHolder> {
 
     List<FileData> list;
-    ClickToModify clickToDownload;
+    ClickToModify modify;
 
-    public AdminAdapter(List<FileData> list, ClickToModify clickToDownload) {
+    public AdminAdapter(List<FileData> list, ClickToModify modify) {
         this.list = list;
-        this.clickToDownload = clickToDownload;
+        this.modify = modify;
     }
 
     @NonNull
@@ -46,26 +52,32 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
     public void onBindViewHolder(@NonNull AdminViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setData(list.get(position));
         holder.binding.getRoot().setOnClickListener(v->{
-            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setMessage(R.string.admin_request_delete)
-                    .setTitle("Xoa");
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @SuppressLint("NotifyDataSetChanged")
-                public void onClick(DialogInterface dialog, int id) {
-                    clickToDownload.modify(list.get(position));
-                    list.remove(position);
-                    notifyItemRemoved(position);
-                }
-            });
-            builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User cancelled the dialog
-                    dialog.cancel();
-                }
-            });
-            builder.create().show();
+            createDialogDelete(position,v);
         });
 
+    }
+
+
+
+    private void createDialogDelete(int position, View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setMessage(R.string.admin_request_delete)
+                .setTitle("Xoa");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            public void onClick(DialogInterface dialog, int id) {
+                modify.modifyData(list.get(position));
+                list.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
     }
 
     @Override

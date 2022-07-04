@@ -13,15 +13,12 @@ import static com.bkit.skinff.utilities.Constants.KEY_NAME;
 import static com.bkit.skinff.utilities.Constants.KEY_NAME_FILE;
 import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
-import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
-import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.bkit.skinff.R;
 import com.bkit.skinff.adapter.UserAdapter;
 import com.bkit.skinff.databinding.ActivityUserWeaponBinding;
@@ -32,14 +29,9 @@ import com.bkit.skinff.model.Name;
 import com.bkit.skinff.utilities.ArrangeTime;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 public class UserWeaponActivity extends AppCompatActivity {
 
@@ -57,6 +49,7 @@ public class UserWeaponActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityUserWeaponBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+//        SetLanguage.getInstance().configLanguage(this);
         initMain();
     }
     // initial run activity

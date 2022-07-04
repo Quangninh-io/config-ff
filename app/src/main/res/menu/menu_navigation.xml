@@ -5,17 +5,17 @@
         android:icon="@drawable/ic_delete"
         android:title="@string/delete_skin" >
     </item>
-    <item android:id="@+id/item_rate"
-        android:icon="@drawable/ic_rating"
-        android:title="@string/rate"/>
-    <item android:id="@+id/item_share"
-        android:icon="@drawable/ic_share"
-        android:title="@string/share"/>
+    <item android:id="@+id/item_language"
+        android:icon="@drawable/ic_language"
+        android:title="@string/language"/>
     <item android:title="@string/settting">
         <menu>
-            <item android:id="@+id/item_language"
-                android:icon="@drawable/ic_language"
-                android:title="@string/language"/>
+            <item android:id="@+id/item_rate"
+                android:icon="@drawable/ic_rating"
+                android:title="@string/rate"/>
+            <item android:id="@+id/item_share"
+                android:icon="@drawable/ic_share"
+                android:title="@string/share"/>
             <item android:id="@+id/item_infor"
                 android:icon="@drawable/ic_infor"
                 android:title="@string/infor"/>

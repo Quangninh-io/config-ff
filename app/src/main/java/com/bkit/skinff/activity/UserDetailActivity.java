@@ -1,5 +1,7 @@
 package com.bkit.skinff.activity;
 
+import static com.bkit.skinff.utilities.Constants.CHECK_FF_EXIST;
+import static com.bkit.skinff.utilities.Constants.CHECK_FF_MAX_EXIST;
 import static com.bkit.skinff.utilities.Constants.INTENT_CHOSE_MODEL;
 import static com.bkit.skinff.utilities.Constants.INTENT_DETAIL;
 import static com.bkit.skinff.utilities.Constants.INTENT_NAME;
@@ -13,10 +15,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
+import com.bkit.skinff.R;
 import com.bkit.skinff.databinding.ActivityUserDetailBinding;
 import com.bkit.skinff.firebase.DownloadFile;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
+import com.bkit.skinff.utilities.SetLanguage;
 import com.squareup.picasso.Picasso;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +39,7 @@ public class UserDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SetLanguage.getInstance().configLanguage(this);
         binding = ActivityUserDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         requestSdcardAccessPermission();
@@ -44,6 +50,9 @@ public class UserDetailActivity extends AppCompatActivity {
 
     // init when open activity
     private void initMain() {
+        if(CHECK_FF_EXIST.equals("") && CHECK_FF_MAX_EXIST.equals("")){
+            binding.btActive.setVisibility(View.GONE);
+        }
         fileData = (FileData) getIntent().getSerializableExtra(INTENT_DETAIL);
         binding.tvName.setText(fileData.getName());
         Picasso.get().load(fileData.getImage()).into(binding.iv);
@@ -71,17 +80,22 @@ public class UserDetailActivity extends AppCompatActivity {
         });
 
         binding.btActive.setTag(STATUS_INACTIVE);
+
+        binding.ivBack.setOnClickListener(v->{
+            onBackPressed();///
+        });
     }
     // handle click button "active"
     private void handleClick() {
         if (binding.btActive.getTag() == STATUS_INACTIVE) {
             binding.btActive.setTag(STATUS_ACTIVE);
-            binding.btActive.setText("Đã kích hoạt");
+            binding.btActive.setText(getResources().getString(R.string.not_active_button));
             handleActive();
-        } else {
-            binding.btActive.setTag(STATUS_INACTIVE);
-            binding.btActive.setText("Kích hoạt");
         }
+//        else {
+//            binding.btActive.setTag(STATUS_INACTIVE);
+//            binding.btActive.setText(getResources().getString(R.string.not_active_button));
+//        }
     }
 
     // download file corresponding from storage

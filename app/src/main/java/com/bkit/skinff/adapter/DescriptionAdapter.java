@@ -1,9 +1,6 @@
 package com.bkit.skinff.adapter;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Build;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;

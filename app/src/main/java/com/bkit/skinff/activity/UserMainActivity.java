@@ -1,7 +1,9 @@
 package com.bkit.skinff.activity;
 
+import static com.bkit.skinff.utilities.Constants.BUNDLE_NAME;
 import static com.bkit.skinff.utilities.Constants.CHECK_FF_EXIST;
 import static com.bkit.skinff.utilities.Constants.CHECK_FF_MAX_EXIST;
+import static com.bkit.skinff.utilities.Constants.INTENT_NAME;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -17,13 +19,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bkit.skinff.R;
 import com.bkit.skinff.databinding.ActivityUserMainBinding;
 import com.bkit.skinff.fragment.user.UserMainFragment;
+import com.bkit.skinff.model.Name;
 import com.bkit.skinff.sharepreference.GetUri;
 import com.bkit.skinff.sharepreference.SaveUri;;
 import com.bkit.skinff.utilities.LanguageManager;
+import com.bkit.skinff.utilities.SetLanguage;
 import com.google.android.material.navigation.NavigationView;
 
 public class UserMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,15 +38,22 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SetLanguage.getInstance().configLanguage(this);
         binding = ActivityUserMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initMain();
     }
 
+
     // initial run activity
     // get uri in share preference, if data exist, user don't have to choose uri again
     private void initMain() {
+        Name fileName = (Name) getIntent().getSerializableExtra(INTENT_NAME);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BUNDLE_NAME,fileName);
+        mainFragment.setArguments(bundle);
         UserMainFragment userMainFragment = (UserMainFragment) fm.findFragmentByTag("main");
+
         if(userMainFragment==null){
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_main, mainFragment, "main").commit();
         }
@@ -64,9 +74,9 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
     private void openDialog() {
         UserMainFragment userMainFragment = (UserMainFragment) fm.findFragmentByTag("main");
         if (CHECK_FF_EXIST.equals("") && CHECK_FF_MAX_EXIST.equals("")) {
-            userMainFragment.openDialog(getResources().getString(R.string.installed));
-        } else {
             userMainFragment.openDialog(getResources().getString(R.string.not_installed));
+        } else {
+            userMainFragment.openDialog(getResources().getString(R.string.installed));
         }
 
     }
@@ -76,12 +86,22 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.item_delete_skin) {
-            if (CHECK_FF_EXIST.equals("") && CHECK_FF_MAX_EXIST.equals("")){
-                Toast.makeText(this, getResources().getString(R.string.not_installed), Toast.LENGTH_SHORT).show();
-            }else{
-                UserMainFragment userMainFragment = (UserMainFragment) fm.findFragmentByTag("main");
-                userMainFragment.delete();
-            }
+            Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.decide_delete);
+            Button btYes = dialog.findViewById(R.id.bt_decide_delete);
+            btYes.setOnClickListener(v->{
+                if (CHECK_FF_EXIST.equals("") && CHECK_FF_MAX_EXIST.equals("")){
+                    Toast.makeText(this, getResources().getString(R.string.not_installed), Toast.LENGTH_SHORT).show();
+                }else{
+                    UserMainFragment userMainFragment = (UserMainFragment) fm.findFragmentByTag("main");
+                    userMainFragment.delete();
+                }
+                dialog.dismiss();
+            });
+            Button btNo = dialog.findViewById(R.id.bt_decide_cancel);
+            btNo.setOnClickListener(v->{dialog.dismiss();});
+            dialog.show();
+
         } else if (id == R.id.item_rate) {
             handleRating();
         } else if (id == R.id.item_share) {
@@ -132,13 +152,19 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
 
         btSaveLanguage.setOnClickListener(v->{
             if(tvVietnamese.getTag().equals("vi")){
-                language.updateLanguage(this,"vi");
-                saveUri.saveLanguage(this,"vi");
+                String cod = GetUri.getInstance().getCode(this);
+                if(!cod.equals("vi")){
+                    language.updateLanguage(this,"vi");
+                    recreate();
+                }
             }else{
-                language.updateLanguage(this,"en");
-                saveUri.saveLanguage(this,"en");
+                String cod = GetUri.getInstance().getCode(this);
+                if(!cod.equals("en")){
+                    language.updateLanguage(this,"en");
+                    recreate();
+                }
             }
-            recreate();
+            dialog.dismiss();
         });
         dialog.show();
     }

@@ -3,9 +3,8 @@ package com.bkit.skinff.utilities;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-
+import com.bkit.skinff.sharepreference.SaveUri;
 import java.util.Locale;
-import java.util.logging.Level;
 
 public class LanguageManager {
     private static LanguageManager instance;
@@ -23,5 +22,6 @@ public class LanguageManager {
         Configuration configuration = resources.getConfiguration();
         configuration.locale = locale;
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        SaveUri.getInstance().saveLanguage(context,code);
     }
 }

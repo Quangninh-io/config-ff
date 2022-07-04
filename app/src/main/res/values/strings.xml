@@ -21,7 +21,8 @@
     <string name="login">Login</string>
     <string name="content_des">Đảm bảo rằng bạn đã tải xuống tất cả các gói trong trung tâm tải xuống</string>
     <string name="submit">fafda</string>
-    <string name="description">Hiệu ứng súng và trang phục chỉ thấy được ở phía người dùng, người khác sẽ không thấy được. Nhấn kích hoạt, skin sẽ được cài vào máy, nếu muốn xóa skin hãy nhấn xóa skin</string>
+    <string name="description">Hiệu ứng súng và trang phục chỉ thấy được ở phía người dùng, người khác sẽ không thấy được.
+        Đây là bản mod của bên thứ 3, sẽ không ảnh hưởng tới trò chơi, và sẽ không bị khóa tài khoản</string>
     <string name="active">Kích hoạt</string>
     <string name="status">activated</string>
     <string name="des">Xóa skin bạn đã cài đặt</string>
@@ -34,7 +35,7 @@
     <string name="delete_success">Bạn đã xóa thành công</string>
     <string name="active_success">Bạn đã kích hoạt thành công</string>
     <string name="admin_request_delete">Bạn có muốn xóa hay không</string>
-    <string name="des_3">Nhấn nút để tiếp tục</string>
+    <string name="des_3">Cấp quyền truy cập cho ứng dụng, bằng cách nhấn vào nút, để ứng dụng có thể mod skin</string>
     <string name="installed">Chọn phiên bản</string>
     <string name="not_installed">Bạn chưa cài free fire</string>
     <string name="clothes">Trang phục</string>
@@ -42,7 +43,7 @@
     <string name="delete_skin">Xóa skin</string>
     <string name="rate">Đánh giá</string>
     <string name="share">Chia sẻ</string>
-    <string name="settting">cài đặt chung</string>
+    <string name="settting">Thông tin chung</string>
     <string name="language">Chọn ngôn ngữ</string>
     <string name="infor">Thông tin về ứng dụng</string>
     <string name="title_choose_language">Chọn ngôn ngữ bạn sử dụng</string>
@@ -60,5 +61,10 @@
     <string name="open_free_fire">Mở free fire</string>
     <string name="exit">Thoát</string>
     <string name="select">Chọn</string>
-
+    <string name="dialog_not_installed_ff">Bạn chưa cài free fire</string>
+    <string name="dialog_not_installed_ff_max">Bạn chưa cài free fire max</string>
+    <string name="activated_button">Đã kích hoạt</string>
+    <string name="not_active_button">Kích hoạt</string>
+    <string name="decide_delete">Bạn có muốn xóa hay không?</string>
+    <string name="Yes">Có</string>
 </resources>

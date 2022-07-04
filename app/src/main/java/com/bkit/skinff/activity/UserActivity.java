@@ -8,28 +8,26 @@ import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT;
 import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT_MAX;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON_MAX;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
+import android.widget.Toast;
 import com.bkit.skinff.R;
 import com.bkit.skinff.adapter.DescriptionAdapter;
 import com.bkit.skinff.databinding.ActivityUserBinding;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
-import com.bkit.skinff.sharepreference.GetUri;
-import com.bkit.skinff.sharepreference.SaveUri;
-import com.bkit.skinff.utilities.LanguageManager;
+import com.bkit.skinff.utilities.SetLanguage;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.ArrayList;
 
 public class UserActivity extends AppCompatActivity {
@@ -42,13 +40,17 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SetLanguage.getInstance().configLanguage(this);
         binding = ActivityUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
         if (Build.VERSION.SDK_INT < 30) {
             binding.iv4.setVisibility(View.GONE);
         }else{
             binding.iv4.setVisibility(View.VISIBLE);
         }
+        binding.tvSuccess.setText(R.string.next_to_continue);
         getName();
         getNameFile();
         initMain();
@@ -82,13 +84,12 @@ public class UserActivity extends AppCompatActivity {
     // handle transform descriptions
     // send model Name for another activity
     private void initMain() {
-        String code = GetUri.getInstance().getCode(this);
-        if(!code.equals("")){
-            LanguageManager.getInstance().updateLanguage(this,code);
-        }else{
-            LanguageManager.getInstance().updateLanguage(this,"vi");
-        }
 
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 30) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }
 
         DescriptionAdapter adapter = new DescriptionAdapter(this);
         binding.vp2User.setAdapter(adapter);
@@ -111,6 +112,17 @@ public class UserActivity extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                Toast.makeText(this, "Permission not granted", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void handleWelcome(int position) {

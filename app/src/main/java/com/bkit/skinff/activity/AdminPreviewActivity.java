@@ -22,12 +22,11 @@ import com.bkit.skinff.listener.ClickToModify;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.utilities.ArrangeTime;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class AdminPreviewActivity extends AppCompatActivity {
+public class AdminPreviewActivity extends AppCompatActivity  {
     private ActivityAdminPreviewBinding binding;
     private AdminAdapter adapter;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -114,12 +113,12 @@ public class AdminPreviewActivity extends AppCompatActivity {
                     }
                     adapter = new AdminAdapter(fileData, new ClickToModify() {
                         @Override
-                        public void modify(FileData fileData) {
+                        public void modifyData(FileData fileData) {
                             delete.deleteFirestore(fileData.getDocumentId(), binding.pb);
                             delete.deleteStorage(fileData.getModel(), fileData.getType(), fileData.getTime(), KEY_IMAGE);
                             delete.deleteStorage(fileData.getModel(),fileData.getType(),fileData.getTime(),fileData.getNameFile());
-
                         }
+
                     });
                     binding.rcvAdmin.setAdapter(adapter);
                 })

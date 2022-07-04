@@ -6,6 +6,8 @@
         android:padding="@dimen/_15sdp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fontFamily="@font/gulzar_regular"
+        android:lineSpacingExtra="@dimen/_5sdp"
         android:text="@string/introduce"
         android:textSize="@dimen/_13sdp"/>
 

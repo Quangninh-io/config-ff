@@ -57,6 +57,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/gulzar_regular"
                                 android:text="@string/outfit"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_20sdp"
@@ -88,6 +89,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/weapon"
+                                android:fontFamily="@font/gulzar_regular"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_20sdp"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -115,6 +117,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:text="@string/package_new"
                 android:textColor="@color/text_color"
+                android:fontFamily="@font/gulzar_regular"
                 android:textSize="@dimen/_23sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

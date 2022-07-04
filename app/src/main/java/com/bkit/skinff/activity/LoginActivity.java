@@ -3,14 +3,11 @@ package com.bkit.skinff.activity;
 import static com.bkit.skinff.utilities.Constants.COLLECTION_ADMIN;
 import static com.bkit.skinff.utilities.Constants.KEY_NAME;
 import static com.bkit.skinff.utilities.Constants.KEY_PASSWORD;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.bkit.skinff.databinding.ActivityLoginBinding;
 import com.bkit.skinff.sharepreference.GetUri;
 import com.bkit.skinff.sharepreference.SaveUri;
@@ -33,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         boolean checkLogin = GetUri.getInstance().getAccountAdmin(getApplication());
         if (checkLogin) {
             startActivity(new Intent(getApplication(), AdminActivity.class));
+            finish();
         }
 
         binding.btLogin.setOnClickListener(v -> {

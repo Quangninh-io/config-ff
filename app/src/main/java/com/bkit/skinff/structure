@@ -11,3 +11,4 @@ click upload image
 side user
 
 - click image, image will for we know, user click what time, app know information of time, handle download corresponding file
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

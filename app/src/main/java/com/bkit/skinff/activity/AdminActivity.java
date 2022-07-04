@@ -17,11 +17,10 @@ import static com.bkit.skinff.utilities.Constants.NAME_CLOTHES;
 import static com.bkit.skinff.utilities.Constants.NAME_RESCONF;
 import static com.bkit.skinff.utilities.Constants.OPEN_DOCUMENT_TREE;
 import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.documentfile.provider.DocumentFile;
-
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,22 +32,21 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import com.bkit.skinff.R;
 import com.bkit.skinff.databinding.ActivityAdminBinding;
+import com.bkit.skinff.firebase.DeleteFile;
 import com.bkit.skinff.firebase.UploadStorage;
 import com.bkit.skinff.firebase.UploadFirestore;
-
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     private ActivityAdminBinding binding;
     private final Map<String, Uri> fileDataChose = new HashMap<>();
     private final UploadStorage storage = UploadStorage.getInstance();
@@ -64,10 +62,12 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.srl.setOnRefreshListener(this);
         initMain();
     }
 
-    boolean checkChooseImage, checkGetTime, checkChooseFile, checkUploadToStorage, checkGetLinkImage;
+    boolean checkChooseImage, checkGetTime, checkChooseFile,
+            checkUploadToStorage, checkGetLinkImage, checkUploadFirestore;
 
     // first initial
     private void initMain() {
@@ -84,26 +84,33 @@ public class AdminActivity extends AppCompatActivity {
             chooseFile();
         });
         binding.btnUploadFile.setOnClickListener(v -> {
-            if (checkChooseImage && checkChooseFile && checkGetTime) {
-                checkUploadToStorage = true;
-                upload();
-            } else {
-                Toast.makeText(this, "Vui lòng chọn các trường trên trước", Toast.LENGTH_SHORT).show();
+            if(!checkUploadToStorage){
+                if (checkChooseImage && checkChooseFile && checkGetTime) {
+                    checkUploadToStorage = true;
+                    upload();
+                } else {
+                    Toast.makeText(this, "Vui lòng chọn các trường trên trước", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         binding.btnUploadFirestore.setOnClickListener(v -> {
-            if (checkGetLinkImage) {
-                uploadToFirestore();
-            } else {
-                Toast.makeText(this, "Vui lòng chọn các trường trên trước", Toast.LENGTH_SHORT).show();
+            if(!checkUploadFirestore){
+                if (checkGetLinkImage) {
+                    uploadToFirestore();
+                    checkUploadFirestore =true;
+                } else {
+                    Toast.makeText(this, "Vui lòng chọn các trường trên trước", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         binding.btnGetLinkImage.setOnClickListener(v -> {
-            if (checkUploadToStorage) {
-                checkGetLinkImage = true;
-                getLinkImage();
-            } else {
-                Toast.makeText(this, "Vui lòng chọn các trường trên trước", Toast.LENGTH_SHORT).show();
+            if(!checkGetLinkImage){
+                if (checkUploadToStorage) {
+                    checkGetLinkImage = true;
+                    getLinkImage();
+                } else {
+                    Toast.makeText(this, "Vui lòng chọn các trường trên trước", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         binding.btnPreview.setOnClickListener(v -> {
@@ -234,10 +241,16 @@ public class AdminActivity extends AppCompatActivity {
         for (String namerb : fileDataChose.keySet()) {
             rbFileName = new RadioButton(this);
             rbFileName.setText(namerb);
-            layoutParams = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT, RadioGroup.LayoutParams.MATCH_PARENT);
+            rbFileName.setPadding(30,0,0,0);
+            layoutParams = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,
+                    RadioGroup.LayoutParams.MATCH_PARENT);
+            layoutParams.setMargins(0,40,0,0);
             rgFileName.addView(rbFileName, layoutParams);
         }
         binding.llRadioGroup.addView(rgFileName);
+        ViewGroup.LayoutParams lp = binding.llRadioGroup.getLayoutParams();
+        lp.height = 100*(fileDataChose.size()+1);
+        binding.llRadioGroup.setLayoutParams(lp);
         rgFileName.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -277,18 +290,19 @@ public class AdminActivity extends AppCompatActivity {
     // update file use to "delete skin"
     private void updateFileRoot() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.admin_request_delete)
-                .setTitle("Xoa");
-        builder.setPositiveButton("Bạn có chắc muốn cập nhập hay ko", new DialogInterface.OnClickListener() {
+        builder.setMessage("Bạn có muốn cập nhập lại file gốc hay ko")
+                .setTitle("Cập nhập");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @SuppressLint("NotifyDataSetChanged")
             public void onClick(DialogInterface dialog, int id) {
                 time = TIME_DELETE;
                 String name = binding.tvNameFileChose.getText().toString().trim();
                 Uri uri = fileDataChose.get(name);
+                DeleteFile.getInstance().deleteFileRoot(model,type,time);
                 storage.putFileFirebaseStorage(getApplication(), uri, model, type, time, binding.pbUpload, name);
             }
         });
-        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("không", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User cancelled the dialog
                 dialog.cancel();
@@ -329,5 +343,10 @@ public class AdminActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "Chọn loại game và kiểu mode trước", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        initMain();
     }
 }

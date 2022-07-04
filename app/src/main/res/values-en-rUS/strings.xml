@@ -22,7 +22,8 @@
     <string name="login">Login</string>
     <string name="content_des">Make sure you have downloaded all the package in the dowload center</string>
     <string name="submit">fafda</string>
-    <string name="description">Gun and skin effects are only visible to the user other people won\'t see it. Click activate, the skin will be installed on the device, if you want to delete the skin, click delete skin</string>
+    <string name="description">Gun and skin effects are only visible to the user other people won\'t see it.
+        This is a 3rd party mod, will not affect the game, and will not lock your account</string>
     <string name="active">Active</string>
     <string name="status">Activated</string>
     <string name="des">Remove the skin you installed</string>
@@ -35,7 +36,7 @@
     <string name="delete_success">You have success deleted</string>
     <string name="active_success">You have success activated</string>
     <string name="admin_request_delete">dow you want delete</string>
-    <string name="des_3">Click button to continue</string>
+    <string name="des_3">Cấp quyền truy cập cho ứng dụng, bằng cách nhấn vào nút, để ứng dụng có thể mod skin</string>
     <string name="installed">Select version</string>
     <string name="not_installed">You haven\'t installed free fire</string>
     <string name="clothes">Outfit</string>
@@ -43,7 +44,7 @@
     <string name="delete_skin">Delete skin</string>
     <string name="rate">Assessment</string>
     <string name="share">Share</string>
-    <string name="settting">Setting</string>
+    <string name="settting">About</string>
     <string name="language">Select language</string>
     <string name="infor">Information about the app</string>
     <string name="title_choose_language">Choose the language you use</string>
@@ -61,4 +62,10 @@
     <string name="open_free_fire">Open free fire</string>
     <string name="exit">Exit</string>
     <string name="select">Select</string>
+    <string name="dialog_not_installed_ff">You haven\'t installed free fire</string>
+    <string name="dialog_not_installed_ff_max">You haven\'t installed free fire max</string>
+    <string name="activated_button">Activated</string>
+    <string name="not_active_button">Active</string>
+    <string name="decide_delete">Do you want to delete?</string>
+    <string name="Yes">Yes</string>
 </resources>

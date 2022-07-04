@@ -54,4 +54,5 @@ public class Constants {
     public static final String SHAREPRECODE = "share preference corresponding code";
     public static final String DOCUMENT_PATH = "name";
     public static final String TIME_DELETE = "3-12-2000";
+    public static final String BUNDLE_NAME = "bundle name";
 }

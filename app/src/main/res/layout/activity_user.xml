@@ -75,6 +75,7 @@
         android:layout_marginBottom="@dimen/_20sdp"
         android:text="@string/next_to_continue"
         android:visibility="gone"
+        android:fontFamily="@font/gulzar_regular"
         android:textColor="@color/white"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintStart_toEndOf="@+id/layout_image"

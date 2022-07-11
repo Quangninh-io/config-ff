@@ -8,6 +8,9 @@
     <item android:id="@+id/item_language"
         android:icon="@drawable/ic_language"
         android:title="@string/language"/>
+    <item android:id="@+id/item_guide"
+        android:icon="@drawable/guide"
+        android:title="@string/guide"/>
     <item android:title="@string/settting">
         <menu>
             <item android:id="@+id/item_rate"

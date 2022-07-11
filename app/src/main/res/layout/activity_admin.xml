@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/srl"
@@ -9,218 +9,215 @@
     android:padding="@dimen/_10sdp"
     tools:context=".activity.AdminActivity">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <Button
+                android:id="@+id/bt_choose_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_choose_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_preview"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bird"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bt_choose_image" />
+
+            <TextView
+                android:id="@+id/tv_get_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_of_month"
+                android:textSize="@dimen/_20sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_preview" />
+
+            <Button
+                android:id="@+id/bt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_get_time" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nhap ten goi"
+                android:textSize="@dimen/_15sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bt_time" />
+
+            <EditText
+                android:id="@+id/et_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:hint="@string/name_package"
+                android:inputType="number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
-                <Button
-                    android:id="@+id/bt_choose_image"
+            <TextView
+                android:id="@+id/tv_model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="loại game"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_name" />
+
+            <RadioGroup
+                android:id="@+id/rg_model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_model">
+
+                <RadioButton
+                    android:id="@+id/rb_ff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/btn_choose_image"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:text="free fire" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_preview"
-                    android:layout_width="300dp"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/bird"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/bt_choose_image" />
-
-                <TextView
-                    android:id="@+id/tv_get_time"
+                <RadioButton
+                    android:id="@+id/rb_ffmax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/date_of_month"
-                    android:textSize="@dimen/_20sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_preview" />
+                    android:text="free fire max" />
+            </RadioGroup>
 
-                <Button
-                    android:id="@+id/bt_time"
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kiểu sẽ mod"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rg_model" />
+
+            <RadioGroup
+                android:id="@+id/rg_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_type">
+
+                <RadioButton
+                    android:id="@+id/rb_gun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/btn_date"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_get_time" />
+                    android:text="vũ khí" />
 
-                <TextView
-                    android:id="@+id/tv_name"
+                <RadioButton
+                    android:id="@+id/rb_outfit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="nhap ten goi"
-                    android:textSize="@dimen/_15sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bt_time" />
+                    android:text="quần áo" />
+            </RadioGroup>
 
-                <EditText
-                    android:id="@+id/et_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/name_package"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            <Button
+                android:id="@+id/btn_choose_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="chọn file"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rg_type" />
 
-                <TextView
-                    android:id="@+id/tv_model"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="loại game"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_name" />
+            <LinearLayout
+                android:id="@+id/ll_radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_choose_file" />
 
-                <RadioGroup
-                    android:id="@+id/rg_model"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_model">
+            <TextView
+                android:id="@+id/tv_name_file_chose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="file da chon"
+                app:layout_constraintBottom_toBottomOf="@id/btn_choose_file"
+                app:layout_constraintStart_toEndOf="@id/btn_choose_file"
+                app:layout_constraintTop_toTopOf="@id/btn_choose_file" />
 
-                    <RadioButton
-                        android:id="@+id/rb_ff"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="free fire" />
+            <Button
+                android:id="@+id/btn_upload_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="file"
+                android:text="@string/btn_upload_file"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_radio_group" />
 
-                    <RadioButton
-                        android:id="@+id/rb_ffmax"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="free fire max" />
-                </RadioGroup>
+            <TextView
+                android:id="@+id/tv_link_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/link_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_upload_file" />
 
-                <TextView
-                    android:id="@+id/tv_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="kiểu sẽ mod"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rg_model" />
+            <Button
+                android:id="@+id/btn_get_link_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="file"
+                android:text="@string/get_link_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_link_image" />
 
-                <RadioGroup
-                    android:id="@+id/rg_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_type">
+            <Button
+                android:id="@+id/btn_upload_firestore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="file"
+                android:text="@string/upload_to_firestore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_get_link_image" />
 
-                    <RadioButton
-                        android:id="@+id/rb_gun"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="vũ khí" />
+            <Button
+                android:id="@+id/bt_update_file_root"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/update_file_root"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_upload_firestore" />
 
-                    <RadioButton
-                        android:id="@+id/rb_outfit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="quần áo" />
-                </RadioGroup>
-
-                <Button
-                    android:id="@+id/btn_choose_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="chọn file"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rg_type" />
-
-                <LinearLayout
-                    android:id="@+id/ll_radio_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_choose_file" />
-
-                <TextView
-                    android:id="@+id/tv_name_file_chose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:text="file da chon"
-                    app:layout_constraintBottom_toBottomOf="@id/btn_choose_file"
-                    app:layout_constraintStart_toEndOf="@id/btn_choose_file"
-                    app:layout_constraintTop_toTopOf="@id/btn_choose_file" />
-
-                <Button
-                    android:id="@+id/btn_upload_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="file"
-                    android:text="@string/btn_upload_file"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ll_radio_group" />
-
-                <TextView
-                    android:id="@+id/tv_link_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/link_image"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_upload_file" />
-
-                <Button
-                    android:id="@+id/btn_get_link_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="file"
-                    android:text="@string/get_link_image"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_link_image" />
-
-                <Button
-                    android:id="@+id/btn_upload_firestore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="file"
-                    android:text="@string/upload_to_firestore"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_get_link_image" />
-
-                <Button
-                    android:id="@+id/bt_update_file_root"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/update_file_root"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_upload_firestore" />
-
-                <Button
-                    android:id="@+id/btn_preview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="file"
-                    android:text="@string/preview"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bt_update_file_root" />
+            <Button
+                android:id="@+id/btn_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="file"
+                android:text="@string/preview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bt_update_file_root" />
 
 
-                <ProgressBar
-                    android:id="@+id/pb_upload"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <ProgressBar
+                android:id="@+id/pb_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
-    </ScrollView>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+</ScrollView>

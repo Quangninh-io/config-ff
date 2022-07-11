@@ -12,6 +12,15 @@ public class FileData  implements Serializable {
     private String documentId;
     private String nameFile;
     private boolean checkName;
+    private boolean active;
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public boolean getCheckName() {
         return checkName;

@@ -21,12 +21,14 @@ import android.os.Bundle;
 import android.util.Log;
 import com.bkit.skinff.R;
 import com.bkit.skinff.adapter.UserAdapter;
+import com.bkit.skinff.ads.GoogleAds;
 import com.bkit.skinff.databinding.ActivityUserWeaponBinding;
 import com.bkit.skinff.firebase.DownloadFile;
 import com.bkit.skinff.listener.ClickSpecificItem;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
 import com.bkit.skinff.utilities.ArrangeTime;
+import com.bkit.skinff.utilities.SetLanguage;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.text.SimpleDateFormat;
@@ -44,12 +46,13 @@ public class UserOutfitActivity extends AppCompatActivity {
     Uri uriOutfit, uriWeapon;
     Name name;
     String decideChoseModel = "";
+    GoogleAds googleAds = GoogleAds.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SetLanguage.getInstance().configLanguage(this);
         binding = ActivityUserWeaponBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        SetLanguage.getInstance().configLanguage(this);
         initMain();
     }
     // initial run activity
@@ -104,6 +107,7 @@ public class UserOutfitActivity extends AppCompatActivity {
         adapter = new UserAdapter(list, getApplicationContext(), new ClickSpecificItem() {
             @Override
             public void click(FileData fileData) {
+                initAds();
                 Intent intent = new Intent(getApplication(), UserDetailActivity.class);
                 intent.putExtra(INTENT_WEAPON, String.valueOf(uriWeapon));
                 intent.putExtra(INTENT_OUTFIT, String.valueOf(uriOutfit));
@@ -112,8 +116,17 @@ public class UserOutfitActivity extends AppCompatActivity {
                 intent.putExtra(INTENT_NAME, name);
                 startActivity(intent);
             }
+
+            @Override
+            public void pos(int position) {
+
+            }
         });
         binding.rvWeapon.setAdapter(adapter);
+    }
+
+    private void initAds() {
+        googleAds.initInterstitialAds(this);
     }
 
 }

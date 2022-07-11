@@ -14,6 +14,7 @@ import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON_MAX;
 import static com.bkit.skinff.utilities.Constants.NAME_CLOTHES;
+import static com.bkit.skinff.utilities.Constants.NAME_IMAGE;
 import static com.bkit.skinff.utilities.Constants.NAME_RESCONF;
 import static com.bkit.skinff.utilities.Constants.OPEN_DOCUMENT_TREE;
 import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
@@ -42,6 +43,8 @@ import com.bkit.skinff.databinding.ActivityAdminBinding;
 import com.bkit.skinff.firebase.DeleteFile;
 import com.bkit.skinff.firebase.UploadStorage;
 import com.bkit.skinff.firebase.UploadFirestore;
+import com.bkit.skinff.utilities.SetLanguage;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,9 +63,9 @@ public class AdminActivity extends AppCompatActivity implements SwipeRefreshLayo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SetLanguage.getInstance().configLanguage(this);
         binding = ActivityAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.srl.setOnRefreshListener(this);
         initMain();
     }
 
@@ -166,7 +169,7 @@ public class AdminActivity extends AppCompatActivity implements SwipeRefreshLayo
     // send a request t device to can open archive dialo
     public void requestSdcardAccessPermission() {
         // to can access android/data
-        Intent intent = new Intent(OPEN_DOCUMENT_TREE);
+        Intent intent = new Intent("android.intent.action.OPEN_DOCUMENT_TREE");
         Uri parse = null;
         if (model.equals("ff")) {
             parse = Uri.parse(FILE_FREE_FIRE);
@@ -175,7 +178,7 @@ public class AdminActivity extends AppCompatActivity implements SwipeRefreshLayo
             parse = Uri.parse(FILE_FREE_FIRE_MAX);
         }
         // will be access first when opening storage
-        intent.putExtra(INITIAL_URI,
+        intent.putExtra("android.provider.extra.INITIAL_URI",
                 DocumentsContract.buildDocumentUriUsingTree(parse, DocumentsContract.getTreeDocumentId(parse)));
         startActivityForResult(intent, CHOSE_FILE);
     }
@@ -278,10 +281,10 @@ public class AdminActivity extends AppCompatActivity implements SwipeRefreshLayo
 
     // upload data to storage
     // upload file config game
-    // uploaf file image
+    // upload file image
     private void upload() {
         time = binding.tvGetTime.getText().toString().trim();
-        storage.putFileFirebaseStorage(this, uriImage, model, type, time, binding.pbUpload, KEY_IMAGE);
+        storage.putFileFirebaseStorage(this, uriImage, model, type, time, binding.pbUpload, NAME_IMAGE);
         String name = binding.tvNameFileChose.getText().toString().trim();
         Uri uri = fileDataChose.get(name);
         storage.putFileFirebaseStorage(this, uri, model, type, time, binding.pbUpload, name);

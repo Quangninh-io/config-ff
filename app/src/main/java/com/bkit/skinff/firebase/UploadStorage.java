@@ -1,5 +1,6 @@
 package com.bkit.skinff.firebase;
 
+import static com.bkit.skinff.activity.AdminUpdateActivity.doneSignal;
 import static com.bkit.skinff.utilities.Constants.KEY_IMAGE;
 
 import android.content.Context;
@@ -31,13 +32,16 @@ public class UploadStorage {
                 .addOnSuccessListener(taskSnapshot -> {
                     pbUpload.setVisibility(View.INVISIBLE);
                     Toast.makeText(context, "thành công", Toast.LENGTH_SHORT).show();
+
                 })
                 .addOnFailureListener(v -> {
                     Log.d("Upload fail", "0");//Exception e
                     pbUpload.setVisibility(View.INVISIBLE);
                     Toast.makeText(context, "thất bại", Toast.LENGTH_SHORT).show();
+
                 });
     }
+
     // handle get link image in storage to upload link to firestore
     public void getUriImage(String model, String type, String time, TextView txtLinkImage){
         StorageReference storageRef;

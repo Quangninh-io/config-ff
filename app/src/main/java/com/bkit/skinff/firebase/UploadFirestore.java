@@ -9,6 +9,7 @@ import static com.bkit.skinff.utilities.Constants.KEY_NAME;
 import static com.bkit.skinff.utilities.Constants.KEY_NAME_FILE;
 import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
+import static com.bkit.skinff.utilities.Constants.NAME_IMAGE;
 
 import android.content.Context;
 import android.util.Log;
@@ -34,7 +35,7 @@ public class UploadFirestore {
     // upload to firestore with collection is file
     public void uploadToFirestore(Context context, String model, String name, String time, String type, ProgressBar pbUpload, String linkImage, String nameFile){
         Map<String, Object> fileData = new HashMap<>();
-        fileData.put(KEY_IMAGE,linkImage);
+        fileData.put(KEY_NAME,linkImage);
         fileData.put(KEY_MODEL,model);
         fileData.put(KEY_NAME,name);
         fileData.put(KEY_TIME, time);

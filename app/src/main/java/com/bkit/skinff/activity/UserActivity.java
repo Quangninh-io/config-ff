@@ -46,9 +46,9 @@ public class UserActivity extends AppCompatActivity {
 
 
         if (Build.VERSION.SDK_INT < 30) {
-            binding.iv4.setVisibility(View.GONE);
+            binding.iv3.setVisibility(View.GONE);
         }else{
-            binding.iv4.setVisibility(View.VISIBLE);
+            binding.iv3.setVisibility(View.VISIBLE);
         }
         binding.tvSuccess.setText(R.string.next_to_continue);
         getName();
@@ -103,6 +103,7 @@ public class UserActivity extends AppCompatActivity {
             }
         });
         binding.tvSuccess.setOnClickListener(v -> {
+            binding.pb.setVisibility(View.VISIBLE);
             Intent intent = new Intent(getApplicationContext(), UserMainActivity.class);
             intent.putExtra(INTENT_WEAPON, String.valueOf(uriWeapon));
             intent.putExtra(INTENT_OUTFIT, String.valueOf(uriOutfit));
@@ -134,9 +135,6 @@ public class UserActivity extends AppCompatActivity {
                     break;
                 case 1:
                     binding.iv2.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
-                    break;
-                case 2:
-                    binding.iv3.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
                     binding.tvSuccess.setVisibility(View.VISIBLE);
                     break;
 
@@ -151,9 +149,6 @@ public class UserActivity extends AppCompatActivity {
                     break;
                 case 2:
                     binding.iv3.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
-                    break;
-                case 3:
-                    binding.iv4.setBackground(getResources().getDrawable(R.drawable.shape_button_transfrom_white));
                     binding.tvSuccess.setVisibility(View.VISIBLE);
                     break;
             }
@@ -165,7 +160,6 @@ public class UserActivity extends AppCompatActivity {
         binding.iv1.setBackground(getResources().getDrawable(R.drawable.shape_button_transform));
         binding.iv2.setBackground(getResources().getDrawable(R.drawable.shape_button_transform));
         binding.iv3.setBackground(getResources().getDrawable(R.drawable.shape_button_transform));
-        binding.iv4.setBackground(getResources().getDrawable(R.drawable.shape_button_transform));
     }
 
     private void getName() {

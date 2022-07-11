@@ -1,5 +1,7 @@
 package com.bkit.skinff.utilities;
 
+import com.bkit.skinff.model.Name;
+
 public class Constants {
     public static final int CHOSE_FILE = 123;
     public static final String OPEN_DOCUMENT_TREE = "android.intent.action.OPEN_DOCUMENT_TREE";
@@ -23,7 +25,8 @@ public class Constants {
     public static final String COLLECTION_NAME = "name";
     public static final String KEY_TIME = "time";
     public static final String KEY_TYPE = "type";
-    public static final String KEY_IMAGE = "image.png";
+    public static final String KEY_IMAGE = "image";
+    public static final String NAME_IMAGE = "image.png";
     public static final String KEY_MODEL = "model";
     public static final String KEY_NAME = "name";
     public static final String KEY_NAME_FILE = "namefile";
@@ -52,7 +55,11 @@ public class Constants {
     public static final String SHAREPREADMIN = "share preference check login admin";
     public static final String SHAREPREFILE = "share preference corresponding model";
     public static final String SHAREPRECODE = "share preference corresponding code";
+    public static final String SHARE_PRE_STATUS_GUN = "share preference status gun";
+    public static final String SHARE_PRE_STATUS_OUTFIT = "share preference status outfit";
+    public static final String SHARE_PRE_GUIDE = "share preference guide";
     public static final String DOCUMENT_PATH = "name";
     public static final String TIME_DELETE = "3-12-2000";
     public static final String BUNDLE_NAME = "bundle name";
+    public static final String APPEARED = "appeared";
 }

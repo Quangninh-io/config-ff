@@ -1,7 +1,14 @@
 package com.bkit.skinff.adapter;
 
 
+import static com.bkit.skinff.utilities.Constants.KEY_MODEL;
+import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT;
+import static com.bkit.skinff.utilities.Constants.KEY_TIME;
+import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
+import static com.bkit.skinff.utilities.Constants.STATUS_ACTIVE;
+import static com.bkit.skinff.utilities.Constants.STATUS_INACTIVE;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
@@ -10,9 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bkit.skinff.R;
 import com.bkit.skinff.databinding.ItemUserMainAdpaterBinding;
 import com.bkit.skinff.listener.ClickSpecificItem;
 import com.bkit.skinff.model.FileData;
+import com.bkit.skinff.sharepreference.GetUri;
+import com.bkit.skinff.utilities.SetLanguage;
 import com.squareup.picasso.Picasso;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,8 +37,11 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserMainViewHolder>{
     List<FileData> list;
     Date currentTime = Calendar.getInstance().getTime();
+    String time = "", mod ="", type ="";
     Context context;
-    private final ClickSpecificItem specificItem;
+    GetUri getUri = GetUri.getInstance();
+    ClickSpecificItem specificItem;
+    SetLanguage setLanguage = SetLanguage.getInstance();
 
     public UserAdapter(List<FileData> list, Context context,ClickSpecificItem specificItem) {
         this.list = list;
@@ -48,6 +62,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserMainViewHo
     @Override
     public void onBindViewHolder(@NonNull UserMainViewHolder holder, int position) {
         holder.setData(list.get(position));
+        holder.binding.getRoot().setOnClickListener(v-> {
+            specificItem.click(list.get(position));
+            specificItem.pos(position);
+
+        });
     }
 
     @Override
@@ -74,6 +93,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserMainViewHo
             Instant now = Instant.now(); //current date
             Instant before = now.minus(Duration.ofDays(LIMITED_DATE_SET_NEW));
             Date dateBefore = Date.from(before);
+
+
             String thirtyDayAgo = simpleDateFormat.format(dateBefore);
             Log.d("time", thirtyDayAgo);
             try {
@@ -89,11 +110,35 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserMainViewHo
                 e.printStackTrace();
             }
 
-            binding.tvName.setText(fileData.getName());
+            getShar(fileData);
+            if(fileData.getActive()){
+                binding.tvActive.setVisibility(View.VISIBLE);
+            }else{
+                binding.tvActive.setVisibility(View.INVISIBLE);
+            }
             binding.tvTime.setText(fileData.getTime());
-            binding.getRoot().setOnClickListener(v-> {
-                specificItem.click(fileData);
-            });
+            setLanguage.configLanguage(context);
+            if(fileData.getType().equals(KEY_OUTFIT)){
+                binding.tvName.setText(context.getResources().getString(R.string.collection_outfit)+fileData.getName());
+            }else{
+                binding.tvName.setText(context.getResources().getString(R.string.collection_gun)+fileData.getName());
+            }
+        }
+    }
+    private void getShar(FileData fileData){
+        if(fileData.getType().equals("gun")){
+            time = getUri.getStatusGun(context,KEY_TIME);
+            mod = getUri.getStatusGun(context,KEY_MODEL);
+            type = getUri.getStatusGun(context,KEY_TYPE);
+        }else{
+            time = getUri.getStatusOutfit(context,KEY_TIME);
+            mod = getUri.getStatusOutfit(context,KEY_MODEL);
+            type = getUri.getStatusOutfit(context,KEY_TYPE);
+        }
+        if(time.equals(fileData.getTime()) && mod.equals(fileData.getModel())  && type.equals(fileData.getType())){
+            fileData.setActive(true);
+        }else{
+            fileData.setActive(false);
         }
     }
 }

@@ -9,7 +9,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.bkit.skinff.fragment.guide.Description2Fragment;
 import com.bkit.skinff.fragment.guide.Description3Fragment;
-import com.bkit.skinff.fragment.guide.DescriptionFragment;
 import com.bkit.skinff.fragment.guide.WelcomeFragment;
 // use for target when open app, user will tap desc about app and guide
 // include 4 fragments
@@ -33,8 +32,6 @@ public class DescriptionAdapter extends FragmentStateAdapter {
                 case 0:
                     return new WelcomeFragment();
                 case 1:
-                    return new DescriptionFragment();
-                case 2:
                     return new Description2Fragment();
             }
         }else{
@@ -42,10 +39,8 @@ public class DescriptionAdapter extends FragmentStateAdapter {
                 case 0:
                     return new WelcomeFragment();
                 case 1:
-                    return new DescriptionFragment();
-                case 2:
                     return new Description2Fragment();
-                case 3:
+                case 2:
                     return new Description3Fragment();
             }
         }
@@ -55,8 +50,8 @@ public class DescriptionAdapter extends FragmentStateAdapter {
     @Override
     public int getItemCount() {
         if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 30) {
-            return 3;
+            return 2;
         }
-        return 4;
+        return 3;
     }
 }

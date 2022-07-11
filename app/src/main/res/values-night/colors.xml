@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text_color">#F4F4F4</color>
     <color name="text_button">#FFFFFF</color>
-    <color name="new_status">#2039B8</color>
+    <color name="new_status">#071145</color>
     <color name="button_transform">#360303</color>
     <color name="background">#837564</color>
     <color name="primary_color">#030B36</color>
@@ -19,4 +19,6 @@
     <color name="warning">#D80000</color>
     <color name="background_detail">#16161A</color>
     <color name="text_language">#030B36</color>
+    <color name="primary_color_item">#171717</color>
+    <color name="active">#36BD2C</color>
 </resources>

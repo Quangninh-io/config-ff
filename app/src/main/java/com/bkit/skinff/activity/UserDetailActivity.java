@@ -7,20 +7,33 @@ import static com.bkit.skinff.utilities.Constants.INTENT_DETAIL;
 import static com.bkit.skinff.utilities.Constants.INTENT_NAME;
 import static com.bkit.skinff.utilities.Constants.INTENT_OUTFIT;
 import static com.bkit.skinff.utilities.Constants.INTENT_WEAPON;
+import static com.bkit.skinff.utilities.Constants.KEY_MODEL;
+import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT;
+import static com.bkit.skinff.utilities.Constants.KEY_TIME;
+import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
 import static com.bkit.skinff.utilities.Constants.STATUS_ACTIVE;
 import static com.bkit.skinff.utilities.Constants.STATUS_INACTIVE;
+import static com.bkit.skinff.utilities.Constants.STORAGE_WEAPON;
+import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.bkit.skinff.R;
+import com.bkit.skinff.adapter.UserAdapter;
+import com.bkit.skinff.ads.GoogleAds;
 import com.bkit.skinff.databinding.ActivityUserDetailBinding;
 import com.bkit.skinff.firebase.DownloadFile;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
+import com.bkit.skinff.sharepreference.GetUri;
+import com.bkit.skinff.sharepreference.SaveUri;
 import com.bkit.skinff.utilities.SetLanguage;
 import com.squareup.picasso.Picasso;
 import java.text.ParseException;
@@ -28,13 +41,17 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
+import java.util.concurrent.CountDownLatch;
 
 public class UserDetailActivity extends AppCompatActivity {
     private ActivityUserDetailBinding binding;
     private FileData fileData;
     Uri uriWeapon, uriOutfit;
     Name name;
-    String decideChoseModel = "";
+    GetUri getUri = GetUri.getInstance();
+    SaveUri saveUri = SaveUri.getInstance();
+    String decideChoseModel = "", time = "", model = "", type = "";
+    GoogleAds googleAds = GoogleAds.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +66,24 @@ public class UserDetailActivity extends AppCompatActivity {
     }
 
     // init when open activity
+    @SuppressLint("SetTextI18n")
+
     private void initMain() {
         if(CHECK_FF_EXIST.equals("") && CHECK_FF_MAX_EXIST.equals("")){
             binding.btActive.setVisibility(View.GONE);
         }
         fileData = (FileData) getIntent().getSerializableExtra(INTENT_DETAIL);
-        binding.tvName.setText(fileData.getName());
+        if(fileData.getType().equals(KEY_OUTFIT)){
+            binding.tvName.setText(getResources().getString(R.string.collection_outfit)+ fileData.getName());
+        }else{
+            binding.tvName.setText(getResources().getString(R.string.collection_gun)+ fileData.getName());
+        }
         Picasso.get().load(fileData.getImage()).into(binding.iv);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Instant now = Instant.now(); //current date
         Instant before = now.minus(Duration.ofDays(LIMITED_DATE_SET_NEW));
         Date dateBefore = Date.from(before);
         String thirtyDayAgo = simpleDateFormat.format(dateBefore);
-        Log.d("time", thirtyDayAgo);
         try {
             Date dateInFirebase = simpleDateFormat.parse(fileData.getTime());
             Date dateInReality = simpleDateFormat.parse(thirtyDayAgo);
@@ -80,6 +102,23 @@ public class UserDetailActivity extends AppCompatActivity {
         });
 
         binding.btActive.setTag(STATUS_INACTIVE);
+        if(fileData.getType().equals("gun")){
+            time = getUri.getStatusGun(getApplication(),KEY_TIME);
+            model = getUri.getStatusGun(getApplication(),KEY_MODEL);
+            type = getUri.getStatusGun(getApplication(),KEY_TYPE);
+        }else{
+            time = getUri.getStatusOutfit(getApplication(),KEY_TIME);
+            model = getUri.getStatusOutfit(getApplication(),KEY_MODEL);
+            type = getUri.getStatusOutfit(getApplication(),KEY_TYPE);
+        }
+
+        if(time.equals(fileData.getTime()) && model.equals(fileData.getModel())  && type.equals(fileData.getType())){
+            binding.btActive.setTag(STATUS_ACTIVE);
+            binding.btActive.setText(getResources().getString(R.string.activated_button));
+        }else{
+            binding.btActive.setTag(STATUS_INACTIVE);
+            binding.btActive.setText(getResources().getString(R.string.not_active_button));
+        }
 
         binding.ivBack.setOnClickListener(v->{
             onBackPressed();///
@@ -88,29 +127,45 @@ public class UserDetailActivity extends AppCompatActivity {
     // handle click button "active"
     private void handleClick() {
         if (binding.btActive.getTag() == STATUS_INACTIVE) {
+            googleAds.initInterstitialAds(this);
             binding.btActive.setTag(STATUS_ACTIVE);
-            binding.btActive.setText(getResources().getString(R.string.not_active_button));
-            handleActive();
+            handleActive(fileData.getTime());
+            binding.btActive.setText(getResources().getString(R.string.activated_button));
+            if(fileData.getType().equals("gun")){
+                saveUri.saveStatusClearDataGun(getApplication());
+                saveUri.saveStatusGun(getApplication(),fileData.getModel(),fileData.getType(),fileData.getTime());
+            }else{
+                saveUri.saveStatusClearDataOutFit(getApplication());
+                saveUri.saveStatusOutfit(getApplication(),fileData.getModel(),fileData.getType(),fileData.getTime());
+            }
         }
-//        else {
-//            binding.btActive.setTag(STATUS_INACTIVE);
-//            binding.btActive.setText(getResources().getString(R.string.not_active_button));
-//        }
+        else {
+            googleAds.initInterstitialAds(this);
+            if(fileData.getType().equals("gun")){
+                saveUri.saveStatusClearDataGun(getApplication());
+            }else{
+                saveUri.saveStatusClearDataOutFit(getApplication());
+            }
+            binding.btActive.setTag(STATUS_INACTIVE);
+            binding.btActive.setText(getResources().getString(R.string.not_active_button));
+            handleActive(TIME_DELETE);
+        }
     }
 
+
     // download file corresponding from storage
-    private void handleActive() {
+    private void handleActive(String time) {
         if (fileData.getModel().equals("ffmax")) {
             if (fileData.getType().equals("gun")) {
-                downLoadFile(uriWeapon, name.getWeaponMax(), fileData.getTime());
+                downLoadFile(uriWeapon, name.getWeaponMax(), time);
             } else {
-                downLoadFile(uriOutfit, name.getOutfitMax(), fileData.getTime());
+                downLoadFile(uriOutfit, name.getOutfitMax(), time);
             }
         } else {
             if (fileData.getType().equals("gun")) {
-                downLoadFile(uriWeapon, name.getWeapon(), fileData.getTime());
+                downLoadFile(uriWeapon, name.getWeapon(),time);
             } else {
-                downLoadFile(uriOutfit, name.getOutfit(), fileData.getTime());
+                downLoadFile(uriOutfit, name.getOutfit(), time);
             }
         }
 
@@ -126,4 +181,5 @@ public class UserDetailActivity extends AppCompatActivity {
     private void downLoadFile(Uri uri, String nameFile, String time) {
         DownloadFile.getInstance().downLoadFile(binding.pbDowload, time, uri, this, fileData.getModel(), fileData.getType(), nameFile);
     }
+
 }

@@ -116,9 +116,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:text="@string/package_new"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:textColor="@color/text_color"
                 android:fontFamily="@font/gulzar_regular"
-                android:textSize="@dimen/_23sdp"
+                android:textSize="@dimen/_21sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

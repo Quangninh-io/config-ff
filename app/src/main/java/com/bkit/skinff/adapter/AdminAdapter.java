@@ -52,7 +52,12 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdminViewHol
     public void onBindViewHolder(@NonNull AdminViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setData(list.get(position));
         holder.binding.getRoot().setOnClickListener(v->{
+            modify.updateData(list.get(position));
+            modify.getPos(position);
+        });
+        holder.binding.getRoot().setOnLongClickListener(v->{
             createDialogDelete(position,v);
+            return false;
         });
 
     }

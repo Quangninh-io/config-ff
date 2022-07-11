@@ -19,4 +19,8 @@
     <color name="warning">#D80000</color>
     <color name="background_detail">#FFFFFF</color>
     <color name="text_language">#FFFFFF</color>
+    <color name="primary_color_item">#E1E1E1</color>
+    <color name="active">#36BD2C</color>
+    <color name="des">#000000</color>
+    <color name="des2">#00F4F4F4</color>
 </resources>

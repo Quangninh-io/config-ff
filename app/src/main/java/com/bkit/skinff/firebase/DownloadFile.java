@@ -80,8 +80,6 @@ public class DownloadFile {
                     am.killBackgroundProcesses("com.dts.freefireth");
                     context.startActivity(context.getPackageManager().getLaunchIntentForPackage("com.dts.freefireth"));
                 }
-            } else {
-                Toast.makeText(context, context.getResources().getString(R.string.dialog_not_installed_ff_max), Toast.LENGTH_SHORT).show();
             }
 
             if (CHECK_FF_MAX_EXIST.equals("ffmax")) {
@@ -90,8 +88,6 @@ public class DownloadFile {
                     am.killBackgroundProcesses("com.dts.freefiremax");
                     context.startActivity(context.getPackageManager().getLaunchIntentForPackage("com.dts.freefiremax"));
                 }
-            } else {
-                Toast.makeText(context, context.getResources().getString(R.string.dialog_not_installed_ff), Toast.LENGTH_SHORT).show();
             }
             dialog.dismiss();
         });

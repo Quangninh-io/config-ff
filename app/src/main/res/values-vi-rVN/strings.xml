@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">skin ff</string>
-    <string name="new_status">mới</string>
+    <string name="new_status">Mới</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="appname">Config FF</string>
     <string name="outfit">Trang phục</string>
@@ -13,7 +13,7 @@
     <string name="date_of_month">10-10-1010</string>
     <string name="btn_date">Chọn ngày</string>
     <string name="name_package">bkit</string>
-    <string name="btn_upload_file">upload to storage</string>
+    <string name="btn_upload_file">Đưa dữ liệu lên storage</string>
     <string name="btn_choose_image">chọn ảnh</string>
     <string name="btn_show_data">show data</string>
     <string name="preview">Xem trước</string>
@@ -23,7 +23,7 @@
     <string name="content_des">Đảm bảo rằng bạn đã tải xuống tất cả các gói trong trung tâm tải xuống</string>
     <string name="submit">fafda</string>
     <string name="description">Hiệu ứng súng và trang phục chỉ thấy được ở phía người dùng, người khác sẽ không thấy được.
-        Đây là bản mod của bên thứ 3, sẽ không ảnh hưởng tới trò chơi, và sẽ không bị khóa tài khoản</string>
+        Đây là bản mod của bên thứ 3, sẽ không ảnh hưởng tới trò chơi, và sẽ không bị khóa tài khoản                                                                                                               </string>
     <string name="active">Kích hoạt</string>
     <string name="status">Đã kích hoạt</string>
     <string name="des">Xóa skin bạn đã cài đặt</string>
@@ -36,7 +36,7 @@
     <string name="delete_success">Bạn đã xóa thành công</string>
     <string name="active_success">Bạn đã kích hoạt thành công</string>
     <string name="admin_request_delete">Bạn có muốn xóa hay không</string>
-    <string name="des_3">Cấp quyền truy cập cho ứng dụng, bằng cách nhấn vào nút, để ứng dụng có thể mod skin</string>
+    <string name="des_3">Nhấn vào nút để cấp quyền cho ứng dụng</string>
     <string name="installed">Chọn phiên bản</string>
     <string name="not_installed">Bạn chưa cài free fire</string>
     <string name="clothes">Trang phục</string>
@@ -68,4 +68,7 @@
     <string name="not_active_button">Kích hoạt</string>
     <string name="decide_delete">Bạn có muốn xóa hay không?</string>
     <string name="Yes">Có</string>
+    <string name="collection_gun">Bộ sưu tập skin súng hiếm v</string>
+    <string name="collection_outfit">Bộ sưu tập trang phục hiếm v</string>
+    <string name="guide">Hướng dẫn</string>
 </resources>

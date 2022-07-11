@@ -4,4 +4,5 @@ import com.bkit.skinff.model.FileData;
 
 public interface ClickSpecificItem {
     void click(FileData fileData);
+    void pos(int position);
 }

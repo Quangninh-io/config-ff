@@ -12,20 +12,15 @@ import androidx.fragment.app.FragmentManager;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,23 +28,13 @@ import com.bkit.skinff.R;
 import com.bkit.skinff.ads.GoogleAds;
 import com.bkit.skinff.databinding.ActivityUserMainBinding;
 import com.bkit.skinff.fragment.user.UserMainFragment;
-import com.bkit.skinff.listener.ClickSpecificItem;
 import com.bkit.skinff.listener.KnowWhichItemClicked;
-import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
 import com.bkit.skinff.sharepreference.GetUri;
 import com.bkit.skinff.sharepreference.SaveUri;;
 import com.bkit.skinff.utilities.LanguageManager;
 import com.bkit.skinff.utilities.SetLanguage;
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.navigation.NavigationView;
 
 public class UserMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KnowWhichItemClicked {
@@ -93,6 +78,7 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
         });
         binding.ivLogo.setOnLongClickListener(v -> {
             startActivity(new Intent(getApplication(), LoginActivity.class));
+
             return false;
         });
 
@@ -116,7 +102,10 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
         int id = item.getItemId();
         if (id == R.id.item_delete_skin) {
             Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.decide_delete);
+            dialog.setContentView(R.layout.alert_delete);
+            int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+            dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_dialog));
             Button btYes = dialog.findViewById(R.id.bt_decide_delete);
             btYes.setOnClickListener(v -> {
                 googleAds.initInterstitialAds(this);
@@ -144,39 +133,44 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
             handleIntroduceAbutApp();
         } else if (id == R.id.item_guide) {
             handleGuide();
+        }else if (id==R.id.item_response){
+            startActivity(new Intent(this,ResponseActivity.class));
+
         }
         binding.dlMain.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void handleGuide() {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_guilde);
-        dialog.show();
-        ImageView gif = dialog.findViewById(R.id.gif);
-        TextView tvGuide = dialog.findViewById(R.id.tv_guide);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gif.setImageResource(R.drawable.skin);
-            }
-        }, 3000);
-        
-
+//        Dialog dialog = new Dialog(this);
+//        dialog.setContentView(R.layout.alert_guilde);
+//        ImageView tvClose = dialog.findViewById(R.id.tv_close);
+//        tvClose.setOnClickListener(v->{dialog.dismiss();});
+//
+//        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.shape_dialog));
+//        dialog.show();
+        startActivity(new Intent(this,GuideActivity.class));
 
     }
 
     private void handleIntroduceAbutApp() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.alert_infor_about);
+        ImageView imageView = dialog.findViewById(R.id.iv_cancel_about);
+        imageView.setOnClickListener(v->{
+            dialog.dismiss();
+        });
         dialog.show();
     }
 
     private void handleLanguage() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.alret_choose_language);
+        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+        dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_dialog));
         Button btSaveLanguage = dialog.findViewById(R.id.bt_save_language);
+        Button btExit = dialog.findViewById(R.id.bt_cancel_language);
         ImageView ivEnglish = dialog.findViewById(R.id.iv_english);
         ImageView ivVietnamese = dialog.findViewById(R.id.iv_vietnamese);
         TextView tvVietnamese = dialog.findViewById(R.id.tv_vietnamese);
@@ -201,7 +195,7 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
             ivEnglish.setVisibility(View.VISIBLE);
             tvVietnamese.setTag("en");
         });
-
+        btExit.setOnClickListener(v->{dialog.dismiss();});
         btSaveLanguage.setOnClickListener(v -> {
             if (tvVietnamese.getTag().equals("vi")) {
                 String cod = GetUri.getInstance().getCode(this);
@@ -229,6 +223,7 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         startActivity(shareIntent);
+
     }
 
     private void handleRating() {

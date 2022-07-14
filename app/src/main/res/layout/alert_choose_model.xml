@@ -3,64 +3,92 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="@dimen/_10sdp"
-    android:layout_margin="@dimen/_5sdp">
+    android:paddingStart="@dimen/_20sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingEnd="@dimen/_18sdp"
+    android:paddingBottom="@dimen/_10sdp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/_10sdp">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_version"
+            android:textColor="@color/primary_color"
+            android:textSize="@dimen/_18sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chọn phiên bản bạn sử dụng"
             android:fontFamily="@font/gulzar_regular"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_16sdp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Chọn phiên bản bạn sẽ mod"
+            android:textColor="#5E5E5E"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:textSize="@dimen/_15sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <RadioGroup
             android:id="@+id/rg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_12sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv">
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/rb_ff"
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="@dimen/_148sdp"
                 android:layout_height="wrap_content"
                 android:text="Free Fire"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/_13sdp"
-                />
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginTop="-7dp"/>
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/rb_ff_max"
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="@dimen/_148sdp"
                 android:layout_height="wrap_content"
                 android:text="Free Fire Max"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/_13sdp" />
+                android:layout_marginTop="-7dp"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/_12sdp" />
         </RadioGroup>
 
-        <Button
-            android:id="@+id/bt_choose_model"
-            android:layout_marginTop="@dimen/_5sdp"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/gulzar_regular"
-            android:textColor="@color/text_button"
-            android:background="@drawable/shape_button_choose_model"
-            android:text="@string/select"
+            android:layout_height="@dimen/_34sdp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rg" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/rg">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_chose_model_exit"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/shape_cancel"
+                android:fontFamily="@font/gulzar_regular"
+                android:text="@string/exit"
+                android:textSize="@dimen/_11sdp"
+                android:textColor="@color/text_button"
+                android:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_choose_model"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/shape_button_choose_model"
+                android:fontFamily="@font/gulzar_regular"
+                android:text="@string/select"
+                android:textSize="@dimen/_11sdp"
+                android:textColor="@color/text_button" />
+        </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,8 +22,12 @@
     <string name="login">Login</string>
     <string name="content_des">Make sure you have downloaded all the package in the dowload center</string>
     <string name="submit">fafda</string>
-    <string name="description">Gun and skin effects are only visible to the user other people won\'t see it.
-        This is a 3rd party mod, will not affect the game, and will not lock your account                                                                                                               </string>
+    <string name="description">
+        If you want to get rarely clothes, weapon skins,
+             but you don\'t have enough diamonds to buy, use this app,
+             you will get them all for free.
+             \n\n Guns and clothes are only visible on your screen, cannot be seen by other players
+    </string>
     <string name="active">Active</string>
     <string name="status">Activated</string>
     <string name="des">Remove the skin you installed</string>
@@ -40,13 +44,13 @@
     <string name="installed">Select version</string>
     <string name="not_installed">You haven\'t installed free fire</string>
     <string name="clothes">Outfit</string>
-    <string name="weapons">Ưeapon</string>
+    <string name="weapons">Weapon</string>
     <string name="delete_skin">Delete skin</string>
-    <string name="rate">Assessment</string>
+    <string name="rate">Rate</string>
     <string name="share">Share</string>
     <string name="settting">About</string>
-    <string name="language">Select language</string>
-    <string name="infor">Information about the app</string>
+    <string name="language">Language</string>
+    <string name="infor">About</string>
     <string name="title_choose_language">Choose the language you use</string>
     <string name="vietnamese">Vietnamese</string>
     <string name="english">English</string>
@@ -59,7 +63,7 @@
          First you need to install the game Garena Free Fire.\n
          This application is only a 3rd party mod, will only appear in the player\'s perspective, does not affect the game
     </string>
-    <string name="open_free_fire">Open free fire</string>
+    <string name="open_free_fire">Open</string>
     <string name="exit">Exit</string>
     <string name="select">Select</string>
     <string name="dialog_not_installed_ff">You haven\'t installed free fire</string>
@@ -71,4 +75,9 @@
     <string name="collection_gun">Gun skins collection rare v</string>
     <string name="collection_outfit">Outfit collection rare v</string>
     <string name="guide">Guide</string>
+    <string name="title_language">Language</string>
+    <string name="title_delete">Remove all skins</string>
+    <string name="title_version">Select version</string>
+    <string name="title_success">Open Free Fire</string>
+    <string name="response">Response</string>
 </resources>

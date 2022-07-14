@@ -19,6 +19,9 @@
             <item android:id="@+id/item_share"
                 android:icon="@drawable/ic_share"
                 android:title="@string/share"/>
+            <item android:id="@+id/item_response"
+                android:icon="@drawable/response"
+                android:title="@string/response"/>
             <item android:id="@+id/item_infor"
                 android:icon="@drawable/ic_infor"
                 android:title="@string/infor"/>

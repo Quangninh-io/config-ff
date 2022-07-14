@@ -12,6 +12,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -69,6 +70,8 @@ public class DownloadFile {
     private void showDialog(Context context, String content, String choseModel) {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.alert_move_free_fire);
+        dialog.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.shape_dialog));
+        dialog.getWindow().setLayout(630, ViewGroup.LayoutParams.WRAP_CONTENT);
         Button btnMoveFf = dialog.findViewById(R.id.bt_move_free_fire);
         Button btnCancel = dialog.findViewById(R.id.bt_cancel);
         TextView tvContent = dialog.findViewById(R.id.tv_content);

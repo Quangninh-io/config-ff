@@ -7,31 +7,28 @@
     android:background="@color/background"
     tools:context=".activity.UserDetailActivity">
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="sung"
-        android:fontFamily="@font/gulzar_regular"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_20sdp"
-        android:gravity="center"
-        android:maxLines="2"
-        app:layout_constraintWidth_percent="0.6"
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_180sdp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bird"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/_5sdp"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/iv_back"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:src="@drawable/ic_back"
+        android:background="@drawable/selector_return"
         android:clickable="true"
         android:focusable="true"
-        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_back"
+        android:padding="@dimen/_5sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
@@ -40,79 +37,123 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="-40dp"
+        android:background="@drawable/shape_background_detail"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"
-        android:background="@drawable/shape_background_detail"
+        app:layout_constraintTop_toBottomOf="@id/iv" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-/>
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/iv"
-        android:layout_width="@dimen/_240sdp"
-        android:layout_height="@dimen/_150sdp"
-        app:layout_constraintTop_toTopOf="@id/view"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="-30dp"
+        android:src="@drawable/logo"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:src="@drawable/bird"
-        android:scaleType="centerCrop"
-        app:riv_corner_radius="@dimen/_20sdp"/>
+        app:layout_constraintTop_toBottomOf="@+id/iv" />
 
     <TextView
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="@dimen/_230sdp"
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/gulzar_regular"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="sung"
+        android:textColor="@color/text_colo2"
+        android:textSize="@dimen/_19sdp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_logo"
+        app:layout_constraintEnd_toStartOf="@id/ll_time"
+        app:layout_constraintStart_toEndOf="@+id/iv_logo"
+        app:layout_constraintTop_toTopOf="@id/iv_logo"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <LinearLayout
+        android:id="@+id/ll_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/tv_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_name">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:text="12-7-2022"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/tv_new"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@drawable/shape_new_detail2"
+            android:gravity="center"
+            android:text="@string/new_status"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="#B58F8F8F"
+        app:layout_constraintTop_toBottomOf="@id/iv" />
+
+    <TextView
+        android:id="@+id/tv_des"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/gulzar_regular"
+        android:lineSpacingExtra="@dimen/_5sdp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
         android:text="@string/description"
         android:textColor="@color/text_color"
-        android:lineSpacingExtra="@dimen/_5sdp"
         android:textSize="@dimen/_16sdp"
-        android:fontFamily="@font/gulzar_regular"
-        app:layout_constraintTop_toBottomOf="@id/iv"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/tv_new"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_50sdp"
-        android:background="@drawable/shape_new"
-        android:gravity="center"
-        android:text="@string/new_status"
-        android:fontFamily="@font/gulzar_regular"
-        android:visibility="invisible"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_13sdp"
-        app:layout_constraintTop_toTopOf="@id/iv"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/bt_active"
+        app:layout_constraintTop_toBottomOf="@id/tv_line" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_active"
-        android:layout_width="@dimen/_130sdp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_26sdp"
         android:background="@drawable/shape_button_inactive"
+        android:fontFamily="@font/gulzar_regular"
+        android:tag="@string/status"
+        android:text="@string/active"
+        android:textColor="@color/text_button"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/_26sdp"
-        android:fontFamily="@font/gulzar_regular"
-        android:text="@string/active"
-        android:tag="@string/status"
-        android:textColor="@color/text_button"
-        android:textSize="@dimen/_13sdp"/>
+
+        app:layout_constraintWidth_percent="0.7" />
+
     <ProgressBar
         android:id="@+id/pb_dowload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+

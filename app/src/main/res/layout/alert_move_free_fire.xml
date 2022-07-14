@@ -3,60 +3,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_5sdp"
-    android:elevation="@dimen/_10sdp">
+    android:paddingStart="@dimen/_20sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingEnd="@dimen/_20sdp"
+    android:paddingBottom="@dimen/_20sdp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/_10sdp">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_success"
+        android:textSize="@dimen/_18sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gulzar_regular"
+        android:text="Bạn đã kích hoạt thành công"
+        android:textColor="#5E5E5E"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_34sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_cancel"
+            android:layout_width="@dimen/_90sdp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/gulzar_regular"
-            android:text="Bạn đã kích hoạt thành công"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/shape_cancel"
+            android:text="@string/exit"
+            android:textColor="@color/text_button"
+            android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tv" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_move_free_fire"
+            android:layout_width="@dimen/_90sdp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:background="@drawable/shape_button_choose_model"
+            android:text="@string/open_free_fire"
+            android:textColor="@color/text_button"
+            android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_content">
-
-            <Button
-                android:id="@+id/bt_move_free_fire"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/shape_button_choose_model"
-                android:text="@string/open_free_fire"
-                android:textSize="@dimen/_8sdp"
-                android:textColor="@color/text_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv" />
-
-            <Button
-                android:id="@+id/bt_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_button"
-                android:layout_margin="@dimen/_5sdp"
-                android:textSize="@dimen/_8sdp"
-                android:background="@drawable/shape_button_choose_model"
-                android:text="@string/exit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tv" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

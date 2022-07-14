@@ -44,28 +44,16 @@
                             <com.makeramen.roundedimageview.RoundedImageView
                                 android:id="@+id/iv_outfit"
                                 android:layout_width="@dimen/_120sdp"
-                                android:layout_height="@dimen/_150sdp"
+                                android:layout_height="@dimen/_135sdp"
                                 android:background="@drawable/shape_chose_object"
                                 android:paddingTop="@dimen/_10sdp"
-                                android:paddingBottom="@dimen/_40sdp"
+                                android:paddingBottom="@dimen/_20sdp"
                                 android:src="@drawable/bulletproof_vest"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:riv_corner_radius="@dimen/_20sdp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/gulzar_regular"
-                                android:text="@string/outfit"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_20sdp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.9" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,27 +64,16 @@
                             <com.makeramen.roundedimageview.RoundedImageView
                                 android:id="@+id/iv_weapon"
                                 android:layout_width="@dimen/_120sdp"
-                                android:layout_height="@dimen/_150sdp"
+                                android:layout_height="@dimen/_135sdp"
                                 android:background="@drawable/shape_chose_object"
                                 android:paddingTop="@dimen/_10sdp"
-                                android:paddingBottom="@dimen/_40sdp"
+                                android:paddingBottom="@dimen/_20sdp"
                                 android:src="@drawable/gun"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/weapon"
-                                android:fontFamily="@font/gulzar_regular"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_20sdp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.9" />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
 
@@ -128,8 +105,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:clipToPadding="false"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"

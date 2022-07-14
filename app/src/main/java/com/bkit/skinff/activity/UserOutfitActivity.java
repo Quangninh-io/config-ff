@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.util.Log;
 import com.bkit.skinff.R;
 import com.bkit.skinff.adapter.UserAdapter;
+import com.bkit.skinff.adapter.UserDeatailAdapter;
 import com.bkit.skinff.ads.GoogleAds;
 import com.bkit.skinff.databinding.ActivityUserWeaponBinding;
 import com.bkit.skinff.firebase.DownloadFile;
@@ -42,7 +43,7 @@ public class UserOutfitActivity extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
     private final DownloadFile downloadFile = DownloadFile.getInstance();
-    UserAdapter adapter;
+    UserDeatailAdapter adapter;
     Uri uriOutfit, uriWeapon;
     Name name;
     String decideChoseModel = "";
@@ -104,7 +105,7 @@ public class UserOutfitActivity extends AppCompatActivity {
     // send data contain (uri, model file data, name file) for user detail activity
     private void uploadRecycleView(ArrayList<FileData> list) {
         binding.tvType.setText(getResources().getString(R.string.clothes));
-        adapter = new UserAdapter(list, getApplicationContext(), new ClickSpecificItem() {
+        adapter = new UserDeatailAdapter(list, getApplicationContext(), new ClickSpecificItem() {
             @Override
             public void click(FileData fileData) {
                 initAds();
@@ -115,6 +116,7 @@ public class UserOutfitActivity extends AppCompatActivity {
                 intent.putExtra(INTENT_CHOSE_MODEL, decideChoseModel);
                 intent.putExtra(INTENT_NAME, name);
                 startActivity(intent);
+
             }
 
             @Override

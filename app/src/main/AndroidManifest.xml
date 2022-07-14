@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.bkit.skinff">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,6 +23,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkinFf">
+        <activity
+            android:name=".activity.ResponseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.GuideActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.AdminUpdateActivity"
             android:exported="false" />

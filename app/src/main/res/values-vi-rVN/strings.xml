@@ -22,8 +22,10 @@
     <string name="login">Đăng nhập</string>
     <string name="content_des">Đảm bảo rằng bạn đã tải xuống tất cả các gói trong trung tâm tải xuống</string>
     <string name="submit">fafda</string>
-    <string name="description">Hiệu ứng súng và trang phục chỉ thấy được ở phía người dùng, người khác sẽ không thấy được.
-        Đây là bản mod của bên thứ 3, sẽ không ảnh hưởng tới trò chơi, và sẽ không bị khóa tài khoản                                                                                                               </string>
+    <string name="description">Nếu bạn mốn nhận được những trang phục hiếm, skin vũ khí,
+        nhưng bạn không có đủ kim cương để mua chúng, sử dụng ứng dụng  này,
+        bạn sẽ nhận được tất cả một cách miễn phí.
+        \n\nHiệu ứng súng và trang phục chỉ thấy được ở màn hình của bạn, người chơi khác sẽ không nhìn thấy                                                                                                         </string>
     <string name="active">Kích hoạt</string>
     <string name="status">Đã kích hoạt</string>
     <string name="des">Xóa skin bạn đã cài đặt</string>
@@ -46,7 +48,7 @@
     <string name="share">Chia sẻ</string>
     <string name="settting">Thông tin chung</string>
     <string name="language">Chọn ngôn ngữ</string>
-    <string name="infor">Thông tin về ứng dụng</string>
+    <string name="infor">Thông tin</string>
     <string name="title_choose_language">Chọn ngôn ngữ bạn sử dụng</string>
     <string name="vietnamese">Tiếng Việt</string>
     <string name="english">Tiếng Anh</string>
@@ -59,7 +61,7 @@
         Đầu tiên bạn cần cái đặt game Garena Free Fire.\n
         Ứng dụng này chỉ là bản mod của bên thứ 3, sẽ chỉ xuất hiện ở góc nhìn của người chơi, không ảnh hưởng đến trò chơi
     </string>
-    <string name="open_free_fire">Mở free fire</string>
+    <string name="open_free_fire">Mở</string>
     <string name="exit">Thoát</string>
     <string name="select">Chọn</string>
     <string name="dialog_not_installed_ff">Bạn chưa cài free fire</string>
@@ -71,4 +73,9 @@
     <string name="collection_gun">Bộ sưu tập skin súng hiếm v</string>
     <string name="collection_outfit">Bộ sưu tập trang phục hiếm v</string>
     <string name="guide">Hướng dẫn</string>
+    <string name="title_language">Ngôn ngữ</string>
+    <string name="title_delete">Xóa toàn bộ skin</string>
+    <string name="title_version">Chọn phiên bản</string>
+    <string name="title_success">Chuyển tới Free Fire</string>
+    <string name="response">Phản hồi</string>
 </resources>

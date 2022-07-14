@@ -4,21 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_5sdp"
-    android:layout_marginTop="@dimen/_10sdp"
     android:layout_marginEnd="@dimen/_5sdp"
-    android:layout_marginBottom="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_15sdp"
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="@dimen/_20sdp"
-    app:strokeWidth="@dimen/_1sdp"
     app:cardElevation="@dimen/_5sdp"
-    app:strokeColor="@color/background"
     android:elevation="@dimen/_10sdp"
     android:padding="@dimen/_10sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:padding="@dimen/_10sdp">
 
         <com.makeramen.roundedimageview.RoundedImageView
@@ -51,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:fontFamily="@font/gulzar_regular"
+
             android:layout_marginTop="@dimen/_11sdp"
             android:includeFontPadding="false"
             android:text="16-10-2000"

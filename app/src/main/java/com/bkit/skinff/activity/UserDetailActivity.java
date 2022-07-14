@@ -8,6 +8,7 @@ import static com.bkit.skinff.utilities.Constants.INTENT_NAME;
 import static com.bkit.skinff.utilities.Constants.INTENT_OUTFIT;
 import static com.bkit.skinff.utilities.Constants.INTENT_WEAPON;
 import static com.bkit.skinff.utilities.Constants.KEY_MODEL;
+import static com.bkit.skinff.utilities.Constants.KEY_NAME;
 import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT;
 import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
@@ -18,18 +19,22 @@ import static com.bkit.skinff.utilities.Constants.STORAGE_WEAPON;
 import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.bkit.skinff.R;
 import com.bkit.skinff.adapter.UserAdapter;
 import com.bkit.skinff.ads.GoogleAds;
 import com.bkit.skinff.databinding.ActivityUserDetailBinding;
 import com.bkit.skinff.firebase.DownloadFile;
+import com.bkit.skinff.fragment.user.DialogFragment;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
 import com.bkit.skinff.sharepreference.GetUri;
@@ -78,6 +83,8 @@ public class UserDetailActivity extends AppCompatActivity {
         }else{
             binding.tvName.setText(getResources().getString(R.string.collection_gun)+ fileData.getName());
         }
+        binding.tvTime.setText(fileData.getTime());
+
         Picasso.get().load(fileData.getImage()).into(binding.iv);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Instant now = Instant.now(); //current date
@@ -90,7 +97,7 @@ public class UserDetailActivity extends AppCompatActivity {
             if (dateInFirebase.compareTo(dateInReality) > 0) {
                 binding.tvNew.setVisibility(View.VISIBLE);
             } else {
-                binding.tvNew.setVisibility(View.INVISIBLE);
+                binding.tvNew.setVisibility(View.GONE);
             }
 
         } catch (ParseException e) {
@@ -123,6 +130,14 @@ public class UserDetailActivity extends AppCompatActivity {
         binding.ivBack.setOnClickListener(v->{
             onBackPressed();///
         });
+//        binding.iv.setOnClickListener(v->{
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable(KEY_NAME,fileData);
+//            DialogFragment dialog = new DialogFragment();
+//            dialog.setArguments(bundle);
+//            dialog.show(getSupportFragmentManager(),"dialog");
+//        });
+
     }
     // handle click button "active"
     private void handleClick() {

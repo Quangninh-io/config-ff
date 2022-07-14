@@ -48,6 +48,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +59,6 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 
 import com.bkit.skinff.R;
-import com.bkit.skinff.activity.LoginActivity;
 import com.bkit.skinff.activity.UserDetailActivity;
 import com.bkit.skinff.activity.UserOutfitActivity;
 import com.bkit.skinff.activity.UserWeaponActivity;
@@ -85,7 +85,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class UserMainFragment extends Fragment {
     private FragmentUserMainBinding binding;
@@ -338,7 +337,12 @@ public class UserMainFragment extends Fragment {
             }
         }else{
             Dialog dialog = new Dialog(getActivity());
-            dialog.setContentView(R.layout.dialog_guilde);
+            dialog.setContentView(R.layout.alert_guilde);
+            int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+            dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ImageView tvClose = dialog.findViewById(R.id.tv_close);
+            tvClose.setOnClickListener(v->{dialog.dismiss();});
+
             saveUri.saveGuide(getActivity());
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
@@ -366,6 +370,7 @@ public class UserMainFragment extends Fragment {
             intent.putExtra(INTENT_MODEL, check);
             putIntent(intent);
             startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         });
         binding.ivOutfit.setOnClickListener(v -> {
             loadInterstitialAd();
@@ -373,6 +378,7 @@ public class UserMainFragment extends Fragment {
             intent.putExtra(INTENT_MODEL, check);
             putIntent(intent);
             startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         });
 
 //        if (check.equals("")) {
@@ -417,7 +423,12 @@ public class UserMainFragment extends Fragment {
     public void openDialog(String note) {
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.alert_choose_model);
+        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+        dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.shape_dialog));
         Button btn = dialog.findViewById(R.id.bt_choose_model);
+        Button btCancel = dialog.findViewById(R.id.bt_chose_model_exit);
+        btCancel.setOnClickListener(v->{dialog.dismiss();});
         rbFF = dialog.findViewById(R.id.rb_ff);
         rbFFMax = dialog.findViewById(R.id.rb_ff_max);
         String chooseModel = getUri.getData(getActivity(), KEY_CHOSE_MODEL);
@@ -434,6 +445,7 @@ public class UserMainFragment extends Fragment {
             rbFFMax.setChecked(false);
         }
         if (uriOutfit == null) {
+            btCancel.setVisibility(View.INVISIBLE);
             dialog.setCanceledOnTouchOutside(false);
         }
         TextView tv = dialog.findViewById(R.id.tv);

@@ -21,4 +21,5 @@
     <color name="text_language">#030B36</color>
     <color name="primary_color_item">#171717</color>
     <color name="active">#36BD2C</color>
+    <color name="text_colo2">#ffffff</color>
 </resources>

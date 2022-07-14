@@ -23,4 +23,11 @@
     <color name="active">#36BD2C</color>
     <color name="des">#000000</color>
     <color name="des2">#00F4F4F4</color>
+    <color name="selector_prepare_click">#D5D5D5</color>
+    <color name="selector_click">#858484</color>
+    <color name="detail1">#080809</color>
+    <color name="detail2">#45425B</color>
+    <color name="next">#808080</color>
+    <color name="next2">#131313</color>
+    <color name="text_colo2">#030B36</color>
 </resources>

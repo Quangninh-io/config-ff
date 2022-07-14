@@ -3,39 +3,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/_20sdp">
+    android:paddingStart="@dimen/_20sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingEnd="@dimen/_20sdp"
+    android:paddingBottom="@dimen/_10sdp">
+
+    <TextView
+        android:id="@+id/tv_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_language"
+        android:textSize="@dimen/_20sdp"
+        android:textColor="@color/primary_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title_language"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_choose_language"
+        android:layout_marginTop="@dimen/_5sdp"
         android:fontFamily="@font/gulzar_regular"
-        android:textSize="@dimen/_17sdp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/title_choose_language"
+        android:textColor="#3E3E3E"
+
+        android:textSize="@dimen/_15sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_language" />
 
     <TextView
         android:id="@+id/tv_vietnamese"
         android:layout_width="@dimen/_210sdp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
-        android:text="@string/vietnamese"
-        android:fontFamily="@font/gulzar_regular"
-        android:textSize="@dimen/_13sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
+        android:textColor="@color/primary_color"
+        android:fontFamily="@font/gulzar_regular"
         android:tag="vi"
-        android:background="?android:attr/selectableItemBackground"
+        android:text="@string/vietnamese"
+        android:textSize="@dimen/_14sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title_language" />
 
     <ImageView
         android:id="@+id/iv_vietnamese"
         android:layout_width="wrap_content"
-        android:fontFamily="@font/gulzar_regular"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/gulzar_regular"
         android:src="@drawable/ic_check"
         app:layout_constraintBottom_toBottomOf="@id/tv_vietnamese"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,11 +74,12 @@
         android:layout_width="@dimen/_210sdp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
-        android:text="@string/english"
-        android:clickable="true"
-        android:focusable="true"
         android:background="?android:attr/selectableItemBackground"
-        android:textSize="@dimen/_13sdp"
+        android:clickable="true"
+        android:textColor="@color/primary_color"
+        android:focusable="true"
+        android:text="@string/english"
+        android:textSize="@dimen/_14sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_vietnamese" />
 
@@ -74,17 +94,39 @@
         app:layout_constraintTop_toTopOf="@id/tv_english"
         app:tint="@color/primary_color" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginTop="@dimen/_20sdp"
-        android:id="@+id/bt_save_language"
-        android:layout_width="@dimen/_70sdp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/gulzar_regular"
-        android:textColor="@color/text_language"
-        android:background="@color/menu_background"
-        android:text="@string/save"
-        android:textSize="@dimen/_13sdp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_english" />
+        app:layout_constraintTop_toBottomOf="@id/tv_english">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_cancel_language"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:background="@drawable/shape_cancel"
+            android:fontFamily="@font/gulzar_regular"
+            android:text="@string/exit"
+            android:textColor="@color/text_language"
+            android:textSize="@dimen/_11sdp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_save_language"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/shape_save"
+            android:fontFamily="@font/gulzar_regular"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp" />
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

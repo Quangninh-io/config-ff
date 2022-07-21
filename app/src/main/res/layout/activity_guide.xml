@@ -7,7 +7,7 @@
     android:paddingStart="@dimen/_10sdp"
     android:paddingTop="@dimen/_10sdp"
     android:paddingEnd="@dimen/_10sdp"
-    tools:context=".activity.GuideActivity">
+    tools:context=".activity.GuideMainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_5sdp"
-            android:text="Hướng dẫn"
+            android:text="@string/ac_guide"
             app:layout_constraintEnd_toEndOf="parent"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintStart_toStartOf="@id/iv_back_guide"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Nếu mod không hoạt động hãy làm theo những bước dưới đây"
+            android:text="@string/guide_1"
             android:textSize="@dimen/_15sdp"
             app:layout_constraintTop_toBottomOf="@id/iv_back_guide" />
 
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="1. Mở trung tâm tải xuống trong game free fire"
+            android:text="@string/guide_2"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintTop_toBottomOf="@id/tv_guide" />
 
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="2. Nhấn tải xuống tất cả"
+            android:text="@string/guide_3"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintTop_toBottomOf="@id/iv_guide_1" />
 
@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="3. Mở ứng dụng Config FF, mod skin bạn muốn"
+            android:text="@string/guide_4"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintTop_toBottomOf="@id/iv_guide_2" />
 

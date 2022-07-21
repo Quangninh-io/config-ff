@@ -49,6 +49,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,7 +60,9 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 
 import com.bkit.skinff.R;
+import com.bkit.skinff.activity.GuideFirstActivity;
 import com.bkit.skinff.activity.UserDetailActivity;
+import com.bkit.skinff.activity.UserMainActivity;
 import com.bkit.skinff.activity.UserOutfitActivity;
 import com.bkit.skinff.activity.UserWeaponActivity;
 import com.bkit.skinff.adapter.UserAdapter;
@@ -325,47 +328,18 @@ public class UserMainFragment extends Fragment {
         String chooseModelS = getUri.getData(getActivity(), KEY_CHOSE_MODEL);
         Log.d("fadfa", stringUriWeapon);
         String guide = getUri.getGuide(getActivity());
-        if(guide!=""){
-            if (stringUriOutfit.equals("")) {
-                decideOpenDialog();
-            } else {
-                uriWeapon = Uri.parse(stringUriWeapon);
-                uriOutfit = Uri.parse(stringUriOutfit);
-                getDataFromFireStore(chooseModelS);
-                check = chooseModelS;
-                decideChooseModel = chooseModelS;
-            }
-        }else{
-            Dialog dialog = new Dialog(getActivity());
-            dialog.setContentView(R.layout.alert_guilde);
-            int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
-            dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-            ImageView tvClose = dialog.findViewById(R.id.tv_close);
-            tvClose.setOnClickListener(v->{dialog.dismiss();});
-
-            saveUri.saveGuide(getActivity());
-            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    if (stringUriOutfit.equals("")) {
-                        decideOpenDialog();
-                    } else {
-                        uriWeapon = Uri.parse(stringUriWeapon);
-                        uriOutfit = Uri.parse(stringUriOutfit);
-                        getDataFromFireStore(chooseModelS);
-                        check = chooseModelS;
-                        decideChooseModel = chooseModelS;
-                    }
-                }
-            });
-            dialog.show();
-        }
-
-
+//        if (guide != "") {
+            openMain(stringUriOutfit, stringUriWeapon, chooseModelS);
+//        } else {
+//            // if first open app, show guide for user
+//            ((UserMainActivity)getActivity()).openGuide();
+//            openMain(stringUriOutfit, stringUriWeapon, chooseModelS);
+//            saveUri.saveGuide(getActivity());
+//        }
 
         //showData();
         binding.ivWeapon.setOnClickListener(v -> {
-            loadInterstitialAd();
+            //loadInterstitialAd();
             Intent intent = new Intent(getActivity(), UserWeaponActivity.class);
             intent.putExtra(INTENT_MODEL, check);
             putIntent(intent);
@@ -373,7 +347,7 @@ public class UserMainFragment extends Fragment {
             getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         });
         binding.ivOutfit.setOnClickListener(v -> {
-            loadInterstitialAd();
+            //loadInterstitialAd();
             Intent intent = new Intent(getActivity(), UserOutfitActivity.class);
             intent.putExtra(INTENT_MODEL, check);
             putIntent(intent);
@@ -381,9 +355,18 @@ public class UserMainFragment extends Fragment {
             getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         });
 
-//        if (check.equals("")) {
-//            binding.tvDefault.setText(R.string.choose_model);
-//        }
+    }
+
+    public void openMain(String stringUriOutfit, String stringUriWeapon, String chooseModelS) {
+        if (stringUriOutfit.equals("")) {
+            decideOpenDialog();
+        } else {
+            uriWeapon = Uri.parse(stringUriWeapon);
+            uriOutfit = Uri.parse(stringUriOutfit);
+            getDataFromFireStore(chooseModelS);
+            check = chooseModelS;
+            decideChooseModel = chooseModelS;
+        }
     }
 
 
@@ -423,12 +406,14 @@ public class UserMainFragment extends Fragment {
     public void openDialog(String note) {
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.alert_choose_model);
-        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
         dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.shape_dialog));
         Button btn = dialog.findViewById(R.id.bt_choose_model);
         Button btCancel = dialog.findViewById(R.id.bt_chose_model_exit);
-        btCancel.setOnClickListener(v->{dialog.dismiss();});
+        btCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
         rbFF = dialog.findViewById(R.id.rb_ff);
         rbFFMax = dialog.findViewById(R.id.rb_ff_max);
         String chooseModel = getUri.getData(getActivity(), KEY_CHOSE_MODEL);

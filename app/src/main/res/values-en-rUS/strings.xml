@@ -41,7 +41,7 @@
     <string name="active_success">You have success activated</string>
     <string name="admin_request_delete">dow you want delete</string>
     <string name="des_3">Tap the button to grant the app permission</string>
-    <string name="installed">Select version</string>
+    <string name="installed">Choose the version you use</string>
     <string name="not_installed">You haven\'t installed free fire</string>
     <string name="clothes">Outfit</string>
     <string name="weapons">Weapon</string>
@@ -77,7 +77,22 @@
     <string name="guide">Guide</string>
     <string name="title_language">Language</string>
     <string name="title_delete">Remove all skins</string>
-    <string name="title_version">Select version</string>
+    <string name="title_version">Version</string>
     <string name="title_success">Open Free Fire</string>
-    <string name="response">Response</string>
+    <string name="response">Feedback</string>
+    <string name="ac_guide">Feedback</string>
+
+    <string name="guide_1">If the mod doesn\'t work please follow the steps below</string>
+    <string name="guide_2">1. Open the download center in the free fire game</string>
+    <string name="guide_3">2. Tap download all</string>
+    <string name="guide_4">3. Open the Config FF app, mod the skin you want</string>
+    <string name="feedback">We are always happy to hear your feedback, to improve the application in the best way.</string>
+    <string name="feedback_1">Free Fire gun error</string>
+    <string name="feedback_2">Free Fire Max gun error</string>
+    <string name="feedback_3">Application error</string>
+    <string name="feedback_4">Free Fire costume error</string>
+    <string name="feedback_5">Free Fire Max costume error</string>
+    <string name="a_feedback">Feedback Config FF</string>
+    <string name="done">Done</string>
+    <string name="loading">Loading ...</string>
 </resources>

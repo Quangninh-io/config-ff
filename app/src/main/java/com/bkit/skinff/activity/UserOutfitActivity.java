@@ -13,25 +13,29 @@ import static com.bkit.skinff.utilities.Constants.KEY_NAME;
 import static com.bkit.skinff.utilities.Constants.KEY_NAME_FILE;
 import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.bkit.skinff.R;
-import com.bkit.skinff.adapter.UserAdapter;
 import com.bkit.skinff.adapter.UserDeatailAdapter;
-import com.bkit.skinff.ads.GoogleAds;
+
 import com.bkit.skinff.databinding.ActivityUserWeaponBinding;
 import com.bkit.skinff.firebase.DownloadFile;
 import com.bkit.skinff.listener.ClickSpecificItem;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
 import com.bkit.skinff.utilities.ArrangeTime;
+import com.bkit.skinff.utilities.CheckNew;
+import com.bkit.skinff.utilities.InterstitialAds;
 import com.bkit.skinff.utilities.SetLanguage;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +51,6 @@ public class UserOutfitActivity extends AppCompatActivity {
     Uri uriOutfit, uriWeapon;
     Name name;
     String decideChoseModel = "";
-    GoogleAds googleAds = GoogleAds.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +111,7 @@ public class UserOutfitActivity extends AppCompatActivity {
         adapter = new UserDeatailAdapter(list, getApplicationContext(), new ClickSpecificItem() {
             @Override
             public void click(FileData fileData) {
-                initAds();
+                showAds(fileData);
                 Intent intent = new Intent(getApplication(), UserDetailActivity.class);
                 intent.putExtra(INTENT_WEAPON, String.valueOf(uriWeapon));
                 intent.putExtra(INTENT_OUTFIT, String.valueOf(uriOutfit));
@@ -127,8 +130,8 @@ public class UserOutfitActivity extends AppCompatActivity {
         binding.rvWeapon.setAdapter(adapter);
     }
 
-    private void initAds() {
-        googleAds.initInterstitialAds(this);
+    private void showAds(FileData fileData) {
+        InterstitialAds ads = InterstitialAds.getInstance();
+        ads.intiInterstitial(UserOutfitActivity.this);
     }
-
 }

@@ -6,10 +6,14 @@
         <entry key="..\:/bkit/SkinFF/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.138" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable-v24/selector_close2.xml" value="0.1405" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable-v24/shape_change_model_b.xml" value="0.1535" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/coustom_progress.xml" value="0.1" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/ic_back.xml" value="0.2145" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/ic_launcher_background.xml" value="0.138" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/selector_change_model.xml" value="0.1535" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/selector_close.xml" value="0.1405" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/selector_close3.xml" value="0.1405" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/selector_help.xml" value="0.1535" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/selector_main.xml" value="0.198" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/selector_next.xml" value="0.135" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/selector_return.xml" value="0.135" />
@@ -27,6 +31,8 @@
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_des.xml" value="0.2595" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_detail_adapter.xml" value="0.198" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_dialog.xml" value="0.198" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_help.xml" value="0.1535" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_help_b.xml" value="0.1535" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_login.xml" value="0.138" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_new.xml" value="0.156" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/drawable/shape_new_detail2.xml" value="0.135" />
@@ -39,19 +45,20 @@
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_admin_update.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_display.xml" value="0.25416666666666665" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_guide.xml" value="0.264" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_guide_first.xml" value="0.264" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_outfit.xml" value="0.25416666666666665" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_response.xml" value="0.264" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_test.xml" value="0.25416666666666665" />
-        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user.xml" value="0.264" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user_detail.xml" value="0.4" />
-        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user_main.xml" value="0.2" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user_main.xml" value="0.176" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/activity_user_weapon.xml" value="0.2" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alert_change_name.xml" value="0.20380434782608695" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alert_choose_model.xml" value="0.264" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alert_delete.xml" value="0.264" />
-        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alert_guilde.xml" value="0.536" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alert_guilde.xml" value="0.264" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alert_infor_about.xml" value="0.264" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alert_move_free_fire.xml" value="0.264" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/alret_choose_language.xml" value="0.264" />
@@ -65,8 +72,9 @@
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_desicription.xml" value="0.17844202898550723" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_user_main.xml" value="0.264" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/fragment_welcome.xml" value="0.152" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/guide_first.xml" value="0.16545784224841342" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/item_admin.xml" value="0.264" />
-        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/item_user_detail_adpater.xml" value="0.536" />
+        <entry key="..\:/bkit/config-ff/app/src/main/res/layout/item_user_detail_adpater.xml" value="0.6" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/item_user_main_adpater.xml" value="0.536" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/item_weapon_adpater.xml" value="0.13360507246376813" />
         <entry key="..\:/bkit/config-ff/app/src/main/res/layout/layout_navigation_header.xml" value="0.1838768115942029" />

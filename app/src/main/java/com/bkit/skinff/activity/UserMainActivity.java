@@ -10,22 +10,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.Application;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bkit.skinff.R;
-import com.bkit.skinff.ads.GoogleAds;
+
+import com.bkit.skinff.ads.MyApplication;
 import com.bkit.skinff.databinding.ActivityUserMainBinding;
 import com.bkit.skinff.fragment.user.UserMainFragment;
 import com.bkit.skinff.listener.KnowWhichItemClicked;
@@ -34,8 +37,15 @@ import com.bkit.skinff.sharepreference.GetUri;
 import com.bkit.skinff.sharepreference.SaveUri;;
 import com.bkit.skinff.utilities.LanguageManager;
 import com.bkit.skinff.utilities.SetLanguage;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Arrays;
 
 public class UserMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KnowWhichItemClicked {
 
@@ -44,23 +54,26 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
     FragmentManager fm = getSupportFragmentManager();
     LanguageManager language = LanguageManager.getInstance();
     SaveUri saveUri = SaveUri.getInstance();
-    GoogleAds googleAds = GoogleAds.getInstance();
-    private InterstitialAd mInterstitialAd;
+
+    GetUri getUri = GetUri.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         SetLanguage.getInstance().configLanguage(this);
         binding = ActivityUserMainBinding.inflate(getLayoutInflater());
         initBanner();
-        initMain();
         setContentView(binding.getRoot());
+        initMain();
     }
 
 
     // initial run activity
     // get uri in share preference, if data exist, user don't have to choose uri again
     private void initMain() {
+
         Name fileName = (Name) getIntent().getSerializableExtra(INTENT_NAME);
         Bundle bundle = new Bundle();
         bundle.putSerializable(BUNDLE_NAME, fileName);
@@ -73,7 +86,7 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
         binding.ivMenu.setOnClickListener(v -> {
             binding.dlMain.openDrawer(GravityCompat.START);
         });
-        binding.ivChangeModel.setOnClickListener(v -> {
+        binding.vChangeModel.setOnClickListener(v -> {
             openDialog();
         });
         binding.ivLogo.setOnLongClickListener(v -> {
@@ -82,7 +95,31 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
             return false;
         });
 
+        TextView tv = findViewById(R.id.tv_close_guide_first);
+        tv.setOnClickListener(v->{
+            binding.clMain.setVisibility(View.VISIBLE);
+            binding.llGuide.setVisibility(View.GONE);
+        });
+
+        binding.vHelp.setOnClickListener(v->{
+            binding.clMain.setVisibility(View.GONE);
+            binding.llGuide.setVisibility(View.VISIBLE);
+        });
+
+        openGuide();
+
         binding.nvMain.setNavigationItemSelectedListener(this);
+    }
+    
+    private void openGuide(){
+
+        String guide = getUri.getGuide(this);
+        if (guide != "") {
+            binding.clMain.setVisibility(View.VISIBLE);
+            binding.llGuide.setVisibility(View.GONE);
+        } else {
+            saveUri.saveGuide(this);
+        }
     }
 
     private void openDialog() {
@@ -101,6 +138,8 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.item_delete_skin) {
+            adsDelete();
+
             Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.alert_delete);
             int width = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
@@ -108,7 +147,7 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
             dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_dialog));
             Button btYes = dialog.findViewById(R.id.bt_decide_delete);
             btYes.setOnClickListener(v -> {
-                googleAds.initInterstitialAds(this);
+
                 if (CHECK_FF_EXIST.equals("") && CHECK_FF_MAX_EXIST.equals("")) {
                     Toast.makeText(this, getResources().getString(R.string.not_installed), Toast.LENGTH_SHORT).show();
                 } else {
@@ -121,6 +160,8 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
             btNo.setOnClickListener(v -> {
                 dialog.dismiss();
             });
+
+
             dialog.show();
 
         } else if (id == R.id.item_rate) {
@@ -141,15 +182,10 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 
+
+
     private void handleGuide() {
-//        Dialog dialog = new Dialog(this);
-//        dialog.setContentView(R.layout.alert_guilde);
-//        ImageView tvClose = dialog.findViewById(R.id.tv_close);
-//        tvClose.setOnClickListener(v->{dialog.dismiss();});
-//
-//        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.shape_dialog));
-//        dialog.show();
-        startActivity(new Intent(this,GuideActivity.class));
+        startActivity(new Intent(this, GuideMainActivity.class));
 
     }
 
@@ -248,15 +284,43 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
             startActivity(intent);
         }
     }
+    public InterstitialAd interstitialAd;
+
+    private void adsDelete() {
+        intiInterstitial();
+    }
 
     // add
     @Override
     public void click() {
-        googleAds.initInterstitialAds(this);
+        intiInterstitial();
+    }
+    public void intiInterstitial(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("fjla","click");
+                Application application = getApplication();
+                if(application instanceof MyApplication){
+                    interstitialAd =  ((MyApplication) application).mInterstitialAd;
+                    if (interstitialAd != null) {
+                        interstitialAd.show(UserMainActivity.this);
+                    } else {
+                        ((MyApplication) application).loadInterstitial();
+                        if(((MyApplication) application).mInterstitialAd != null){
+                            ((MyApplication) application).mInterstitialAd.show(UserMainActivity.this);
+                        }
+                    }
+                }
+            }
+        },1000);
     }
 
     private void initBanner() {
-        googleAds.initBanner(binding.av, this);
+        Application application = getApplication();
+        if(application instanceof MyApplication){
+            ((MyApplication) application).showBanner(binding.av);
+        }
     }
 
 }

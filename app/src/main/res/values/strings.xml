@@ -40,7 +40,7 @@
     <string name="active_success">Bạn đã kích hoạt thành công</string>
     <string name="admin_request_delete">Bạn có muốn xóa hay không</string>
     <string name="des_3">Nhấn vào nút để cấp quyền cho ứng dụng</string>
-    <string name="installed">Chọn phiên bản</string>
+    <string name="installed">Chọn phiên bản bạn sử dụng</string>
     <string name="not_installed">Bạn chưa cài free fire</string>
     <string name="clothes">Trang phục</string>
     <string name="weapons">Súng</string>
@@ -73,7 +73,24 @@
     <string name="collection_outfit">Bộ sưu tập trang phục hiếm v</string>
     <string name="title_language">Ngôn ngữ</string>
     <string name="title_delete">Xóa toàn bộ skin</string>
-    <string name="title_version">Chọn phiên bản</string>
+    <string name="title_version">Phiên bản</string>
     <string name="title_success">Mở Free Fire</string>
     <string name="response">Phản hồi</string>
+    <string name="ac_guide">Hướng dẫn</string>
+
+
+    <string name="guide_1">Nếu mod không hoạt động hãy làm theo những bước dưới đây</string>
+    <string name="guide_2">1. Mở trung tâm tải xuống trong game free fire</string>
+    <string name="guide_3">2. Nhấn tải xuống tất cả</string>
+    <string name="guide_4">3. Mở ứng dụng Config FF, mod skin bạn muốn</string>
+    <string name="feedback">Have feedback? We\'d love to hear it, but please don\'t sharesensitive information</string>
+    <string name="feedback_1">Lỗi súng free fire</string>
+    <string name="feedback_2">Lỗi súng free fire max</string>
+    <string name="feedback_3">Lỗi ứng dụng</string>
+    <string name="feedback_4">Lỗi trang phục free fire</string>
+    <string name="feedback_5">Lỗi trang phục free fire max</string>
+
+    <string name="a_feedback">Phản hồi Config FF</string>
+    <string name="done">Xong</string>
+    <string name="loading">Đang tải ...</string>
 </resources>

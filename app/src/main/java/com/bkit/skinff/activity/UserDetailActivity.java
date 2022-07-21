@@ -8,45 +8,41 @@ import static com.bkit.skinff.utilities.Constants.INTENT_NAME;
 import static com.bkit.skinff.utilities.Constants.INTENT_OUTFIT;
 import static com.bkit.skinff.utilities.Constants.INTENT_WEAPON;
 import static com.bkit.skinff.utilities.Constants.KEY_MODEL;
-import static com.bkit.skinff.utilities.Constants.KEY_NAME;
 import static com.bkit.skinff.utilities.Constants.KEY_OUTFIT;
 import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.LIMITED_DATE_SET_NEW;
 import static com.bkit.skinff.utilities.Constants.STATUS_ACTIVE;
 import static com.bkit.skinff.utilities.Constants.STATUS_INACTIVE;
-import static com.bkit.skinff.utilities.Constants.STORAGE_WEAPON;
 import static com.bkit.skinff.utilities.Constants.TIME_DELETE;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.bkit.skinff.R;
-import com.bkit.skinff.adapter.UserAdapter;
-import com.bkit.skinff.ads.GoogleAds;
+
+import com.bkit.skinff.ads.MyApplication;
 import com.bkit.skinff.databinding.ActivityUserDetailBinding;
 import com.bkit.skinff.firebase.DownloadFile;
-import com.bkit.skinff.fragment.user.DialogFragment;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
 import com.bkit.skinff.sharepreference.GetUri;
 import com.bkit.skinff.sharepreference.SaveUri;
 import com.bkit.skinff.utilities.SetLanguage;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.squareup.picasso.Picasso;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
-import java.util.concurrent.CountDownLatch;
 
 public class UserDetailActivity extends AppCompatActivity {
     private ActivityUserDetailBinding binding;
@@ -56,7 +52,7 @@ public class UserDetailActivity extends AppCompatActivity {
     GetUri getUri = GetUri.getInstance();
     SaveUri saveUri = SaveUri.getInstance();
     String decideChoseModel = "", time = "", model = "", type = "";
-    GoogleAds googleAds = GoogleAds.getInstance();
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,19 +126,41 @@ public class UserDetailActivity extends AppCompatActivity {
         binding.ivBack.setOnClickListener(v->{
             onBackPressed();///
         });
-//        binding.iv.setOnClickListener(v->{
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable(KEY_NAME,fileData);
-//            DialogFragment dialog = new DialogFragment();
-//            dialog.setArguments(bundle);
-//            dialog.show(getSupportFragmentManager(),"dialog");
-//        });
 
+
+    }
+
+    private void showAds() {
+
+        intiInterstitial();
+    }
+
+    private void intiInterstitial(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Application application = getApplication();
+                if(application instanceof MyApplication){
+                    interstitialAd =  ((MyApplication) application).mInterstitialAd;
+                    if (interstitialAd != null) {
+                        interstitialAd.show(UserDetailActivity.this);
+                    } else {
+                        ((MyApplication) application).loadInterstitial();
+                        if(((MyApplication) application).mInterstitialAd != null){
+                            ((MyApplication) application).mInterstitialAd.show(UserDetailActivity.this);
+                        }
+                    }
+                }
+            }
+        },1000);
     }
     // handle click button "active"
     private void handleClick() {
+        showAds();
+
         if (binding.btActive.getTag() == STATUS_INACTIVE) {
-            googleAds.initInterstitialAds(this);
+
             binding.btActive.setTag(STATUS_ACTIVE);
             handleActive(fileData.getTime());
             binding.btActive.setText(getResources().getString(R.string.activated_button));
@@ -155,7 +173,7 @@ public class UserDetailActivity extends AppCompatActivity {
             }
         }
         else {
-            googleAds.initInterstitialAds(this);
+
             if(fileData.getType().equals("gun")){
                 saveUri.saveStatusClearDataGun(getApplication());
             }else{

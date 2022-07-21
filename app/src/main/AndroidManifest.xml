@@ -17,6 +17,7 @@
     </queries>
 
     <application
+        android:name=".ads.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,10 +25,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SkinFf">
         <activity
+            android:name=".activity.TestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.GuideFirstActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ResponseActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.GuideActivity"
+            android:name=".activity.GuideMainActivity"
             android:exported="false" />
         <activity
             android:name=".activity.AdminUpdateActivity"

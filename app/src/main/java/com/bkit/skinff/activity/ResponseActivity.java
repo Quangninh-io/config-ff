@@ -14,12 +14,14 @@ import android.widget.Toast;
 import com.bkit.skinff.R;
 import com.bkit.skinff.databinding.ActivityResponseBinding;
 import com.bkit.skinff.databinding.ActivityUserBinding;
+import com.bkit.skinff.utilities.SetLanguage;
 
 public class ResponseActivity extends AppCompatActivity {
     private ActivityResponseBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SetLanguage.getInstance().configLanguage(this);
         super.onCreate(savedInstanceState);
         binding = ActivityResponseBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -36,37 +38,37 @@ public class ResponseActivity extends AppCompatActivity {
 
        binding.fbErrorApp.setOnClickListener(v->{
            message = binding.etMessage.getText().toString().trim();
-           message +="Lỗi ứng dụng ";
+           message +=binding.fbErrorApp.getText().toString().trim();
            binding.etMessage.setText(message);
        });
 
         binding.fbErrorOutfitMax.setOnClickListener(v->{
             message = binding.etMessage.getText().toString().trim();
-            message +="Lỗi trang phục free fire max ";
+            message +=binding.fbErrorOutfitMax.getText().toString().trim();
             binding.etMessage.setText(message);
         });
 
         binding.fbErrorOutfit.setOnClickListener(v->{
             message = binding.etMessage.getText().toString().trim();
-            message +="Lỗi trang phục free fire ";
+            message +=binding.fbErrorOutfit.getText().toString().trim();
             binding.etMessage.setText(message);
         });
 
         binding.fbErrorGun.setOnClickListener(v->{
             message = binding.etMessage.getText().toString().trim();
-            message +="Lỗi skin súng free fire ";
+            message +=binding.fbErrorGun.getText().toString().trim();
             binding.etMessage.setText(message);
         });
         binding.fbErrorGunMax.setOnClickListener(v->{
             message = binding.etMessage.getText().toString().trim();
-            message +="Lỗi skin súng free fire max ";
+            message +=binding.fbErrorGunMax.getText().toString().trim();
             binding.etMessage.setText(message);
         });
     }
 
     private void handleSendResponse() {
         String[] emailReceive = {"quangninh312456@gmail.com"};
-        String subject ="Phản hồi0 Config FF";
+        String subject =getResources().getString(R.string.a_feedback);
         message = binding.etMessage.getText().toString().trim();
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL,emailReceive);

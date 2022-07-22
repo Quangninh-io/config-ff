@@ -2,6 +2,7 @@ package com.bkit.skinff.firebase;
 
 import static com.bkit.skinff.activity.AdminUpdateActivity.doneSignal;
 import static com.bkit.skinff.utilities.Constants.KEY_IMAGE;
+import static com.bkit.skinff.utilities.Constants.NAME_IMAGE;
 
 import android.content.Context;
 import android.net.Uri;
@@ -45,7 +46,7 @@ public class UploadStorage {
     // handle get link image in storage to upload link to firestore
     public void getUriImage(String model, String type, String time, TextView txtLinkImage){
         StorageReference storageRef;
-        storageRef = FirebaseStorage.getInstance().getReference(model + "/" + type + "/" + time + "/" + KEY_IMAGE);
+        storageRef = FirebaseStorage.getInstance().getReference(model + "/" + type + "/" + time + "/" + NAME_IMAGE);
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

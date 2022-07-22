@@ -35,7 +35,10 @@ import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
 import com.bkit.skinff.sharepreference.GetUri;
 import com.bkit.skinff.sharepreference.SaveUri;
+import com.bkit.skinff.utilities.CheckNew;
+import com.bkit.skinff.utilities.InterstitialAds;
 import com.bkit.skinff.utilities.SetLanguage;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.squareup.picasso.Picasso;
 import java.text.ParseException;
@@ -155,6 +158,9 @@ public class UserDetailActivity extends AppCompatActivity {
             }
         },1000);
     }
+
+
+
     // handle click button "active"
     private void handleClick() {
         showAds();

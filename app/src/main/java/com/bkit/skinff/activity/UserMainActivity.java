@@ -17,7 +17,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,22 +31,18 @@ import com.bkit.skinff.ads.MyApplication;
 import com.bkit.skinff.databinding.ActivityUserMainBinding;
 import com.bkit.skinff.fragment.user.UserMainFragment;
 import com.bkit.skinff.listener.KnowWhichItemClicked;
+import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
 import com.bkit.skinff.sharepreference.GetUri;
 import com.bkit.skinff.sharepreference.SaveUri;;
 import com.bkit.skinff.utilities.LanguageManager;
 import com.bkit.skinff.utilities.SetLanguage;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.RequestConfiguration;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Arrays;
-
-public class UserMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KnowWhichItemClicked {
+public class UserMainActivity extends AppCompatActivity implements OnUserEarnedRewardListener, NavigationView.OnNavigationItemSelectedListener, KnowWhichItemClicked {
 
     private ActivityUserMainBinding binding;
     UserMainFragment mainFragment = new UserMainFragment();
@@ -292,14 +287,15 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
 
     // add
     @Override
-    public void click() {
+    public void click(FileData fileData) {
         intiInterstitial();
     }
+
+
     public void intiInterstitial(){
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d("fjla","click");
                 Application application = getApplication();
                 if(application instanceof MyApplication){
                     interstitialAd =  ((MyApplication) application).mInterstitialAd;
@@ -314,6 +310,7 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
                 }
             }
         },1000);
+
     }
 
     private void initBanner() {
@@ -323,4 +320,8 @@ public class UserMainActivity extends AppCompatActivity implements NavigationVie
         }
     }
 
+    @Override
+    public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+
+    }
 }

@@ -12,6 +12,7 @@ import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON;
 import static com.bkit.skinff.utilities.Constants.KEY_WEAPON_MAX;
+import static com.bkit.skinff.utilities.Constants.NAME_IMAGE;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -131,7 +132,7 @@ public class AdminPreviewActivity extends AppCompatActivity {
             @Override
             public void modifyData(FileData fileData) {
                 delete.deleteFirestore(fileData.getDocumentId(), binding.pb);
-                delete.deleteStorage(fileData.getModel(), fileData.getType(), fileData.getTime(), KEY_IMAGE);
+                delete.deleteStorage(fileData.getModel(), fileData.getType(), fileData.getTime(), NAME_IMAGE);
                 delete.deleteStorage(fileData.getModel(), fileData.getType(), fileData.getTime(), fileData.getNameFile());
             }
 

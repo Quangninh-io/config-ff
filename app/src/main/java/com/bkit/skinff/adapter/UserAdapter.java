@@ -116,7 +116,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserMainViewHo
             }else{
                 binding.tvActive.setVisibility(View.INVISIBLE);
             }
-            binding.tvTime.setText(fileData.getTime());
+            StringBuilder builder = new StringBuilder(fileData.getTime());
+            builder.delete(builder.length()-5,builder.length());
+            Log.d("flatraaf", String.valueOf(builder));
+            binding.tvTime.setText(builder.toString());
             setLanguage.configLanguage(context);
             if(fileData.getType().equals(KEY_OUTFIT)){
                 binding.tvName.setText(context.getResources().getString(R.string.collection_outfit)+fileData.getName());

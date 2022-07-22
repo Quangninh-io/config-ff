@@ -575,7 +575,7 @@ public class UserMainFragment extends Fragment {
         adapter = new UserAdapter(display, getContext(), new ClickSpecificItem() {
             @Override
             public void click(FileData fileData) {
-                loadInterstitialAd();
+                loadInterstitialAd(fileData);
                 data = fileData;
                 Intent intent = new Intent(getActivity(), UserDetailActivity.class);
                 intent.putExtra(INTENT_DETAIL, fileData);
@@ -598,16 +598,18 @@ public class UserMainFragment extends Fragment {
     }
 
     // add ads full screen
-    private void loadInterstitialAd() {
-        clicked.click();
+    private void loadInterstitialAd(FileData fileData) {
+        clicked.click(fileData);
     }
 
     @Override
     public void onResume() {
+        Log.d("logresume","resume");
         super.onResume();
         if (data.getName() != null) {
             getShar(data);
         }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -628,6 +630,8 @@ public class UserMainFragment extends Fragment {
             fileData.setActive(false);
         }
         String valueNew = String.valueOf(fileData.getActive());
+        Log.d("fjal",valueNew);
+        Log.d("fjal",value);
         if (!value.equals(valueNew)) {
             adapter.notifyDataSetChanged();
         }

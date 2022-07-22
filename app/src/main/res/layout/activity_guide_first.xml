@@ -9,13 +9,13 @@
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/freefire2"
+        android:src="@drawable/freefire"
         android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/iv_close"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_38sdp"
         android:layout_marginTop="@dimen/_7sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:background="@drawable/selector_close"
@@ -23,7 +23,7 @@
         android:text="Đóng"
         android:textColor="@color/white"
         android:paddingEnd="@dimen/_5sdp"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_15sdp"
         android:gravity="center"
         android:paddingStart="@dimen/_5sdp"
         android:paddingTop="@dimen/_3sdp"

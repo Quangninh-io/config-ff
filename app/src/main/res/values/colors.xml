@@ -31,4 +31,5 @@
     <color name="next2">#131313</color>
     <color name="text_colo2">#030B36</color>
     <color name="button_b">#EFEFEF</color>
+    <color name="time">#D7000000</color>
 </resources>

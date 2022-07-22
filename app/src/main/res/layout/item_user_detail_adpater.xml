@@ -44,6 +44,21 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:riv_corner_radius="@dimen/_5sdp" />
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_video"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:src="@drawable/video"
+                    app:tint="@color/white"
+                    android:visibility="invisible"
+                    android:background="@drawable/shape_time"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    app:layout_constraintTop_toTopOf="@id/iv_package"
+                    app:layout_constraintStart_toStartOf="@id/iv_package"/>
+
                 <TextView
                     android:id="@+id/tv_new"
                     android:layout_width="@dimen/_30sdp"

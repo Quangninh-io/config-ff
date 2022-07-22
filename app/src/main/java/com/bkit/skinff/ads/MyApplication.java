@@ -47,6 +47,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd;
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback;
 
 import java.util.Date;
 
@@ -70,6 +72,7 @@ public class MyApplication extends Application
                     @Override
                     public void onInitializationComplete(
                             @NonNull InitializationStatus initializationStatus) {
+                        loadAdReward();
                     }
                 });
 
@@ -77,15 +80,69 @@ public class MyApplication extends Application
         appOpenAdManager = new AppOpenManager();
         loadInterstitial();
     }
+    public RewardedInterstitialAd rewardedInterstitialAd;
+
+    public void loadAdReward(){
+        RewardedInterstitialAd.load(currentActivity, "ca-app-pub-3940256099942544/5354046379",
+                new AdRequest.Builder().build(), new RewardedInterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(RewardedInterstitialAd ad) {
+                        rewardedInterstitialAd = ad;
+                        rewardedInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdClicked() {
+                                // Called when a click is recorded for an ad.
+
+                            }
+
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                // Called when ad is dismissed.
+                                // Set the ad reference to null so you don't show the ad a second time.
+
+                                rewardedInterstitialAd = null;
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                // Called when ad fails to show.
+
+                                rewardedInterstitialAd = null;
+                            }
+
+                            @Override
+                            public void onAdImpression() {
+                                // Called when an impression is recorded for an ad.
+
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                // Called when ad is shown.
+
+                            }
+                        });
+                    }
+                    @Override
+                    public void onAdFailedToLoad(LoadAdError loadAdError) {
+                        rewardedInterstitialAd = null;
+                    }
+                });
+    }
 
 
     /**
      * LifecycleObserver method that shows the app open ad when the app moves to foreground.
      */
+    int check =0;
     @OnLifecycleEvent(Event.ON_START)
     protected void onMoveToForeground() {
+        Log.d("fjla","start");
+        if(check==0){
+            appOpenAdManager.showAdIfAvailable(currentActivity);
+            check =1;
+        }
         // Show the ad (if available) when the app moves to foreground.
-        appOpenAdManager.showAdIfAvailable(currentActivity);
     }
 
     /**

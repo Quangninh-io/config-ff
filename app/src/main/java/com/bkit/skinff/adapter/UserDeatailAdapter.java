@@ -114,8 +114,10 @@ public class UserDeatailAdapter extends RecyclerView.Adapter<UserDeatailAdapter.
             getShar(fileData);
             if(fileData.getActive()){
                 binding.tvActive.setVisibility(View.VISIBLE);
+                binding.ivVideo.setVisibility(View.VISIBLE);
             }else{
                 binding.tvActive.setVisibility(View.INVISIBLE);
+                binding.ivVideo.setVisibility(View.GONE);
             }
             binding.tvTime.setText(fileData.getTime());
             setLanguage.configLanguage(context);

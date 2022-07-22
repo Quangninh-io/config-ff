@@ -35,7 +35,7 @@ public class UploadFirestore {
     // upload to firestore with collection is file
     public void uploadToFirestore(Context context, String model, String name, String time, String type, ProgressBar pbUpload, String linkImage, String nameFile){
         Map<String, Object> fileData = new HashMap<>();
-        fileData.put(KEY_NAME,linkImage);
+        fileData.put(KEY_IMAGE,linkImage);
         fileData.put(KEY_MODEL,model);
         fileData.put(KEY_NAME,name);
         fileData.put(KEY_TIME, time);

@@ -7,27 +7,26 @@
     android:layout_marginEnd="@dimen/_5sdp"
     android:layout_marginBottom="@dimen/_15sdp"
     android:clickable="true"
-    android:focusable="true"
-    app:cardCornerRadius="@dimen/_20sdp"
-    app:cardElevation="@dimen/_5sdp"
     android:elevation="@dimen/_10sdp"
-    android:padding="@dimen/_10sdp">
+    android:focusable="true"
+    android:padding="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardElevation="@dimen/_5sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:padding="@dimen/_10sdp">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_package"
             android:layout_width="165dp"
-            android:layout_height="0dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/image"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:riv_corner_radius="@dimen/_5sdp" />
 
         <TextView
@@ -35,9 +34,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/gulzar_regular"
             android:maxLines="4"
             android:text="Bộ sưu tập skin súng v1"
-            android:fontFamily="@font/gulzar_regular"
             android:textColor="@color/text_color"
             android:textSize="@dimen/_18sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,40 +48,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-
-            android:layout_marginTop="@dimen/_11sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:background="@drawable/shape_time"
             android:includeFontPadding="false"
-            android:text="16-10-2000"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_12sdp"
+            android:paddingStart="@dimen/_4sdp"
+            android:paddingTop="@dimen/_1sdp"
+            android:paddingEnd="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_1sdp"
+            android:text="16-10"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp"
             android:textStyle="italic"
-            app:layout_constraintStart_toEndOf="@id/iv_package"
-            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            app:layout_constraintBottom_toBottomOf="@id/iv_package"
+            app:layout_constraintEnd_toEndOf="@id/iv_package" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:src="@drawable/video"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/iv_package"
+            app:layout_constraintTop_toTopOf="@id/iv_package"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/tv_new"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:background="@drawable/shape_new"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:background="@drawable/shape_new_detail"
             android:gravity="center"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:text="@string/new_status"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13sdp"
-            android:visibility="invisible"
-            app:layout_constraintTop_toTopOf="@id/tv_time"
-            app:layout_constraintBottom_toBottomOf="@id/tv_time"
-            app:layout_constraintStart_toEndOf="@id/tv_time"
-           />
+            android:textColor="@color/warning"
+            app:layout_constraintEnd_toEndOf="@id/iv_package"
+            app:layout_constraintTop_toTopOf="@id/iv_package" />
+
+
 
         <TextView
             android:id="@+id/tv_active"
-            android:background="@drawable/shape_active"
             android:layout_width="@dimen/_10sdp"
             android:layout_height="@dimen/_10sdp"
+            android:background="@drawable/shape_active"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,31 +14,40 @@ import static com.bkit.skinff.utilities.Constants.KEY_NAME_FILE;
 import static com.bkit.skinff.utilities.Constants.KEY_TIME;
 import static com.bkit.skinff.utilities.Constants.KEY_TYPE;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import com.bkit.skinff.R;
 import com.bkit.skinff.adapter.UserDeatailAdapter;
 
+import com.bkit.skinff.ads.MyApplication;
 import com.bkit.skinff.databinding.ActivityUserWeaponBinding;
 import com.bkit.skinff.firebase.DownloadFile;
 import com.bkit.skinff.listener.ClickSpecificItem;
 import com.bkit.skinff.model.FileData;
 import com.bkit.skinff.model.Name;
 import com.bkit.skinff.utilities.ArrangeTime;
+import com.bkit.skinff.utilities.CheckNew;
 import com.bkit.skinff.utilities.InterstitialAds;
 import com.bkit.skinff.utilities.SetLanguage;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class UserWeaponActivity extends AppCompatActivity {
+public class UserWeaponActivity extends AppCompatActivity implements OnUserEarnedRewardListener {
 
     private ActivityUserWeaponBinding binding;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,6 +68,7 @@ public class UserWeaponActivity extends AppCompatActivity {
 
         initMain();
     }
+
     // initial run activity
     // catch event foe button delete, handle delete by the way override file initial of free fire saved in storage
     // receive data from user main activity delivery by the way intent ( uri weapon, outfit, chose model, name file)
@@ -66,7 +76,7 @@ public class UserWeaponActivity extends AppCompatActivity {
     // with condition is what is model, type = weapon( because we handle in activity weapon)
     // data received is data array, prepare to assign for adapter
     private void initMain() {
-        binding.ivBack.setOnClickListener(v->{
+        binding.ivBack.setOnClickListener(v -> {
             onBackPressed();
         });
         String result = getIntent().getStringExtra(INTENT_MODEL);
@@ -102,6 +112,9 @@ public class UserWeaponActivity extends AppCompatActivity {
                 });
 
     }
+
+    FileData fileDataTras = new FileData();
+
     // calculated time now with time of packages, if package time less current time -30, set new and vice versa
     // set data for adapter
     // send data contain (uri, model file data, name file) for user detail activity
@@ -111,24 +124,59 @@ public class UserWeaponActivity extends AppCompatActivity {
             @Override
             public void click(FileData fileData) {
                 showAds(fileData);
-                Intent intent = new Intent(getApplication(), UserDetailActivity.class);
-                intent.putExtra(INTENT_WEAPON, String.valueOf(uriWeapon));
-                intent.putExtra(INTENT_OUTFIT, String.valueOf(uriOutfit));
-                intent.putExtra(INTENT_DETAIL, fileData);
-                intent.putExtra(INTENT_CHOSE_MODEL, decideChoseModel);
-                intent.putExtra(INTENT_NAME, name);
-                startActivity(intent);
-
             }
+
             @Override
             public void pos(int position) {
-
             }
         });
         binding.rvWeapon.setAdapter(adapter);
     }
-    private void showAds(FileData fileData) {
-       InterstitialAds.getInstance().intiInterstitial(UserWeaponActivity.this);
+
+    private void openActivityDetail(FileData fileData) {
+        Intent intent = new Intent(getApplication(), UserDetailActivity.class);
+        intent.putExtra(INTENT_WEAPON, String.valueOf(uriWeapon));
+        intent.putExtra(INTENT_OUTFIT, String.valueOf(uriOutfit));
+        intent.putExtra(INTENT_DETAIL, fileData);
+        intent.putExtra(INTENT_CHOSE_MODEL, decideChoseModel);
+        intent.putExtra(INTENT_NAME, name);
+        startActivity(intent);
     }
 
+    InterstitialAds ads = InterstitialAds.getInstance();
+
+    private void showAds(FileData fileData) {
+        fileDataTras = fileData;
+        boolean check = CheckNew.getInstance().check(fileData);
+        if (check) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Application application = getApplication();
+                    if (application instanceof MyApplication) {
+                        if (((MyApplication) application).rewardedInterstitialAd != null) {
+                            ((MyApplication) application).rewardedInterstitialAd.show(UserWeaponActivity.this, (OnUserEarnedRewardListener) UserWeaponActivity.this);
+                        } else {
+                            ((MyApplication) application).loadAdReward();
+                            openActivityDetail(fileDataTras);
+                        }
+                    }
+                }
+            }, 1000);
+        }else{
+            ads.intiInterstitial(UserWeaponActivity.this);
+            openActivityDetail(fileData);
+        }
+
+    }
+
+    @Override
+    public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                openActivityDetail(fileDataTras);
+            }
+        },1000);
+    }
 }
